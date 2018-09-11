@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const {Product, Reviews, Cart} = require('../db/models');
 
+module.exports = router
+
 router.get('/:productId', async (req, res, next) => {
     const reqProductId = Number(req.params.productId)
     try {
