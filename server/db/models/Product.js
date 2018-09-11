@@ -14,7 +14,7 @@ const Product = db.define('product', {
     defaultValue: 'marcy.jpg'
   },
   price: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.STRING,
     validate: {
       notEmpty: true
     }
