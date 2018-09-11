@@ -20,7 +20,7 @@ const fakeProduct = {
   category: 'Cooking'
 }
 
-class AllProducts extends React.Component {
+export class AllProducts extends React.Component {
   render() {
     return (
       <div>
