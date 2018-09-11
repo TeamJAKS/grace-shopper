@@ -16,7 +16,7 @@ const User = db.define('user', {
     unique: true,
     allowNull: false
   },
-  adimStatus: {
+  adminStatus: {
     type: Sequelize.BOOLEAN
   },
   password: {
