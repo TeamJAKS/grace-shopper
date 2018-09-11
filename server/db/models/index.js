@@ -44,5 +44,9 @@ const Reviews = require('./reviews')
  */
 module.exports = {
   User,
-  Address
+  Address,
+  PreviousOrders,
+  Product,
+  Cart,
+  Reviews
 }
