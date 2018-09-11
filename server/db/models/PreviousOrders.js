@@ -7,7 +7,7 @@ module.exports = db.define('previous_orders', {
         defaultValue: 'In Process'
     },
     shipped_date: {
-        type: Sequelize.DATE,
+        type: Sequelize.STRING,
         defaultValue: 'Skill Not Yet Shipped'
     }
 })
