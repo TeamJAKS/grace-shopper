@@ -1,6 +1,6 @@
 const {expect} = require('chai')
 const db = require('../index')
-const Product = require('./Product')
+const Product = require('./product')
 
 describe('Product model', () => {
   let marcy
