@@ -20,7 +20,7 @@ const fakeProduct = {
   category: 'Cooking'
 }
 
-export default class AllProducts extends React.Component {
+class AllProducts extends React.Component {
   render() {
     return (
       <div>
@@ -57,5 +57,5 @@ const styles = theme => ({
   }
 })
 
-// const Products = withStyles(styles)(AllProducts)
+export default withStyles(styles)(AllProducts)
 // export default Products
