@@ -1,10 +1,14 @@
 const Sequelize = require('sequelize');
 const db = require('../db')
 
-module.exports = db.define('previous_orders', {
+module.exports = db.define('orders', {
     order_status: {
         type: Sequelize.STRING,
-        defaultValue: 'In Process'
+        defaultValue: 'In Cart',
+        validate: {
+            notEmpty: true, 
+            isIn: [['In Cart', 'Processing', 'Complete']]
+        }
     },
     shipped_date: {
         type: Sequelize.STRING,

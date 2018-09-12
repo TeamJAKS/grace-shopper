@@ -1,6 +1,11 @@
 import axios from 'axios'
 
 //action types
+// const GOT_ALL_PRODUCTS
+// const GOT_SINGLE_PRODUCT
+// const ADDED_PRODUCT
+// const UPDATED_PRODUCT
+
 
 //action creators
 

@@ -1,7 +1,17 @@
 const router = require('express').Router();
-const {Product, Reviews, Cart} = require('../db/models');
+const {Product, Reviews} = require('../db/models');
 
 module.exports = router
+
+router.get('/', async (req, res, next) => {
+    try {
+      const products = await Product.findAll()
+      res.json(products)
+    } catch (err) {
+      next(err)
+    }
+})
+
 
 router.get('/:productId', async (req, res, next) => {
     const reqProductId = Number(req.params.productId)
@@ -17,6 +27,22 @@ router.get('/:productId', async (req, res, next) => {
         next(error)
     }
 })
+
+
+router.get('/:category', async (req, res, next) => {
+    try {
+      const category = await Product.findAll({
+        where: {category: req.params.category}
+      })
+      if (!category) {
+        res.status(404).send('Not Found')
+      } else {
+        res.json(category)
+      }
+    } catch (err) {
+      next(err)
+    }
+   })
 
 router.post('/', async (req, res, next)=> {
     try {
@@ -53,3 +79,4 @@ router.delete('/:productId', async (req, res, next) => {
         next(error)
     }
 })
+

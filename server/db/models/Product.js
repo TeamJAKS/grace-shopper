@@ -29,7 +29,7 @@ const Product = db.define('product', {
     }
   },
   category: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
+    type: Sequelize.STRING,
     validate: {
       notEmpty: true
     }
