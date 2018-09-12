@@ -1,6 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
+
 const {User, Address, Product, Cart, Reviews} = require('../server/db/models')
 
 const users = [{firstName: 'Jordan', lastName: 'Davis', email: 'jdavis@email.com', password: 'jordanCodes8910', adminStatus: true}, {firstName: 'Almendra', lastName: 'Estrada', email: 'AEstrada@email.com', password: 'irockmysocks1224', adminStatus: false}, {firstName: 'Keyairra', lastName: 'Wright', email: 'kwright@email.com', password: 'keyairrakeyairraaaa', adminStatus:  true}, {firstName: 'Stacy', lastName: 'Harfenist', email:'stacy@email.com', password: 'whatineedapassword?', adminStatus: false}]
@@ -27,9 +28,6 @@ function seed() {
     // .then(() => {
     // console.log('db synced!') 
 
-    // console.log(`seeded ${users.length} users`)
-    // console.log(`seeded successfully`)
-    // }
 
 }
 

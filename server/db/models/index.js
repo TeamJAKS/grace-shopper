@@ -1,9 +1,11 @@
-const User = require('./User')
+
+const User = require('./user')
+const Product = require('./product')
 const Address = require('./address')
 const PreviousOrders = require('./PreviousOrders')
-const Product = require('./Product')
 const Cart = require('./cart')
 const Reviews = require('./reviews')
+
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
