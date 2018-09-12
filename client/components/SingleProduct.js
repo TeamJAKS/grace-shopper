@@ -21,22 +21,6 @@ const fakeSingleProduct = {
 
 }
 
-const fakeReviews = [
-    {
-        title: 'Great Product',
-        text: 'I love this so much',
-        stars: 4,
-        user: 'Stacy & Keyairra'
-    },
-
-    {
-        title: 'Decent Product',
-        text: 'I thought this was okay',
-        stars: 3,
-        user: 'Keyairra & Stacy'
-    }
-]
-//345, 140
 const styles = {
     card: {
       maxWidth: 400,
@@ -44,6 +28,7 @@ const styles = {
     media: {
       height: 300,
     },
+
   };
 
 class SingleProduct extends Component {
