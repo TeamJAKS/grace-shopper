@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {withRouter, NavLink} from 'react-router-dom';
+import {getSingleProduct} from '../store/product'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -8,18 +11,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
-//import {connect} from 'react-redux'
 //potential material ui component - card, complex 
-
-const fakeSingleProduct = {
-    title: 'Cook a Duck',
-    price: 45.50,
-    imageUrl: "https://cdn.vectorstock.com/i/1000x1000/63/27/white-duck-with-empty-thoughts-vector-1266327.jpg",
-    description: 'Learn how to cook a duck in the French style',
-    category: 'Cooking',
-    quantity: 6
-
-}
+//suggestion to look at gist for themes
 
 const styles = {
     card: {
@@ -33,30 +26,34 @@ const styles = {
 
 class SingleProduct extends Component {
     componentDidMount(){
-        
+        this.props.getSingleProduct(Number(this.props.id))
     }
     render () {
         const { classes } = this.props;
+        const product = this.props.singleProduct;
+        if(!product) {
+            return <h1>Hello World</h1>
+        }
         return (
             <Card className={classes.card}>
                 <CardActionArea>
                     <CardMedia
                     className={classes.media}
-                    image={fakeSingleProduct.imageUrl}
-                    title={fakeSingleProduct.title}
+                    image={product.imageUrl}
+                    title={product.title}
                     />
                     <CardContent>
                     <Typography gutterBottom variant="headline" component="h2">
-                        {fakeSingleProduct.title}
+                        {product.title}
                     </Typography>
                     <Typography component="p">
-                        {fakeSingleProduct.description}
+                        {product.description}
                     </Typography>
                     <Typography component="p">
-                        {fakeSingleProduct.price}
+                        {product.price}
                     </Typography>
                     <Typography component="p">
-                        {fakeSingleProduct.quantity}
+                        {product.quantity}
                     </Typography>
                     </CardContent>
             </CardActionArea>
@@ -78,6 +75,18 @@ SingleProduct.propTypes = {
     classes: PropTypes.object.isRequired,
   };
 
-export default withStyles(styles)(SingleProduct);
+const mapStateToProps = (state) => {
+    console.log( 'this is the state', state)
+    return {
+        singleProduct: state.product.singleProduct
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getSingleProduct: (id) => dispatch(getSingleProduct(id))
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(SingleProduct));
 
 

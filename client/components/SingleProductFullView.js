@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import Review from './Review'
 import SingleProduct from './SingleProduct'
 
-const SingleProductFullView = () => {
+const SingleProductFullView = (props) => {
+        console.log('here are the pros in singlePRoductView', props.match.params.productId)
+        const id = props.match.params.productId
         return (
             <div>
-                <SingleProduct/>
+                <SingleProduct id={id}/>
                 <Review />
             </div>
             
