@@ -38,7 +38,7 @@ class SingleProduct extends Component {
     render () {
         const { classes } = this.props;
         return (
-            <Card className={classes.card}>>
+            <Card className={classes.card}>
                 <CardActionArea>
                     <CardMedia
                     className={classes.media}
