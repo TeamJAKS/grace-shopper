@@ -6,14 +6,14 @@ module.exports = db.define('reviews', {
         type: Sequelize.TEXT,
         allowNull: false,
         validate: {
-            isEmpty: false
+            notEmpty: true 
         }
     },
     text: {
         type: Sequelize.TEXT,
         allowNull: false,
         validate: {
-            isEmpty: false
+            notEmpty: true 
         }
     },
     stars: {
