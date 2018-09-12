@@ -76,7 +76,6 @@ SingleProduct.propTypes = {
   };
 
 const mapStateToProps = (state) => {
-    console.log( 'this is the state', state)
     return {
         singleProduct: state.product.singleProduct
     }

@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {withRouter, NavLink} from 'react-router-dom'
+import {getReviews} from '../store/product'
+import {connect} from 'react-redux'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -13,34 +16,35 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
 });
-const fakeReviews = [
-    {
-        title: 'Great Product',
-        text: 'I love this so much',
-        stars: 4,
-        user: 'Stacy & Keyairra'
-    },
+// const fakeReviews = [
+//     {
+//         title: 'Great Product',
+//         text: 'I love this so much',
+//         stars: 4,
+//         user: 'Stacy & Keyairra'
+//     },
 
-    {
-        title: 'Decent Product',
-        text: 'I thought this was okay',
-        stars: 3,
-        user: 'Keyairra & Stacy'
-    }
-]
+//     {
+//         title: 'Decent Product',
+//         text: 'I thought this was okay',
+//         stars: 3,
+//         user: 'Keyairra & Stacy'
+//     }
+// ]
 
 class Review extends Component {
     componentDidMount () {
-
+        this.props.getReviews(Number(this.props.id))
     }
     render(){
         const { classes } = this.props;
+        const reviews = this.props.reviews
         return(
             <div className={classes.root}>
             <List>
-                {fakeReviews.map(review => {
+                {reviews.map(review => {
                     return (
-                        <ListItem>
+                        <ListItem key = {review.id}>
                             <Avatar>
                             {review.stars}
                             </Avatar>
@@ -58,5 +62,17 @@ class Review extends Component {
 Review.propTypes = {
     classes: PropTypes.object.isRequired,
   };
+
+const mapStateToProps = (state) => {
+    return {
+        reviews: state.product.reviews
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getReviews: (id) => dispatch(getReviews(id))
+    }
+}
   
-export default withStyles(styles)(Review);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Review));

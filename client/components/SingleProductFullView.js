@@ -8,7 +8,7 @@ const SingleProductFullView = (props) => {
         return (
             <div>
                 <SingleProduct id={id}/>
-                <Review />
+                <Review id={id}/>
             </div>
             
         )
