@@ -36,4 +36,14 @@ const Product = db.define('product', {
   }
 })
 
+Product.findByCategory = function(category) {
+  return Product.findAll({
+    where: {
+      category: {
+        [Sequelize.Op.eq]: category
+      }
+    }
+  })
+}
+
 module.exports = Product
