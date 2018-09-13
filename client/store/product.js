@@ -2,6 +2,7 @@ import axios from 'axios'
 //if thunks aren't working, then consider install "npm install redux-thunk"
 
 //action types
+
 const GOT_SINGLE_PRODUCT = 'GOT_SINGLE_PRODUCT'
 const GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS'
 const GOT_PRODUCT_CATEGORY = 'GOT_PRODUCT_CATEGORY'
@@ -51,9 +52,9 @@ export const fetchProducts = () => {
   }
 }
 
-export const fetchByCategory = categoryId => {
+export const fetchByCategory = category => {
   return async dispatch => {
-    const response = await axios.get(`/api/product/category/${categoryId}`)
+    const response = await axios.get(`/api/product/category/${category}`)
     const products = response.data
     dispatch(gotProductCategory(products))
   }
