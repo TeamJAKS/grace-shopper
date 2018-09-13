@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, NavLink} from 'react-router-dom'
 import {logout} from '../store'
-import searchView from './searchView'
+
 
 const defaultState = {
   search: ''
@@ -14,20 +14,12 @@ class Navbar extends React.Component {
       super()
       this.state = defaultState
       this.handleChange = this.handleChange.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange (evt) {
       this.setState({
           [evt.target.name]: evt.target.value
       })
-    }
-
-    handleSubmit (evt) {
-    // evt.preventDefault()
-    return (
-      <searchView searchTerm = {this.state.search} />
-    )
     }
 
 
@@ -57,7 +49,7 @@ class Navbar extends React.Component {
             </label>
             <input name = 'search' type = 'text' onChange = {this.handleChange} value = {this.state.search} />
             <NavLink to ={{pathname: '*search', state: {searchTerm: this.state.search}}}>
-            <button type = 'submit'>Submit</button>
+            <button type = 'submit' onClick = {() => this.setState(defaultState)}>Submit</button>
             </NavLink>
         </nav>
         <hr />
