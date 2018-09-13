@@ -58,16 +58,11 @@ class Cart extends Component {
                             <Avatar>
                             {fake.imageUrl}
                             </Avatar>
-                            <ListItemText primary={fake.title} secondary={fake.price} />
+                            <ListItemText primary={fake.title} secondary={fake.price.toFixed(2)} />
                         </ListItem> 
                     )
                 })}
-                 <ListItem>
-                        <Avatar>
-                            {'T'}
-                        </Avatar>
-                            <ListItemText primary='Total Price' secondary={fakeItemsPrices.reduce(findTotalPrices,0)} />
-                </ListItem> 
+                 <h2>Total Price: ${fakeItemsPrices.reduce(findTotalPrices,0).toFixed(2)}</h2>
             </List>
             </div>
             
