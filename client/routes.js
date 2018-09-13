@@ -2,7 +2,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome, AllProducts, SingleProductFullView} from './components'
+import {
+  Login,
+  Signup,
+  UserHome,
+  AllProducts,
+  ProductCategory,
+  SingleProductFullView
+} from './components'
+
 import {me} from './store'
 
 /**
@@ -23,6 +31,12 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route exact path="/product" component={AllProducts} />
         <Route exact path="/product/:productId" component={SingleProductFullView} />
+        <Route
+          exact
+          path="/product/category/:category"
+          component={ProductCategory}
+        />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

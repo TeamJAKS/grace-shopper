@@ -1,5 +1,5 @@
 import React from 'react'
-import {fetchProducts} from '../store/product'
+import {fetchByCategory} from '../store/product'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -9,21 +9,28 @@ import GridListTile from '@material-ui/core/GridListTile'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import ProductGrid from './productGrid'
 
-class AllProducts extends React.Component {
+class ProductCategory extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {category: props.match.params.category}
+  }
+
   componentDidMount() {
-    console.log(this.props)
-    this.props.fetchAllProducts()
+    this.props.fetchAllProducts(this.state.category)
   }
 
   render() {
     const products = this.props.products
+
     if (products) {
       const {classes} = this.props
       return (
         <div className={classes.root}>
           <GridList cellHeight={180} className={classes.gridList}>
             <GridListTile key="Subheader" cols={2} style={{height: 'auto'}}>
-              <ListSubheader component="div">All Products</ListSubheader>
+              <ListSubheader component="div">
+                {this.state.category}
+              </ListSubheader>
             </GridListTile>
             {products.map(product => (
               <ProductGrid product={product} key={product.id} />
@@ -58,15 +65,15 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchAllProducts: () => dispatch(fetchProducts())
+    fetchAllProducts: category => dispatch(fetchByCategory(category))
   }
 }
 
 const ProductsComponent = withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AllProducts)
+  connect(mapStateToProps, mapDispatchToProps)(ProductCategory)
 )
 
-AllProducts.propTypes = {
+ProductCategory.propTypes = {
   classes: PropTypes.object.isRequired
 }
 

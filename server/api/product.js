@@ -1,32 +1,42 @@
 const router = require('express').Router();
 const {Product, Reviews, User} = require('../db/models');
 
+
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-    try {
-      const products = await Product.findAll()
-      res.json(products)
-    } catch (err) {
-      next(err)
-    }
+  try {
+    const products = await Product.findAll()
+    res.json(products)
+  } catch (err) {
+    next(err)
+  }
 })
 
+router.get('/category/:category', async (req, res, next) => {
+  try {
+    const products = await Product.findByCategory(req.params.category)
+    res.json(products)
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.get('/:productId', async (req, res, next) => {
-    const reqProductId = Number(req.params.productId)
-    try {
-        const product = await Product.findAll({
-            where:{
-                id: reqProductId
-            },
-            include: [{model: Reviews}]
-        })
-        res.json(product)
-    } catch (error) {
-        next(error)
-    }
+  const reqProductId = Number(req.params.productId)
+  try {
+    const product = await Product.findAll({
+      where: {
+        id: reqProductId
+      },
+      include: [{model: Reviews}]
+    })
+    res.json(product)
+  } catch (error) {
+    next(error)
+  }
 })
+
 
 router.get('/:productId/reviews', async (req, res, next) => {
     try{
@@ -66,32 +76,35 @@ router.post('/', async (req, res, next)=> {
     } catch (error){
         next(error)
     }
+
 })
 
 router.put('/:productId', async (req, res, next) => {
-    try {
-        const id = req.params.productId;
-        const updates = req.body
-        const updatedProduct = await Product.update(updates, {
-            where: {id},
-            returning: true,
-            plain: true
-        })
-        res.sendStatus(204).json(updatedProduct[1]).end()
-    } catch (error){
-        next(error)
-    }
+  try {
+    const id = req.params.productId
+    const updates = req.body
+    const updatedProduct = await Product.update(updates, {
+      where: {id},
+      returning: true,
+      plain: true
+    })
+    res
+      .sendStatus(204)
+      .json(updatedProduct[1])
+      .end()
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.delete('/:productId', async (req, res, next) => {
-    try {
-        await Product.destroy({
-            where: {
-                id: req.params.productId
-            }
-        })
-    } catch (error){
-        next(error)
-    }
+  try {
+    await Product.destroy({
+      where: {
+        id: req.params.productId
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
 })
-
