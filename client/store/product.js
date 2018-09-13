@@ -1,13 +1,13 @@
-import axios from 'axios';
+import axios from 'axios'
 //if thunks aren't working, then consider install "npm install redux-thunk"
 
 //action types
-const GOT_SINGLE_PRODUCT = 'GOT_SINGLE_PRODUCT';
+const GOT_SINGLE_PRODUCT = 'GOT_SINGLE_PRODUCT'
 const GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS'
 const GOT_PRODUCT_CATEGORY = 'GOT_PRODUCT_CATEGORY'
-// const ADDED_PRODUCT
+const ADDED_PRODUCT = 'ADDED_PRODUCT'
 // const UPDATED_PRODUCT
-const GOT_REVIEWS = 'GOT_REVIEWS';
+const GOT_REVIEWS = 'GOT_REVIEWS'
 
 //action creators
 
@@ -28,20 +28,25 @@ const gotProductCategory = products => {
   }
 }
 
-
+const addedProduct = product => {
+  return {
+    type: ADDED_PRODUCT,
+    product
+  }
+}
 //thunks
 export const getSingleProduct = id => {
-    return async (dispatch)=> {
-        const {data} = await axios.get(`/api/product/${id}`)
-        dispatch(gotSingleProduct(data[0]))
-    }
+  return async dispatch => {
+    const {data} = await axios.get(`/api/product/${id}`)
+    dispatch(gotSingleProduct(data[0]))
+  }
 }
 
 export const getReviews = productId => {
-    return async (dispatch) => {
-        const {data} = await axios.get(`/api/product/${productId}/reviews`)
-        dispatch(gotReviews(data))
-    }
+  return async dispatch => {
+    const {data} = await axios.get(`/api/product/${productId}/reviews`)
+    dispatch(gotReviews(data))
+  }
 }
 
 export const fetchProducts = () => {
@@ -60,14 +65,21 @@ export const fetchByCategory = category => {
   }
 }
 
-const initialState = {
-    products: [],
-    singleProduct: {},
-    reviews: [],
-    error: null,
-    loading: null
+export const addNewProduct = product => {
+  return async dispatch => {
+    const response = await axios.post('/api/product', product)
+    const data = response.data
+    dispatch(addedProduct(data))
+  }
 }
-
+const initialState = {
+  products: [],
+  singleProduct: {},
+  reviews: [],
+  error: null,
+  loading: null,
+  product: {}
+}
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -82,13 +94,17 @@ const productReducer = (state = initialState, action) => {
         products: action.products
       }
     case GOT_SINGLE_PRODUCT:
-            return {...state , singleProduct: {...action.product}}
+      return {...state, singleProduct: {...action.product}}
     case GOT_REVIEWS:
-            return {...state, reviews: [...action.reviews]}
+      return {...state, reviews: [...action.reviews]}
+    case ADDED_PRODUCT:
+      return {
+        ...state,
+        products: [...state.products, action.product]
+      }
     default:
       return state
   }
-
 }
 
 export default productReducer
