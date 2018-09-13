@@ -8,7 +8,8 @@ import {
   UserHome,
   AllProducts,
   ProductCategory,
-  SingleProductFullView
+  SingleProductFullView,
+  Cart
 } from './components'
 
 import {me} from './store'
@@ -36,6 +37,7 @@ class Routes extends Component {
           path="/product/category/:category"
           component={ProductCategory}
         />
+         <Route exact path="/cart" component={Cart} />
 
         {isLoggedIn && (
           <Switch>
