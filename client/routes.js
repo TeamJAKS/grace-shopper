@@ -2,13 +2,15 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
+import {fetchProducts} from './store/product'
 import {
   Login,
   Signup,
   UserHome,
   AllProducts,
   ProductCategory,
-  SingleProductFullView
+  SingleProductFullView,
+  SearchView
 } from './components'
 
 import {me} from './store'
@@ -36,6 +38,7 @@ class Routes extends Component {
           path="/product/category/:category"
           component={ProductCategory}
         />
+        <Route path="*search" component = {SearchView} />
 
         {isLoggedIn && (
           <Switch>
@@ -65,6 +68,7 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(fetchProducts())
     }
   }
 }
