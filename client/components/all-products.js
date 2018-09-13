@@ -1,6 +1,6 @@
 import React from 'react'
 import {fetchProducts} from '../store/product'
-import {withRouter} from 'react-router-dom'
+import {withRouter, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
