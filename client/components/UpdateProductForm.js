@@ -1,63 +1,80 @@
-//not yet using redux
-//not yet using material UI -- so this looks simple at the moment
-//props would be passed down from a single product, single product component not yet assigned/made
-//double check the state
-//what are the types for forms in react
-//default values not currently present
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
+import PropTypes from 'prop-types'
+import {withStyles} from '@material-ui/core/styles'
+import Input from '@material-ui/core/Input'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import FormControl from '@material-ui/core/FormControl'
+import {InputAdornment} from '@material-ui/core'
 
 class UpdateProductForm extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-          value: '',
-          quantity: null
-        };
-  
-      this.handleChange = this.handleChange.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
+  constructor(props) {
+    super(props)
+    this.state = {
+      title: '',
+      price: 0,
+      quantity: 0,
+      category: ''
     }
-  
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
-  
-    handleSubmit(event) {
-      alert('An updated product was submitted: ' + this.state.value);
-      event.preventDefault();
-    }
-  
-    render() {
-      return (
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Title:
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <label>
-            ImgUrl:
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <label>
-            Price:
-            <input type="number" value={this.state.quantity} onChange={this.handleChange} />
-          </label>
-          <label>
-            Description:
-            <input type="url" value={this.state.quantity} onChange={this.handleChange} />
-          </label>
-          <label>
-            Quantity:
-            <input type="number" value={this.state.quantity} onChange={this.handleChange} />
-          </label>
-          <label>
-            Category:
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      );
-    }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  export default UpdateProductForm;
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value})
+  }
+
+  handleSubmit(event) {
+    event.preventDefault()
+
+    alert('An updated product was submitted: ' + this.state.value)
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <FormControl className="name">
+          <InputLabel htmlFor="title">Title</InputLabel>
+          <Input
+            id="title"
+            name="title"
+            value={this.state.title}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+        <FormControl className="name">
+          <InputLabel htmlFor="title">Price</InputLabel>
+          <Input
+            id="adornment-amount"
+            name="price"
+            value={this.state.price}
+            onChange={this.handleChange}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+          />
+        </FormControl>
+        <FormControl className="name">
+          <InputLabel htmlFor="title">Quantity</InputLabel>
+          <Input
+            id="quantity"
+            name="quantity"
+            value={this.state.quantity}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+        <FormControl className="name">
+          <InputLabel htmlFor="title">Category</InputLabel>
+          <Input
+            name="category"
+            value={this.state.category}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+        <button type="submit">Submit</button>
+      </form>
+    )
+  }
+}
+
+export default withRouter(connect(null, null)(UpdateProductForm))

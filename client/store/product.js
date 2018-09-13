@@ -6,7 +6,7 @@ const GOT_SINGLE_PRODUCT = 'GOT_SINGLE_PRODUCT'
 const GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS'
 const GOT_PRODUCT_CATEGORY = 'GOT_PRODUCT_CATEGORY'
 const ADDED_PRODUCT = 'ADDED_PRODUCT'
-// const UPDATED_PRODUCT
+const UPDATED_PRODUCT = 'UPDATED_PRODUCT'
 const GOT_REVIEWS = 'GOT_REVIEWS'
 
 //action creators
@@ -31,6 +31,13 @@ const gotProductCategory = products => {
 const addedProduct = product => {
   return {
     type: ADDED_PRODUCT,
+    product
+  }
+}
+
+const updateProduct = product => {
+  return {
+    type: UPDATED_PRODUCT,
     product
   }
 }
@@ -72,6 +79,15 @@ export const addNewProduct = product => {
     dispatch(addedProduct(data))
   }
 }
+
+export const updateOldProduct = product => {
+  return async dispatch => {
+    const response = await axios.put(`/api/product/${product.id}`, product)
+    const data = response.data
+    dispatch(updateProduct(data))
+  }
+}
+
 const initialState = {
   products: [],
   singleProduct: {},

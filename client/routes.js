@@ -9,7 +9,8 @@ import {
   AllProducts,
   ProductCategory,
   SingleProductFullView,
-  AddProductForm
+  AddProductForm,
+  UpdateProductForm
 } from './components'
 
 import {me} from './store'
@@ -42,6 +43,11 @@ class Routes extends Component {
           component={ProductCategory}
         />
         <Route exact path="/product/add/form" component={AddProductForm} />
+        <Route
+          exact
+          path="/product/update/form"
+          component={UpdateProductForm}
+        />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
