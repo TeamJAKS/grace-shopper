@@ -10,6 +10,8 @@ import {
   AllProducts,
   ProductCategory,
   SingleProductFullView,
+  AddProductForm,
+  UpdateProductForm,
   SearchView
 } from './components'
 
@@ -32,11 +34,21 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/product" component={AllProducts} />
-        <Route exact path="/product/:productId" component={SingleProductFullView} />
+        <Route
+          exact
+          path="/product/:productId"
+          component={SingleProductFullView}
+        />
         <Route
           exact
           path="/product/category/:category"
           component={ProductCategory}
+        />
+        <Route exact path="/product/add/form" component={AddProductForm} />
+        <Route
+          exact
+          path="/product/:productId/update"
+          component={UpdateProductForm}
         />
         <Route path="*search" component = {SearchView} />
 

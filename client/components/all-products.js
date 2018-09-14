@@ -1,6 +1,6 @@
 import React from 'react'
 import {fetchProducts} from '../store/product'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
@@ -11,7 +11,6 @@ import ProductGrid from './productGrid'
 
 class AllProducts extends React.Component {
   componentDidMount() {
-    console.log(this.props)
     this.props.fetchAllProducts()
   }
 
@@ -21,6 +20,7 @@ class AllProducts extends React.Component {
       const {classes} = this.props
       return (
         <div className={classes.root}>
+          <Link to="/product/add/form">Add Product</Link>
           <GridList cellHeight={180} className={classes.gridList}>
             <GridListTile key="Subheader" cols={2} style={{height: 'auto'}}>
               <ListSubheader component="div">All Products</ListSubheader>
