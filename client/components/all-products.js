@@ -1,6 +1,6 @@
 import React from 'react'
 import {fetchProducts} from '../store/product'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import DisplayManyProducts from './display-many-products'
 
