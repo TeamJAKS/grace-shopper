@@ -48,26 +48,27 @@ const fakeItemsPrices = [fakeCartItem.price, fakeCartItem2.price, fakeCartItem3.
 const findTotalPrices = (accumulator, currentValue) => accumulator + currentValue;
 
 class Cart extends Component {
-    componentDidMount(){
-        //do a thunk that is for getCart
-        //
-    }
+    // componentDidMount(){
+    //     //do a thunk that is for getCart
+    //     //
+    // }
     render(){
+        const {cart} = this.state.cartItems
         return (
             <div>
                 <h1>Your Shopping Cart</h1>
                 <List>
-                {fakeItems.map(fake => {
+                {cart.map(product => {
                     return (
-                        <ListItem key = {fake.id}>
+                        <ListItem key={product.id}>
                             <Avatar>
-                            {fake.imageUrl}
+                            {product.imageUrl}
                             </Avatar>
-                            <ListItemText primary={fake.title} secondary={fake.price.toFixed(2)} />
+                            <ListItemText primary={product.title} secondary={product.price.toFixed(2)} />
                         </ListItem> 
                     )
                 })}
-                 <h2>Total Price: ${fakeItemsPrices.reduce(findTotalPrices,0).toFixed(2)}</h2>
+                 {/* <h2>Total Price: ${fakeItemsPrices.reduce(findTotalPrices,0).toFixed(2)}</h2> */}
             </List>
             </div>
             
@@ -76,18 +77,11 @@ class Cart extends Component {
     }
 }
 
-//These thunks are not yet created
-// const mapStateToProps = (state, props) => {
-//     return {
-//         cartItems: getCartItems(state, props),
-//         total: getTotal(state, props) 
-//     }
-// }
+const mapStateToProps = state => {
+    return {
+      cartItems: state.cart.cartItems
+    }
+}
 
-// const mapDispatchToProps = (dispatch) => ({
-//     removedFromCart: (id) => dispatch(removedFromCart(id))
-// })
 
-// export default connect(mapStateToProps, mapDispatchToProps) (withStyles(styles)(Cart));
-
-export default Cart;
+export default connect(mapStateToProps) (withStyles(styles)(Cart));

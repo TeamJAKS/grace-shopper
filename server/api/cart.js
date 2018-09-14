@@ -7,7 +7,7 @@ router.post('/', async (req, res, next) => {
     try {
         const userCart = await Order.findOrCreate({
             where:{
-                userId: req.body.id,
+                userId: req.body.userId,
                 order_status: 'In Cart'
             },
             include: [{model: Product}]

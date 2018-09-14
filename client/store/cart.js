@@ -1,12 +1,12 @@
 import axios from 'axios';
 import {getSingleProduct} from './product'
 
-const ADDED_TO_CART = 'ADDED_TO_CART'
+const FILLED_CART = 'FILLED_CART'
 const REMOVED_FROM_CART = 'REMOVED_FROM_CART'
 
 
-export function addedToCart(productId) {
-    return {type: ADDED_TO_CART, productId}   
+export function filledCart(cart) {
+    return {type: FILLED_CART, cart: cart.products, orderId: cart.orderId}   
   }
 export function removedFromCart(productId) {
     return {type: REMOVED_FROM_CART, productId}
@@ -14,8 +14,8 @@ export function removedFromCart(productId) {
 
 
 const initialState = {
-    cartItems: [],
-    orderId: null
+    orderId: null,
+    cartItems: []
 }
 
 //thunks
@@ -24,13 +24,24 @@ const initialState = {
 //order.getProducts will exist due to sequelize magical methods with associations and order.addProduct or .setProduct
 
 export function getCartOrders(userId) {
-    
+    return async dispatch => {
+        const {data} = await axios.post('/api/cart', userId)
+        dispatch(filledCart(data))
+    }
 }
+
+export function addItemToCart(orderId, productId){
+    return async dispatch => {
+        const {data} = await axios.put('/api/cart', orderId, productId)
+        dispatch(filledCart(data))
+    }
+}
+
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
-      case ADDED_TO_CART:
-          return {...state, cartItems: [...state.cartItems, action.productId ]}
+      case FILLED_CART:
+          return {...state, orderId: action.orderId, cartItems: [...action.cart]}
       case REMOVED_FROM_CART:
           return {...state, cartItems: state.cartItems.filter(id => id !== action.productId)}
       default:
