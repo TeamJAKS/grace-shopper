@@ -9,7 +9,8 @@ router.post('/', async (req, res, next) => {
             where:{
                 userId: req.body.id,
                 order_status: 'In Cart'
-            }
+            },
+            include: [{model: Product}]
         })
         res.json(userCart)
     }catch(err){
