@@ -13,4 +13,5 @@ export {default as AddProductForm} from './addProductForm'
 export {default as UpdateProductForm} from './UpdateProductForm'
 export {default as DisplayWithProducts} from './productCategory'
 export {default as SearchView} from './searchView'
+export {default as ErrorNoProduct} from './error_NoProduct'
 
