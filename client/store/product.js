@@ -7,6 +7,7 @@ const GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS'
 const GOT_PRODUCT_CATEGORY = 'GOT_PRODUCT_CATEGORY'
 const ADDED_PRODUCT = 'ADDED_PRODUCT'
 const UPDATED_PRODUCT = 'UPDATED_PRODUCT'
+
 const GOT_REVIEWS = 'GOT_REVIEWS'
 
 //action creators
@@ -41,6 +42,7 @@ const updateProduct = productUpdate => {
     productUpdate
   }
 }
+
 //thunks
 export const getSingleProduct = id => {
   return async dispatch => {
@@ -64,9 +66,9 @@ export const fetchProducts = () => {
   }
 }
 
-export const fetchByCategory = category => {
+export const fetchByCategory = categoryId => {
   return async dispatch => {
-    const response = await axios.get(`/api/product/category/${category}`)
+    const response = await axios.get(`/api/product/category/${categoryId}`)
     const products = response.data
     dispatch(gotProductCategory(products))
   }
@@ -99,6 +101,7 @@ const initialState = {
   product: {},
   productUpdate: {}
 }
+
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {

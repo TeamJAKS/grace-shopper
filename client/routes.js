@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
+import {fetchProducts} from './store/product'
 import {
   Login,
   Signup,
@@ -10,7 +11,8 @@ import {
   ProductCategory,
   SingleProductFullView,
   AddProductForm,
-  UpdateProductForm
+  UpdateProductForm,
+  SearchView
 } from './components'
 
 import {me} from './store'
@@ -48,6 +50,8 @@ class Routes extends Component {
           path="/product/:productId/update"
           component={UpdateProductForm}
         />
+        <Route path="*search" component = {SearchView} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -76,6 +80,7 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(fetchProducts())
     }
   }
 }

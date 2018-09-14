@@ -11,3 +11,6 @@ export {default as SingleProductFullView} from './SingleProductFullView'
 export {default as ProductCategory} from './productCategory'
 export {default as AddProductForm} from './addProductForm'
 export {default as UpdateProductForm} from './UpdateProductForm'
+export {default as DisplayWithProducts} from './productCategory'
+export {default as SearchView} from './searchView'
+
