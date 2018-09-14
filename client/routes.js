@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {fetchProducts, me, getCartOrder} from './store'
+import {fetchProducts, me, getCartOrders} from './store'
 import {
   Login,
   Signup,
@@ -22,7 +22,9 @@ import {
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
-    this.props.getCartOrder(this.props.userId)
+    if(this.props.userId){
+      this.props.getCartOrders(this.props.userId)
+    }
   }
 
   render() {
@@ -50,7 +52,7 @@ class Routes extends Component {
           path="/product/:productId/update"
           component={UpdateProductForm}
         />
-        <Route exact path="/cart" component={Cart} />
+        <Route path="/cart" component={Cart} />
         <Route path="*search" component = {SearchView} />
         {isLoggedIn && (
           <Switch>
@@ -83,7 +85,7 @@ const mapDispatch = dispatch => {
       dispatch(me())
       dispatch(fetchProducts())
     },
-    getCartOrder: userId => {dispatch(getCartOrder(userId))}
+    getCartOrders: userId => dispatch(getCartOrders(userId))
   }
 }
 

@@ -26,11 +26,11 @@ class Navbar extends React.Component {
       <div>
         <h1>BOILERMAKER</h1>
         <nav>
-          {this.isLoggedIn ? (
+          {this.props.isLoggedIn ? (
             <div>
               {/* The navbar will show these links after you log in */}
               <Link to="/home">Home</Link>
-              <a href="#" onClick={this.handleClick}>
+              <a href="#" onClick={this.props.handleClick}>
                 Logout
               </a>
             </div>

@@ -1,12 +1,17 @@
 import axios from 'axios';
-import {getSingleProduct} from './product'
+
 
 const FILLED_CART = 'FILLED_CART'
 const REMOVED_FROM_CART = 'REMOVED_FROM_CART'
 
 
 export function filledCart(cart) {
-    return {type: FILLED_CART, cart: cart.products, orderId: cart.orderId}   
+    console.log('here are the products in the reducer', cart)
+    return {
+        type: FILLED_CART, 
+        cart: cart.products, 
+        orderId: cart.id
+    }   
   }
 export function removedFromCart(productId) {
     return {type: REMOVED_FROM_CART, productId}
@@ -41,7 +46,12 @@ export function addItemToCart(orderId, productId){
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
       case FILLED_CART:
-          return {...state, orderId: action.orderId, cartItems: [...action.cart]}
+            if(action.cart){
+                return {...state, orderId: action.orderId, cartItems: [...action.cart]}
+            } else {
+                return {...state, orderId: action.orderId}
+            }
+            
       case REMOVED_FROM_CART:
           return {...state, cartItems: state.cartItems.filter(id => id !== action.productId)}
       default:

@@ -12,6 +12,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import {connect} from 'react-redux'
+import {getCartOrders} from '../store'
 
 
 const styles = theme => ({
@@ -48,17 +49,17 @@ const fakeItemsPrices = [fakeCartItem.price, fakeCartItem2.price, fakeCartItem3.
 const findTotalPrices = (accumulator, currentValue) => accumulator + currentValue;
 
 class Cart extends Component {
-    // componentDidMount(){
-    //     //do a thunk that is for getCart
-    //     //
-    // }
+    componentDidMount(){
+        this.props.getCartOrders(this.props.userId)
+    }
     render(){
-        const {cart} = this.state.cartItems
+        console.log('here is the state in the Cart.js Component', this.props)
+        const {cartItems} = this.props.cartItems
         return (
             <div>
                 <h1>Your Shopping Cart</h1>
-                <List>
-                {cart.map(product => {
+                {cartItems ? <List>
+                {cartItems.map(product => {
                     return (
                         <ListItem key={product.id}>
                             <Avatar>
@@ -69,7 +70,8 @@ class Cart extends Component {
                     )
                 })}
                  {/* <h2>Total Price: ${fakeItemsPrices.reduce(findTotalPrices,0).toFixed(2)}</h2> */}
-            </List>
+            </List> : <h3>Your Cart Is Empty</h3>}
+                
             </div>
             
         )
@@ -78,10 +80,17 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log('here is the state in the carts map statto props', state)
     return {
-      cartItems: state.cart.cartItems
+      cartItems: state.cart.cartItems,
+      userId: state.user.id
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return{
+        getCartOrders: userId => dispatch(getCartOrders(userId))
+    }
+}
 
-export default connect(mapStateToProps) (withStyles(styles)(Cart));
+export default connect(mapStateToProps, mapDispatchToProps) (withStyles(styles)(Cart));
