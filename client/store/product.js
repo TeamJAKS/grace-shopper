@@ -1,5 +1,4 @@
 import axios from 'axios';
-//if thunks aren't working, then consider install "npm install redux-thunk"
 
 //action types
 const GOT_SINGLE_PRODUCT = 'GOT_SINGLE_PRODUCT';
@@ -27,7 +26,6 @@ const gotProductCategory = products => {
     products
   }
 }
-
 
 //thunks
 export const getSingleProduct = id => {
@@ -82,9 +80,9 @@ const productReducer = (state = initialState, action) => {
         products: action.products
       }
     case GOT_SINGLE_PRODUCT:
-            return {...state , singleProduct: {...action.product}}
+        return {...state , singleProduct: {...action.product}}
     case GOT_REVIEWS:
-            return {...state, reviews: [...action.reviews]}
+        return {...state, reviews: [...action.reviews]}
     default:
       return state
   }

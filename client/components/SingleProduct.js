@@ -11,18 +11,23 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography'
-//potential material ui component - card, complex 
-//suggestion to look at gist for themes
+//TODO: Take Away the "Share" and "Learn More" Buttons - Keyairra
 
-const styles = {
+const styles = theme => ({
     card: {
       maxWidth: 400,
     },
     media: {
       height: 300,
     },
+    button: {
+        margin: theme.spacing.unit,
+    },
+      input: {
+        display: 'none',
+    }
 
-  };
+  });
 
 class SingleProduct extends Component {
     componentDidMount(){
@@ -63,6 +68,12 @@ class SingleProduct extends Component {
                 </Button>
                 <Button size="small" color="primary">
                 Learn More
+                </Button>
+                <Button variant="contained" color="primary" className={classes.button}>
+                    Add to Cart
+                </Button>
+                <Button variant="contained" color="secondary" className={classes.button}>
+                    Remove 
                 </Button>
             </CardActions>
             </Card>

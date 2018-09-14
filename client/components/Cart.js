@@ -11,6 +11,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
+import {connect} from 'react-redux'
+
 
 const styles = theme => ({
     root: {
@@ -43,10 +45,12 @@ const fakeItems = [fakeCartItem, fakeCartItem2, fakeCartItem3]
 const fakeItemsPrices = [fakeCartItem.price, fakeCartItem2.price, fakeCartItem3.price]
 
 ///CUT ABOVE DUMMY DATA
-
 const findTotalPrices = (accumulator, currentValue) => accumulator + currentValue;
 
 class Cart extends Component {
+    componentDidMount(){
+        
+    }
     render(){
         return (
             <div>
@@ -67,7 +71,20 @@ class Cart extends Component {
             </div>
             
         )
+
     }
 }
 
-export default withStyles(styles)(Cart);
+//These thunks are not yet created
+// const mapStateToProps = (state, props) => {
+//     return {
+//         cartItems: getCartItems(state, props),
+//         total: getTotal(state, props) 
+//     }
+// }
+
+// const mapDispatchToProps = (dispatch) => ({
+//     removedFromCart: (id) => dispatch(removedFromCart(id))
+// })
+
+// export default connect(mapStateToProps, mapDispatchToProps) (withStyles(styles)(Cart));
