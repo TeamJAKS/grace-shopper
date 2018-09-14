@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
+import {updateOldProduct} from '../store/product'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
@@ -8,6 +9,15 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
 import {InputAdornment} from '@material-ui/core'
+const styles = theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  formControl: {
+    margin: theme.spacing.unit
+  }
+})
 
 class UpdateProductForm extends React.Component {
   constructor(props) {
@@ -21,15 +31,15 @@ class UpdateProductForm extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value})
   }
 
   handleSubmit(event) {
     event.preventDefault()
-
-    alert('An updated product was submitted: ' + this.state.value)
+    const {title, price, quantity, category} = this.state
+    this.props.update({title, price, quantity, category})
+    alert('An updated product was submitted: ')
   }
 
   render() {
@@ -77,4 +87,19 @@ class UpdateProductForm extends React.Component {
   }
 }
 
-export default withRouter(connect(null, null)(UpdateProductForm))
+const mapStateToProps = state => {
+  return {
+    products: state.product.products
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    update: product => dispatch(updateOldProduct({product}))
+  }
+}
+
+const UpdateComponent = withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(UpdateProductForm)
+)
+export default withStyles(styles)(UpdateComponent)

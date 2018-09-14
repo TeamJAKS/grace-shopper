@@ -28,17 +28,17 @@ const gotProductCategory = products => {
   }
 }
 
-const addedProduct = product => {
+const addedProduct = productId => {
   return {
     type: ADDED_PRODUCT,
-    product
+    productId
   }
 }
 
-const updateProduct = product => {
+const updateProduct = productUpdate => {
   return {
     type: UPDATED_PRODUCT,
-    product
+    productUpdate
   }
 }
 //thunks
@@ -82,9 +82,11 @@ export const addNewProduct = product => {
 
 export const updateOldProduct = product => {
   return async dispatch => {
-    const response = await axios.put(`/api/product/${product.id}`, product)
-    const data = response.data
-    dispatch(updateProduct(data))
+    const {data: productUpdate} = await axios.put(
+      `/api/product/${product.id}`,
+      product
+    )
+    dispatch(updateProduct(productUpdate))
   }
 }
 
@@ -94,7 +96,8 @@ const initialState = {
   reviews: [],
   error: null,
   loading: null,
-  product: {}
+  product: {},
+  productUpdate: {}
 }
 
 const productReducer = (state = initialState, action) => {
@@ -117,6 +120,16 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         products: [...state.products, action.product]
+      }
+    case UPDATED_PRODUCT:
+      return {
+        ...state,
+        products: state.product.map(product => {
+          if (product.id === action.product.id) return action.productUpdate
+          else {
+            return product
+          }
+        })
       }
     default:
       return state

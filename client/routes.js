@@ -45,7 +45,7 @@ class Routes extends Component {
         <Route exact path="/product/add/form" component={AddProductForm} />
         <Route
           exact
-          path="/product/update/form"
+          path="/product/:productId/update"
           component={UpdateProductForm}
         />
         {isLoggedIn && (
