@@ -51,7 +51,6 @@ class Routes extends Component {
           component={UpdateProductForm}
         />
         <Route path="*search" component = {SearchView} />
-
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

@@ -4,27 +4,25 @@ import {connect} from 'react-redux'
 import {Link, NavLink} from 'react-router-dom'
 import {logout} from '../store'
 
-
 const defaultState = {
   search: ''
 }
 
 class Navbar extends React.Component {
-    constructor () {
-      super()
-      this.state = defaultState
-      this.handleChange = this.handleChange.bind(this)
-    }
+  constructor() {
+    super()
+    this.state = defaultState
+    this.handleChange = this.handleChange.bind(this)
+  }
 
-    handleChange (evt) {
-      this.setState({
-          [evt.target.name]: evt.target.value
-      })
-    }
-
+  handleChange(evt) {
+    this.setState({
+      [evt.target.name]: evt.target.value
+    })
+  }
 
   render() {
-  return (
+    return (
       <div>
         <h1>BOILERMAKER</h1>
         <nav>
@@ -43,14 +41,21 @@ class Navbar extends React.Component {
               <Link to="/signup">Sign Up</Link>
             </div>
           )}
-          
-            <label htmlFor = 'searchProds'>
-            Search Our Products
-            </label>
-            <input name = 'search' type = 'text' onChange = {this.handleChange} value = {this.state.search} />
-            <NavLink to ={{pathname: '*search', state: {searchTerm: this.state.search}}}>
-            <button type = 'submit' onClick = {() => this.setState(defaultState)}>Submit</button>
-            </NavLink>
+
+          <label htmlFor="searchProds">Search Our Products</label>
+          <input
+            name="search"
+            type="text"
+            onChange={this.handleChange}
+            value={this.state.search}
+          />
+          <NavLink
+            to={{pathname: '*search', state: {searchTerm: this.state.search}}}
+          >
+            <button type="submit" onClick={() => this.setState(defaultState)}>
+              Submit
+            </button>
+          </NavLink>
         </nav>
         <hr />
       </div>
