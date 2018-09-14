@@ -2,17 +2,31 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link, NavLink} from 'react-router-dom'
-import {logout} from '../store'
+import {logout, fetchUserData} from '../store'
+
+import Button from '@material-ui/core/Button'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 
 const defaultState = {
-  search: ''
+  search: '',
+  anchorEl: null
 }
 
 class Navbar extends React.Component {
   constructor(props) {
     super(props)
     this.state = defaultState
+    this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleClick(evt) {
+    this.setState({anchorEl: evt.currentTarget})
+  }
+
+  handleClose = () => {
+    this.setState({anchorEl: null})
   }
 
   handleChange(evt) {
@@ -22,9 +36,11 @@ class Navbar extends React.Component {
   }
 
   render() {
+    const {anchorEl} = this.state
+    console.log('PROPS', this.props)
     return (
       <div>
-        <h1>BOILERMAKER</h1>
+        <h1>GRACE SHOPPER</h1>
         <nav>
           {this.props.isLoggedIn ? (
             <div>
@@ -33,6 +49,25 @@ class Navbar extends React.Component {
               <a href="#" onClick={this.props.handleClick}>
                 Logout
               </a>
+
+              <Button
+                color="primary"
+                aria-owns={anchorEl ? 'simple-menu' : null}
+                aria-haspopup="true"
+                onClick={this.handleClick}
+              >
+                {this.props.user.email}
+              </Button>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={this.handleClose}
+              >
+                <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                <MenuItem onClick={this.handleClose}>My Orders</MenuItem>
+                <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+              </Menu>
             </div>
           ) : (
             <div>
@@ -68,6 +103,7 @@ class Navbar extends React.Component {
  */
 const mapState = state => {
   return {
+    user: state.user,
     isLoggedIn: !!state.user.id
   }
 }
