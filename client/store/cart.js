@@ -14,12 +14,18 @@ export function removedFromCart(productId) {
 
 
 const initialState = {
-    cartItems: []
+    cartItems: [],
+    orderId: null
 }
 
 //thunks
 //may use getSingleProduct thunk or create originial thunks
+//create thunk that will add items to an existing cart via order OR update an existing cart
+//order.getProducts will exist due to sequelize magical methods with associations and order.addProduct or .setProduct
 
+export function getCartOrders(userId) {
+    
+}
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {

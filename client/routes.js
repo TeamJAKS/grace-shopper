@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
+import {fetchProducts} from './store/product'
 import {
   Login,
   Signup,
@@ -9,6 +10,9 @@ import {
   AllProducts,
   ProductCategory,
   SingleProductFullView,
+  AddProductForm,
+  UpdateProductForm,
+  SearchView,
   Cart
 } from './components'
 
@@ -31,14 +35,23 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/product" component={AllProducts} />
-        <Route exact path="/product/:productId" component={SingleProductFullView} />
+        <Route
+          exact
+          path="/product/:productId"
+          component={SingleProductFullView}
+        />
         <Route
           exact
           path="/product/category/:category"
           component={ProductCategory}
         />
-         <Route exact path="/cart" component={Cart} />
-
+        <Route exact path="/product/add/form" component={AddProductForm} />
+        <Route
+          exact
+          path="/product/:productId/update"
+          component={UpdateProductForm}
+        />
+        <Route path="*search" component = {SearchView} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -47,6 +60,7 @@ class Routes extends Component {
         )}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
+        <Route exact path="/cart" component={Cart} />
       </Switch>
     )
   }
@@ -67,6 +81,7 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(fetchProducts())
     }
   }
 }

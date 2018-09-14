@@ -1,5 +1,6 @@
-const router = require('express').Router();
-const {Product, Reviews, User} = require('../db/models');
+const router = require('express').Router()
+
+const {Product, Reviews, User, Category} = require('../db/models')
 
 
 module.exports = router
@@ -13,10 +14,24 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/category', async (req, res, next) => {
+  try {
+    const category = await Category.findAll()
+    res.json(category)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/category/:category', async (req, res, next) => {
   try {
-    const products = await Product.findByCategory(req.params.category)
-    res.json(products)
+    const category = await Category.findOne({
+      where: {
+        title: req.params.category
+      }
+    })
+    const categoryProducts = await category.getProductsByCat()
+    res.json(categoryProducts)
   } catch (err) {
     next(err)
   }
@@ -37,46 +52,28 @@ router.get('/:productId', async (req, res, next) => {
   }
 })
 
-
 router.get('/:productId/reviews', async (req, res, next) => {
-    try{
-        const productId = Number(req.params.productId)
-        const reviewsByProduct = await Reviews.findAll({
-            where: {
-                productId: productId
-            },
-            include: [{model: User}]
-        })
-        res.json(reviewsByProduct)
-    }catch (error){
-        next(error)
-    }
+  try {
+    const productId = Number(req.params.productId)
+    const reviewsByProduct = await Reviews.findAll({
+      where: {
+        productId: productId
+      },
+      include: [{model: User}]
+    })
+    res.json(reviewsByProduct)
+  } catch (error) {
+    next(error)
+  }
 })
 
-
-router.get('/:category', async (req, res, next) => {
-    try {
-      const category = await Product.findAll({
-        where: {category: req.params.category}
-      })
-      if (!category) {
-        res.status(404).send('Not Found')
-      } else {
-        res.json(category)
-      }
-    } catch (err) {
-      next(err)
-    }
-   })
-
-router.post('/', async (req, res, next)=> {
-    try {
-        const newProduct = await Product.create(req.body)
-        res.json(newProduct)
-    } catch (error){
-        next(error)
-    }
-
+router.post('/', async (req, res, next) => {
+  try {
+    const newProduct = await Product.create(req.body)
+    res.json(newProduct)
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.put('/:productId', async (req, res, next) => {

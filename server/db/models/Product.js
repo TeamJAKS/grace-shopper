@@ -27,23 +27,7 @@ const Product = db.define('product', {
     validate: {
       notEmpty: true
     }
-  },
-  category: {
-    type: Sequelize.STRING,
-    validate: {
-      notEmpty: true
-    }
   }
 })
-
-Product.findByCategory = function(category) {
-  return Product.findAll({
-    where: {
-      category: {
-        [Sequelize.Op.eq]: category
-      }
-    }
-  })
-}
 
 module.exports = Product
