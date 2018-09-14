@@ -3,7 +3,7 @@ const {Product, User, Order} = require('../db/models')
 
 module.exports = router;
 
-router.get('/', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
         const userCart = await Order.findOrCreate({
             where:{

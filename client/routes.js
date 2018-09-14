@@ -51,6 +51,7 @@ class Routes extends Component {
           path="/product/:productId/update"
           component={UpdateProductForm}
         />
+        <Route exact path="/cart" component={Cart} />
         <Route path="*search" component = {SearchView} />
         {isLoggedIn && (
           <Switch>
@@ -60,7 +61,6 @@ class Routes extends Component {
         )}
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
-        <Route exact path="/cart" component={Cart} />
       </Switch>
     )
   }

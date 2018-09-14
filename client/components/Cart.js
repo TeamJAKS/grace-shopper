@@ -49,7 +49,8 @@ const findTotalPrices = (accumulator, currentValue) => accumulator + currentValu
 
 class Cart extends Component {
     componentDidMount(){
-        
+        //do a thunk that is for getCart
+        //
     }
     render(){
         return (
@@ -88,3 +89,5 @@ class Cart extends Component {
 // })
 
 // export default connect(mapStateToProps, mapDispatchToProps) (withStyles(styles)(Cart));
+
+export default Cart;
