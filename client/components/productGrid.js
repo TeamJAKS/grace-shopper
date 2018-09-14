@@ -5,7 +5,6 @@ import {styles} from './all-products'
 
 const ProductGrid = props => {
   const product = props.product
-  console.log(product)
   return (
     <div className={styles.gridList}>
       <GridListTile key={product.title}>
