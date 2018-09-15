@@ -23,38 +23,50 @@ const styles = theme => ({
     },
   });
 
-//CUT BELOW DUMMY DATA
-const fakeCartItem = {
-    title: 'Cook a Duck', 
-    price: 30.50,
-    imageUrl: 'D'
-}
+// //CUT BELOW DUMMY DATA
+// const fakeCartItem = {
+//     title: 'Cook a Duck', 
+//     price: 30.50,
+//     imageUrl: 'D'
+// }
 
-const fakeCartItem2 = {
-    title: 'Cook a Big Duck', 
-    price: 45.50,
-    imageUrl: 'D'
-}
+// const fakeCartItem2 = {
+//     title: 'Cook a Big Duck', 
+//     price: 45.50,
+//     imageUrl: 'D'
+// }
 
-const fakeCartItem3 = {
-    title: 'Cook a Little Duck', 
-    price: 50.50,
-    imageUrl: 'D'
-}
+// const fakeCartItem3 = {
+//     title: 'Cook a Little Duck', 
+//     price: 50.50,
+//     imageUrl: 'D'
+// }
 
-const fakeItems = [fakeCartItem, fakeCartItem2, fakeCartItem3]
-const fakeItemsPrices = [fakeCartItem.price, fakeCartItem2.price, fakeCartItem3.price]
+// const fakeItems = [fakeCartItem, fakeCartItem2, fakeCartItem3]
+// const fakeItemsPrices = [fakeCartItem.price, fakeCartItem2.price, fakeCartItem3.price]
 
-///CUT ABOVE DUMMY DATA
-const findTotalPrices = (accumulator, currentValue) => accumulator + currentValue;
+// ///CUT ABOVE DUMMY DATA
+// const findTotalPrices = (accumulator, currentValue) => accumulator + currentValue;
+
+//issue is, even though we're mapping the userId to props, it isn't getting into the
+//componentDidMount in time
+const userId = 1
 
 class Cart extends Component {
-    componentDidMount(){
-        this.props.getCartOrders(this.props.userId)
+
+    // componentDidMount(){
+    //     console.log('this.props', this.props)
+    //     if(this.props.userId) {
+    //     this.props.getCartOrders(this.props.userId)
+    //     }
+    // }
+       componentDidMount(){
+        console.log('this.props', this.props)
+        this.props.getCartOrders(userId)
     }
     render(){
-        console.log('here is the state in the Cart.js Component', this.props)
-        const {cartItems} = this.props.cartItems
+        console.log('here is the state in the Cart.js Component', this.props.cartItems)
+        const cartItems = this.props.cartItems
         return (
             <div>
                 <h1>Your Shopping Cart</h1>
@@ -80,7 +92,6 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('here is the state in the carts map statto props', state)
     return {
       cartItems: state.cart.cartItems,
       userId: state.user.id

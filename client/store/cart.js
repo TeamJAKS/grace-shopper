@@ -6,7 +6,6 @@ const REMOVED_FROM_CART = 'REMOVED_FROM_CART'
 
 
 export function filledCart(cart) {
-    console.log('here are the products in the reducer', cart)
     return {
         type: FILLED_CART, 
         cart: cart.products, 

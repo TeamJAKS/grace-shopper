@@ -4,15 +4,16 @@ const {Product, User, Order} = require('../db/models')
 module.exports = router;
 
 router.post('/', async (req, res, next) => {
+    const userId = Number(Object.keys(req.body)[0])
     try {
         const userCart = await Order.findOrCreate({
             where:{
-                userId: req.body.userId,
+                userId: userId,
                 order_status: 'In Cart'
             },
             include: [{model: Product}]
         })
-        res.json(userCart)
+        res.json(userCart[0])
     }catch(err){
         next(err)
     }
