@@ -11,6 +11,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import {addItemToCart} from '../store'
 //potential material ui component - card, complex
 //suggestion to look at gist for themes
 
@@ -23,9 +24,22 @@ const styles = {
   }
 }
 
+//ISSUE - state not staying stable. don't have access to orderId here for some reason
+
+const orderId = 1
+
 class SingleProduct extends Component {
+  constructor () {
+    super() 
+    this.handleClick = this.handleClick.bind(this)
+  }
   componentDidMount() {
     this.props.getSingleProduct(Number(this.props.id))
+  }
+
+  handleClick () {
+    const reqBodyObj = {orderId: orderId, productId: Number(this.props.singleProduct.id)}
+    return this.props.addItemToCart(reqBodyObj)
   }
   render() {
     const {classes} = this.props
@@ -54,8 +68,8 @@ class SingleProduct extends Component {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
-            Share
+          <Button size="small" color="primary" onClick = {this.handleClick} >
+            Add to Cart
           </Button>
           <Button size="small" color="primary">
             Learn More
@@ -71,14 +85,17 @@ SingleProduct.propTypes = {
 }
 
 const mapStateToProps = state => {
+  console.log('state.cart', state.cart)
   return {
-    singleProduct: state.product.singleProduct
+    singleProduct: state.product.singleProduct,
+    orderId: state.cart.orderId
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSingleProduct: id => dispatch(getSingleProduct(id))
+    getSingleProduct: id => dispatch(getSingleProduct(id)),
+    addItemToCart: (orderid, productId) => dispatch(addItemToCart(orderid, productId))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(

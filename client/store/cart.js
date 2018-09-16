@@ -34,9 +34,9 @@ export function getCartOrders(userId) {
     }
 }
 
-export function addItemToCart(orderId, productId){
+export function addItemToCart(infoObj){
     return async dispatch => {
-        const {data} = await axios.put('/api/cart', orderId, productId)
+        const {data} = await axios.put('/api/cart', infoObj)
         dispatch(filledCart(data))
     }
 }

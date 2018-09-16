@@ -30,7 +30,8 @@ router.put('/' , async (req, res, next) => {
             },
             include: [{model: Product}]
         })
-        res.json(updatedOrder)
+        console.log(updatedOrder)
+        res.json(updatedOrder[0])
     }catch(err){
         next(err)
     }
