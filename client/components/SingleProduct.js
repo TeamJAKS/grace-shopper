@@ -12,6 +12,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {addItemToCart} from '../store'
+import ErrorNoProduct from './Error_NoProduct';
 //potential material ui component - card, complex
 //suggestion to look at gist for themes
 
@@ -43,39 +44,43 @@ class SingleProduct extends Component {
   render() {
     const {classes} = this.props
     const product = this.props.singleProduct
-    if (!product) {
-      return <h1>Hello World</h1>
+    console.log('ERROR', this.props.error)
+    if (this.props.error) {
+      return (
+        <ErrorNoProduct />
+      )
+    } else {
+      return (
+        <Card className={classes.card}>
+          <div>
+            <Link to={`${product.id}/update`}>Update Product</Link>
+          </div>
+          <CardActionArea>
+            <CardMedia
+              className={classes.media}
+              image={product.imageUrl}
+              title={product.title}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="headline" component="h2">
+                {product.title}
+              </Typography>
+              <Typography component="p">{product.description}</Typography>
+              <Typography component="p">{product.price}</Typography>
+              <Typography component="p">{product.quantity}</Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Button size="small" color="primary" onClick = {this.handleClick}>
+              Add to Cart
+            </Button>
+            <Button size="small" color="primary">
+              Learn More
+            </Button>
+          </CardActions>
+        </Card>
+      )
     }
-    return (
-      <Card className={classes.card}>
-        <div>
-          <Link to={`${product.id}/update`}>Update Product</Link>
-        </div>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image={product.imageUrl}
-            title={product.title}
-          />
-          <CardContent>
-            <Typography gutterBottom variant="headline" component="h2">
-              {product.title}
-            </Typography>
-            <Typography component="p">{product.description}</Typography>
-            <Typography component="p">{product.price}</Typography>
-            <Typography component="p">{product.quantity}</Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary" onClick = {this.handleClick} >
-            Add to Cart
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-        </CardActions>
-      </Card>
-    )
   }
 }
 
@@ -86,7 +91,8 @@ SingleProduct.propTypes = {
 const mapStateToProps = state => {
   return {
     singleProduct: state.product.singleProduct,
-    orderId: state.cart.orderId
+    orderId: state.cart.orderId,
+    error: state.product.error
   }
 }
 

@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router'
 import {withRouter} from 'react-router-dom'
 import {updateOldProduct} from '../store/product'
+import {getSingleProduct} from '../store/product'
 import PropTypes from 'prop-types'
 import {withStyles} from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
@@ -26,20 +28,23 @@ class UpdateProductForm extends React.Component {
       title: '',
       price: 0,
       quantity: 0,
-      category: ''
+      category: '',
+      id: Number(this.props.match.params.productId),
+      isSubmit: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value})
   }
 
   handleSubmit(event) {
     event.preventDefault()
-    const {title, price, quantity, category} = this.state
-    this.props.update({title, price, quantity, category})
-    alert('An updated product was submitted: ')
+    if (this.props.update(this.state)) {
+      this.props.history.push(`/product/${this.state.id}`)
+    }
   }
 
   render() {
@@ -89,7 +94,7 @@ class UpdateProductForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.products
+    singleProduct: state.product.singleProduct
   }
 }
 

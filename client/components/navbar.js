@@ -9,8 +9,8 @@ const defaultState = {
 }
 
 class Navbar extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = defaultState
     this.handleChange = this.handleChange.bind(this)
   }
