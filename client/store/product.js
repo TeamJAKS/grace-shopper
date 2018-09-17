@@ -95,10 +95,11 @@ export const addNewProduct = product => {
 }
 
 export const updateOldProduct = product => {
+  console.log('PRODUCT', product)
   return async dispatch => {
     const {data: productUpdate} = await axios.put(
-      `/api/product/${product.id}`,
-      product
+      `/api/product/${product.product.id}`,
+      product.product
     )
     dispatch(updateProduct(productUpdate))
   }
@@ -113,7 +114,6 @@ const initialState = {
   product: {},
   productUpdate: {}
 }
-
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -141,13 +141,13 @@ const productReducer = (state = initialState, action) => {
     case UPDATED_PRODUCT:
       return {
         ...state,
+        singleProduct: action.productUpdate,
+        products: state.products.map(product => {
+          if (product.id === action.productUpdate.id)
+            return action.productUpdate
+          else return product
+        }),
         error: null,
-        products: state.product.map(product => {
-          if (product.id === action.product.id) return action.productUpdate
-          else {
-            return product
-          }
-        })
       }
       case ERROR_RETURNED:
       return {
