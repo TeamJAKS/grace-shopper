@@ -12,7 +12,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {addItemToCart} from '../store'
-import ErrorNoProduct from './Error_NoProduct';
+import ErrorNoProduct from './Error_NoProduct'
 //potential material ui component - card, complex
 //suggestion to look at gist for themes
 
@@ -27,38 +27,41 @@ const styles = {
 
 //ISSUE - state not staying stable. don't have access to orderId here for some reason
 
-
 class SingleProduct extends Component {
-  constructor () {
-    super() 
+  constructor() {
+    super()
     this.handleClick = this.handleClick.bind(this)
   }
   componentDidMount() {
     this.props.getSingleProduct(Number(this.props.id))
   }
 
-  handleClick () {
-    const reqBodyObj = {orderId: this.props.orderId, productId: Number(this.props.singleProduct.id)}
+  handleClick() {
+    const reqBodyObj = {
+      orderId: this.props.orderId,
+      productId: Number(this.props.singleProduct.id)
+    }
     return this.props.addItemToCart(reqBodyObj)
   }
   render() {
     const {classes} = this.props
     const product = this.props.singleProduct
     console.log('ERROR', this.props.error)
+    let adminStatus = this.props.user.adminStatus
+    let link
+    if (adminStatus) {
+      link = <Link to={`${product.id}/update`}>Update Product</Link>
+    }
     if (this.props.error) {
-      return (
-        <ErrorNoProduct />
-      )
+      return <ErrorNoProduct />
     } else {
       return (
         <Card className={classes.card}>
-          <div>
-            <Link to={`${product.id}/update`}>Update Product</Link>
-          </div>
+          <div>{link}</div>
           <CardActionArea>
             <CardMedia
               className={classes.media}
-              image={product.imageUrl}
+              image={`/${product.imgUrl}`}
               title={product.title}
             />
             <CardContent>
@@ -71,7 +74,7 @@ class SingleProduct extends Component {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary" onClick = {this.handleClick}>
+            <Button size="small" color="primary" onClick={this.handleClick}>
               Add to Cart
             </Button>
             <Button size="small" color="primary">
@@ -92,14 +95,16 @@ const mapStateToProps = state => {
   return {
     singleProduct: state.product.singleProduct,
     orderId: state.cart.orderId,
-    error: state.product.error
+    error: state.product.error,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: id => dispatch(getSingleProduct(id)),
-    addItemToCart: (orderid, productId) => dispatch(addItemToCart(orderid, productId))
+    addItemToCart: (orderid, productId) =>
+      dispatch(addItemToCart(orderid, productId))
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(
