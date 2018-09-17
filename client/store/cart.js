@@ -81,7 +81,11 @@ const cartReducer = (state = initialState, action) => {
           return {...state, cartItems: state.cartItems.filter(id => id !== action.productId)}
 
       case ADD_TO_CART_NLI: 
+            if(cartItems && cartItems.length) {
             return {...state, cartItems: [...state.cartItems, action.product]}
+            } else {
+                return {...state, cartItems: [action.product]}
+            }
         case FILL_CART_NLI:
             return {...state, cartItems: action.cart}
       default:
