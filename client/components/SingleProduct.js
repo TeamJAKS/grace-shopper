@@ -11,13 +11,8 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-<<<<<<< HEAD
-import {addItemToCart} from '../store'
-import ErrorNoProduct from './error_NoProduct';
-=======
 import {addItemToCart, addToCartNLI, setCartState} from '../store'
 import ErrorNoProduct from './Error_NoProduct';
->>>>>>> dev
 //potential material ui component - card, complex
 //suggestion to look at gist for themes
 
