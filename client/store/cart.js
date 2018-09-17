@@ -3,6 +3,8 @@ import axios from 'axios';
 
 const FILLED_CART = 'FILLED_CART'
 const REMOVED_FROM_CART = 'REMOVED_FROM_CART'
+const ADD_TO_CART_NLI = "ADD_TO_CART_NLI"
+const FILL_CART_NLI = 'FILL_CART_NLI'
 
 
 export function filledCart(cart) {
@@ -14,6 +16,17 @@ export function filledCart(cart) {
   }
 export function removedFromCart(productId) {
     return {type: REMOVED_FROM_CART, productId}
+  }
+
+  export function addToCartNLI (product) {
+      return {type: ADD_TO_CART_NLI, product}
+  }
+
+  export function fillCartNLI (cart) {
+      return {
+          type: FILL_CART_NLI,
+          cart
+      }
   }
 
 
@@ -41,6 +54,13 @@ export function addItemToCart(infoObj){
     }
 }
 
+export function setCartState() {
+    const curCart = JSON.parse(window.localStorage.getItem("cart"))
+    return dispatch => {
+        dispatch(fillCartNLI(curCart))
+    }
+}
+
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -53,6 +73,12 @@ const cartReducer = (state = initialState, action) => {
             
       case REMOVED_FROM_CART:
           return {...state, cartItems: state.cartItems.filter(id => id !== action.productId)}
+
+      case ADD_TO_CART_NLI: 
+            console.log('CART before action', state.cartItems)
+            return {...state, cartItems: [...state.cartItems, action.product]}
+        case FILL_CART_NLI:
+            return {...state, cartItems: action.cart}
       default:
         return state
     }
