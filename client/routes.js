@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch, Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {fetchProducts} from './store/product'
+import {fetchProducts, me, getCartOrders} from './store'
 import {
   Login,
   Signup,
@@ -12,17 +12,20 @@ import {
   SingleProductFullView,
   AddProductForm,
   UpdateProductForm,
-  SearchView
+  SearchView,
+  Cart
 } from './components'
-
-import {me} from './store'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
-    this.props.loadInitialData()
+
+   async componentDidMount() {
+    await this.props.loadInitialData()
+    console.log('this.props.userId in cdm', this.props.userId)
+    this.props.getCartOrders(this.props.userId)
+  
   }
 
   render() {
@@ -50,6 +53,7 @@ class Routes extends Component {
           path="/product/:productId/update"
           component={UpdateProductForm}
         />
+        <Route path="/cart" component={Cart} />
         <Route path="*search" component = {SearchView} />
         {isLoggedIn && (
           <Switch>
@@ -68,21 +72,26 @@ class Routes extends Component {
  * CONTAINER
  */
 const mapState = state => {
+  
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    loadInitialData() {
-      dispatch(me())
-      dispatch(fetchProducts())
-    }
+   async loadInitialData() {
+      await dispatch(me())
+      await dispatch(fetchProducts())
+      //await dispatch(getCartOrders(userId))
+    },
+    getCartOrders: userId => dispatch(getCartOrders(userId))
   }
 }
+
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
