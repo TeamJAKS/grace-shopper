@@ -113,13 +113,11 @@ export const updateOldProduct = product => {
   }
 }
 
-export const addNewReview = product => {
+export const addNewReview = (product, productReview) => {
   return async dispatch => {
-    const {data: productReview} = await axios.post(
-      `/api/product/${product.product.id}/review`,
-      product.product
-    )
-    dispatch(addedReview(productReview))
+    const response = await axios.post(`/api/product/${product.id}}`, productReview)
+    const data = response.data
+    dispatch(addedReview(data))
   }
 }
 
@@ -127,12 +125,13 @@ const initialState = {
   products: [],
   singleProduct: {},
   reviews: [],
-  singleReview: {},
-  error: null,
-  loading: null,
+  productReview: {},
   product: {},
   productUpdate: {},
-  productReview: {}
+  error: null,
+  loading: null,
+  
+  
 }
 
 const productReducer = (state = initialState, action) => {
@@ -161,13 +160,8 @@ const productReducer = (state = initialState, action) => {
     case ADDED_REVIEW:
       return {
         ...state,
-        singleReview: action.productReview,
-        reviews: state.reviews.map(review => {
-          if (review.id === action.productReview.id)
-            return action.productReview
-          else return review
-        }),
         error: null,
+        reviews: [...state.reviews, action.productReview]
       }
       case UPDATED_PRODUCT:
       return {

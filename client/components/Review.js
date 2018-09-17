@@ -16,21 +16,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
   },
 });
-// const fakeReviews = [
-//     {
-//         title: 'Great Product',
-//         text: 'I love this so much',
-//         stars: 4,
-//         user: 'Stacy & Keyairra'
-//     },
 
-//     {
-//         title: 'Decent Product',
-//         text: 'I thought this was okay',
-//         stars: 3,
-//         user: 'Keyairra & Stacy'
-//     }
-// ]
 
 class Review extends Component {
     componentDidMount () {

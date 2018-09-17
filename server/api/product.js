@@ -66,11 +66,21 @@ router.get('/:productId/reviews', async (req, res, next) => {
   }
 })
 
+
 router.post('/', async (req, res, next) => {
   try {
     const newProduct = await Product.create(req.body)
     res.json(newProduct)
   } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/:productId', async (req, res, next)=> {
+  try{
+    const newReview = await Product.create(req.body)
+    res.json(newReview)
+  }catch (error){
     next(error)
   }
 })
