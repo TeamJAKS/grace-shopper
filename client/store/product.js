@@ -11,6 +11,7 @@ const UPDATED_PRODUCT = 'UPDATED_PRODUCT'
 const GOT_REVIEWS = 'GOT_REVIEWS'
 const ERROR_RETURNED = 'ERROR_RETURNED'
 const ADDED_REVIEW ='ADDED_REVIEW'
+const GOT_ALL_CATEGORIES = 'GOT_ALL_CATEGORIES'
 
 //action creators
 
@@ -58,13 +59,19 @@ const addedReview = productReview =>{
     productReview
   }
 }
+const gotAllCategories = categories => {
+  return {
+    type: GOT_ALL_CATEGORIES,
+    categories
+  }
+}
 
 //thunks
 export const getSingleProduct = id => {
   return async dispatch => {
     const {data} = await axios.get(`/api/product/${id}`)
-    if(data.length) {
-    dispatch(gotSingleProduct(data[0]))
+    if (data.length) {
+      dispatch(gotSingleProduct(data[0]))
     } else {
       dispatch(errorOccured())
     }
@@ -103,7 +110,6 @@ export const addNewProduct = product => {
 }
 
 export const updateOldProduct = product => {
-  console.log('PRODUCT', product)
   return async dispatch => {
     const {data: productUpdate} = await axios.put(
       `/api/product/${product.product.id}`,
@@ -121,6 +127,13 @@ export const addNewReview = (product, productReview) => {
   }
 }
 
+export const getAllCategories = () => {
+  return async dispatch => {
+    const {data} = await axios.get('/api/product/category')
+    dispatch(gotAllCategories(data))
+  }
+}
+
 const initialState = {
   products: [],
   singleProduct: {},
@@ -130,8 +143,7 @@ const initialState = {
   productUpdate: {},
   error: null,
   loading: null,
-  
-  
+  categories: []
 }
 
 const productReducer = (state = initialState, action) => {
@@ -155,6 +167,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
+        loading: true,
         products: [...state.products, action.product]
       }
     case ADDED_REVIEW:
@@ -173,10 +186,17 @@ const productReducer = (state = initialState, action) => {
           else return product
         }),
         error: null,
+        loading: true
       }
-      case ERROR_RETURNED:
+    case ERROR_RETURNED:
       return {
-        ...state, error: action.error
+        ...state,
+        error: action.error
+      }
+    case GOT_ALL_CATEGORIES:
+      return {
+        ...state,
+        categories: action.categories
       }
     default:
       return state

@@ -9,6 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
 import {InputAdornment} from '@material-ui/core'
+import ErrorNoProduct from './Error_NoProduct'
 
 const styles = theme => ({
   container: {
@@ -45,57 +46,64 @@ class AddProductForm extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <FormControl className="name">
-            <InputLabel htmlFor="title">Title</InputLabel>
-            <Input
-              id="title"
-              name="title"
-              value={this.state.title}
-              onChange={this.handleChange}
-            />
-          </FormControl>
-          <FormControl className="name">
-            <InputLabel htmlFor="title">Price</InputLabel>
-            <Input
-              id="adornment-amount"
-              name="price"
-              value={this.state.price}
-              onChange={this.handleChange}
-              startAdornment={
-                <InputAdornment position="start">$</InputAdornment>
-              }
-            />
-          </FormControl>
-          <FormControl className="name">
-            <InputLabel htmlFor="title">Quantity</InputLabel>
-            <Input
-              id="quantity"
-              name="quantity"
-              value={this.state.quantity}
-              onChange={this.handleChange}
-            />
-          </FormControl>
-          <FormControl className="name">
-            <InputLabel htmlFor="title">Category</InputLabel>
-            <Input
-              name="category"
-              value={this.state.category}
-              onChange={this.handleChange}
-            />
-          </FormControl>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    )
+    let adminStatus = this.props.user.adminStatus
+    if (this.props.loading || !adminStatus) {
+      return <ErrorNoProduct />
+    } else {
+      return (
+        <div>
+          <form onSubmit={this.handleSubmit}>
+            <FormControl className="name">
+              <InputLabel htmlFor="title">Title</InputLabel>
+              <Input
+                id="title"
+                name="title"
+                value={this.state.title}
+                onChange={this.handleChange}
+              />
+            </FormControl>
+            <FormControl className="name">
+              <InputLabel htmlFor="title">Price</InputLabel>
+              <Input
+                id="adornment-amount"
+                name="price"
+                value={this.state.price}
+                onChange={this.handleChange}
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
+              />
+            </FormControl>
+            <FormControl className="name">
+              <InputLabel htmlFor="title">Quantity</InputLabel>
+              <Input
+                id="quantity"
+                name="quantity"
+                value={this.state.quantity}
+                onChange={this.handleChange}
+              />
+            </FormControl>
+            <FormControl className="name">
+              <InputLabel htmlFor="title">Category</InputLabel>
+              <Input
+                name="category"
+                value={this.state.category}
+                onChange={this.handleChange}
+              />
+            </FormControl>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      )
+    }
   }
 }
 
 const mapStateToProps = state => {
   return {
-    products: state.product.products
+    products: state.product.products,
+    user: state.user,
+    loading: state.loading
   }
 }
 

@@ -1,54 +1,42 @@
-/* 
+/*
 Idea:
 Cart should be persistent on main pages users/visitors will browse products (ie. SingleProductFullView
     SingleProduct, AllProducts)
 When cart is closed (if not persistent), then we should redirect to the last page viewed by client
 */
 
-import React, {Component} from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
+import React, {Component} from 'react'
+import {withStyles} from '@material-ui/core/styles'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Avatar from '@material-ui/core/Avatar'
 import {connect} from 'react-redux'
 import {getCartOrders} from '../store'
 
-
 const styles = theme => ({
-    root: {
-      width: '100%',
-      maxWidth: 360,
-      backgroundColor: theme.palette.background.paper,
-    },
-  });
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper
+  }
+})
 
 //const userId = 1
 
 class Cart extends Component {
-
-    //DOLI - the coded out below is what doesn't work. the live 
-    //componentDidMount I just built for testing. 
-
-    // componentDidMount(){
-    //     console.log('this.props', this.props)
-    //     if(this.props.userId) {
-    //     this.props.getCartOrders(this.props.userId)
-    //     } else {
-    //         return null
-    //     }
-    // }
-    //    componentDidMount(){
-    //     console.log('this.props', this.props)
-    //     this.props.getCartOrders(userId)
-    // }
     render(){
-        const cartItems = this.props.cartItems
-        const userId = this.props.userId
+        let cartItems
+        if(this.props.userId) {
+        cartItems = this.props.cartItems
+        }
+        else {
+        cartItems = JSON.parse(localStorage.getItem("cart"))
+        }
         return (
             <div>
                 <h1>Your Shopping Cart</h1>
-                {cartItems.length ? <List>
+                {cartItems && cartItems.length ? <List>
                 {cartItems.map(product => {
                     return (
                         <ListItem key={product.id}>
@@ -70,17 +58,18 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.user.id)
-    return {
-      cartItems: state.cart.cartItems,
-      userId: state.user.id
-    }
+  return {
+    cartItems: state.cart.cartItems,
+    userId: state.user.id
+  }
 }
 
 const mapDispatchToProps = dispatch => {
-    return{
-        getCartOrders: userId => dispatch(getCartOrders(userId))
-    }
+  return {
+    getCartOrders: userId => dispatch(getCartOrders(userId))
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (withStyles(styles)(Cart));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(Cart)
+)

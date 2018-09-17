@@ -11,9 +11,15 @@ class AllProducts extends React.Component {
 
   render() {
     const products = this.props.products
+    let adminStatus = this.props.user.adminStatus
+    let link
+    if (adminStatus) {
+      link = <Link to="product/add/form">Add Product</Link>
+    }
     if (products) {
       return (
         <div>
+          <h2>{link}</h2>
           <DisplayManyProducts products={products} title="All Products" />
         </div>
       )
@@ -25,7 +31,8 @@ class AllProducts extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.products
+    products: state.product.products,
+    user: state.user
   }
 }
 
