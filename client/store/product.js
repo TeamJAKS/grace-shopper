@@ -55,8 +55,8 @@ const errorOccured = () => {
 export const getSingleProduct = id => {
   return async dispatch => {
     const {data} = await axios.get(`/api/product/${id}`)
-    if(data.length) {
-    dispatch(gotSingleProduct(data[0]))
+    if (data.length) {
+      dispatch(gotSingleProduct(data[0]))
     } else {
       dispatch(errorOccured())
     }
@@ -136,6 +136,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
+        loading: true,
         products: [...state.products, action.product]
       }
     case UPDATED_PRODUCT:
@@ -148,10 +149,12 @@ const productReducer = (state = initialState, action) => {
           else return product
         }),
         error: null,
+        loading: true
       }
-      case ERROR_RETURNED:
+    case ERROR_RETURNED:
       return {
-        ...state, error: action.error
+        ...state,
+        error: action.error
       }
     default:
       return state
