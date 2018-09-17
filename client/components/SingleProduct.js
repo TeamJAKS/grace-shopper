@@ -56,9 +56,7 @@ class SingleProduct extends Component {
     console.log('ERROR', this.props.error)
     console.log('CART ITEMS ON THIS PAGE', this.props.cartItems)
     if (this.props.error) {
-      return (
-        <ErrorNoProduct />
-      )
+      return <ErrorNoProduct />
     } else {
       return (
         <Card className={classes.card}>

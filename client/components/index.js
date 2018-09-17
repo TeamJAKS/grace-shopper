@@ -16,3 +16,6 @@ export {default as DisplayWithProducts} from './productCategory'
 export {default as SearchView} from './searchView'
 export {default as SingleCartProduct} from './SingleCartProduct'
 export {default as ErrorNoProduct} from './error_NoProduct'
+export {default as UserProfile} from './UserProfile'
+export {default as EditProfile} from './EditProfile'
+
