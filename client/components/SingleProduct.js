@@ -26,7 +26,6 @@ const styles = {
 
 //ISSUE - state not staying stable. don't have access to orderId here for some reason
 
-const orderId = 1
 
 class SingleProduct extends Component {
   constructor () {
@@ -38,7 +37,7 @@ class SingleProduct extends Component {
   }
 
   handleClick () {
-    const reqBodyObj = {orderId: orderId, productId: Number(this.props.singleProduct.id)}
+    const reqBodyObj = {orderId: this.props.orderId, productId: Number(this.props.singleProduct.id)}
     return this.props.addItemToCart(reqBodyObj)
   }
   render() {
@@ -85,7 +84,6 @@ SingleProduct.propTypes = {
 }
 
 const mapStateToProps = state => {
-  console.log('state.cart', state.cart)
   return {
     singleProduct: state.product.singleProduct,
     orderId: state.cart.orderId

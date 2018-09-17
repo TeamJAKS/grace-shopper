@@ -23,7 +23,7 @@ const styles = theme => ({
     },
   });
 
-const userId = 1
+//const userId = 1
 
 class Cart extends Component {
 
@@ -34,19 +34,21 @@ class Cart extends Component {
     //     console.log('this.props', this.props)
     //     if(this.props.userId) {
     //     this.props.getCartOrders(this.props.userId)
+    //     } else {
+    //         return null
     //     }
     // }
-       componentDidMount(){
-        console.log('this.props', this.props)
-        this.props.getCartOrders(userId)
-    }
+    //    componentDidMount(){
+    //     console.log('this.props', this.props)
+    //     this.props.getCartOrders(userId)
+    // }
     render(){
-        console.log('here is the state in the Cart.js Component', this.props.cartItems)
         const cartItems = this.props.cartItems
+        const userId = this.props.userId
         return (
             <div>
                 <h1>Your Shopping Cart</h1>
-                {cartItems ? <List>
+                {cartItems.length ? <List>
                 {cartItems.map(product => {
                     return (
                         <ListItem key={product.id}>
@@ -68,6 +70,7 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
+    console.log(state.user.id)
     return {
       cartItems: state.cart.cartItems,
       userId: state.user.id
