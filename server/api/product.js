@@ -2,7 +2,6 @@ const router = require('express').Router()
 
 const {Product, Reviews, User, Category} = require('../db/models')
 
-
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -85,10 +84,7 @@ router.put('/:productId', async (req, res, next) => {
       returning: true,
       plain: true
     })
-    res
-      .sendStatus(204)
-      .json(updatedProduct[1])
-      .end()
+    res.status(204).json(updatedProduct[1])
   } catch (error) {
     next(error)
   }

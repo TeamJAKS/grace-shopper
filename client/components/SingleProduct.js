@@ -11,7 +11,8 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import ErrorNoProduct from './Error_NoProduct'
+import {addItemToCart, addToCartNLI, setCartState} from '../store'
+import ErrorNoProduct from './Error_NoProduct';
 //potential material ui component - card, complex
 //suggestion to look at gist for themes
 
@@ -24,14 +25,36 @@ const styles = {
   }
 }
 
+//ISSUE - state not staying stable. don't have access to orderId here for some reason
+
+
 class SingleProduct extends Component {
+  constructor () {
+    super() 
+    this.handleClick = this.handleClick.bind(this)
+  }
   componentDidMount() {
     this.props.getSingleProduct(Number(this.props.id))
+  }
+
+  async handleClick () {
+    const reqBodyObj = {orderId: this.props.orderId, productId: Number(this.props.singleProduct.id)}
+    if(this.props.orderId) {
+    return this.props.addItemToCart(reqBodyObj)
+    } else {
+      await this.props.setCartState();
+      await this.props.addToCartNLI(this.props.singleProduct)
+      window.localStorage.setItem("cart", JSON.stringify(this.props.cartItems))
+    }
+    //use an action creator to add the item to the cartItems array
+    //window.localStorage.setItem("cart", this.props.cart.cartItems)
+    //to ultimately access this to display a customer's cart, i'm looping over localStorage.getItem("cart")
   }
   render() {
     const {classes} = this.props
     const product = this.props.singleProduct
     console.log('ERROR', this.props.error)
+    console.log('CART ITEMS ON THIS PAGE', this.props.cartItems)
     if (this.props.error) {
       return <ErrorNoProduct />
     } else {
@@ -56,8 +79,8 @@ class SingleProduct extends Component {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary">
-              Share
+            <Button size="small" color="primary" onClick = {this.handleClick}>
+              Add to Cart
             </Button>
             <Button size="small" color="primary">
               Learn More
@@ -76,13 +99,18 @@ SingleProduct.propTypes = {
 const mapStateToProps = state => {
   return {
     singleProduct: state.product.singleProduct,
-    error: state.product.error
+    orderId: state.cart.orderId,
+    error: state.product.error,
+    cartItems: state.cart.cartItems
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getSingleProduct: id => dispatch(getSingleProduct(id))
+    getSingleProduct: id => dispatch(getSingleProduct(id)),
+    addItemToCart: (orderid, productId) => dispatch(addItemToCart(orderid, productId)),
+    addToCartNLI: (product) => dispatch(addToCartNLI(product)),
+    setCartState: () => dispatch (setCartState())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(
