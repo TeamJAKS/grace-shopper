@@ -23,8 +23,9 @@ class Routes extends Component {
 
    async componentDidMount() {
     await this.props.loadInitialData()
-    console.log('this.props.userId in cdm', this.props.userId)
+    if(this.props.userId) {
     this.props.getCartOrders(this.props.userId)
+    }
   
   }
 
