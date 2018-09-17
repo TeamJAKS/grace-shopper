@@ -44,26 +44,194 @@ const products = [
   {
     title: 'Cook a Duck',
     price: 45.5,
-    imageUrl: 'n/a',
+    imageUrl: 'http://www.mapleleaffarms.com/lib/sitefiles/Image/WholeDuck_v1%20copy.jpg',
     description:
       'Learn how to cook a duck in the french style.  Impress your friends and neighbors.  Even the neighbors who are not your friends.',
     quantity: 6
   },
   {
+    title: 'Addictive Seaseme Chicken',
+    price: 35.00,
+    imageUrl: 'https://images.media-allrecipes.com/images/74208.jpg?width=420&height=237',
+    description: 'This chicken is incredible. It is so tender, that you\'re partner will eat double the amount and break his gym diet goals!' ,
+    quantity: 10,
+  },
+  {
+    title: 'General Tao Chicken',
+    price: 45.00,
+    imageUrl: 'https://images.media-allrecipes.com/userphotos/250x250/332998.jpg',
+    description: 'You may not be in the military, but this recipe\'s general\'s oyster sauce will command your dinner plate for the night!',
+    quantity: 10,
+  },
+  {
+    title: 'Pan-Fried Chinese Pancakes',
+    price: 30.00,
+    imageUrl: 'https://images.media-allrecipes.com/userphotos/250x250/401958.jpg',
+    description: 'A savory dough is sprinkled with green onions and seasame oil. Even Grace Hopper instructors can\'t resist this recipe!',
+    quantity: 10,
+  },
+  {
+    title: 'Slow Cooker Chicken Mole',
+    price: 35.00,
+    imageUrl: 'https://dish-environment-prod-contentbucket-10u8bszryovz3.s3.amazonaws.com/assets/s3fs-public/styles/content_image_x_large/public/Slow-Cooker-Chicken-Mole-Photo-by-mauigirl.jpg?itok=3EE0vw3O',
+    description: 'Shred the chicken so it will soak up all the yummy mole! Your friends will think you\'re a better chef with this recipe!',
+    quantity: 10,
+  },
+  {
+    title: 'Chicken Tortilla Soup' ,
+    price: 40.00,
+    imageUrl: 'https://dish-environment-prod-contentbucket-10u8bszryovz3.s3.amazonaws.com/assets/s3fs-public/styles/content_image_x_large/public/861446_Chicken-Tortilla-Soup-I_Photo-by-bvwdesign-1.jpg?itok=nyNarP_e',
+    description: 'This soups is quick to make, flavorful, and filling - a great meal for computer programmers on the go!',
+    quantity: 10,
+  },
+  {
+    title: 'Enchiladas Suizas',
+    price: 32.75,
+    imageUrl: 'https://dish-environment-prod-contentbucket-10u8bszryovz3.s3.amazonaws.com/assets/s3fs-public/styles/content_image_x_large/public/1006044_-Enchiladas-Suizas-Photo-by-naples34102.jpg?itok=2j_3hQ1V',
+    description: 'Following this recipe will be great for data night! Just don\'t spill any of the cheese on your pants. No one likes cheese pants.',
+    quantity: 10,
+  },
+  {
+    title: 'Southern Shrimp and Grits',
+    price: 37.95,
+    imageUrl: 'https://www.tasteofhome.com/wp-content/uploads/2018/01/Southern-Shrimp-and-Grits_EXPS_THN18_140896_C06_06_7b.jpg',
+    description: 'A southern specialty, sometimes called breakfast shrimp. This dish tastes better than passing the senior checkpoint!' ,
+    quantity: 10,
+  },
+  {
+    title: 'Chicken Okra Gumbo',
+    price: 42.55,
+    imageUrl: 'https://www.tasteofhome.com/wp-content/uploads/2017/10/Chicken-and-Okra-Gumbo_exps3201_AC2930252C01_15_1bC_RMS-2.jpg',
+    description: 'This recipe\'s creator used to live in New Orleans. But your taste buds won\'t ever know about the move. Get this recipe today!' ,
+    quantity: 10,
+  },
+  {
+    title: 'Jalapeno Buttermilk Cornbread',
+    price: 25.99,
+    imageUrl: 'https://www.tasteofhome.com/wp-content/uploads/2018/02/Jalapeno-Buttermilk-Corn-Bread_exps174128_TH143190D10_03_3bC_RMS-1.jpg' ,
+    description: 'If you are from the South, then you probably have a good cornbread recipe. For everyone else, we\'ve got you covered!',
+    quantity: 10,
+  },
+  {
     title: 'React Expertise',
     price: 500,
-    imageUrl: 'n/a',
+    imageUrl: 'https://cdn-images-1.medium.com/max/900/1*EntHChgUyirgbZ9A3zTxkA.png',
     description: 'Instantly become an expert at React.  Redux costs extra',
     quantity: 1
   },
   {
+    title: 'Language',
+    price: 25.00,
+    imageUrl: 'http://2.bp.blogspot.com/-Zfhy1HF5mDM/UxjpmSooXZI/AAAAAAAAABM/4-saxfmqVTA/s1600/languages.png',
+    description: 'It may seem obvious, but in order to write code, you’ll have to learn at least one programming or scripting language. ',
+    quantity: 10,
+  },
+  {
+    title: 'Self-Reliance',
+    price: 25.00,
+    imageUrl: 'https://dariusforoux.com/wp-content/uploads/2016/10/1vNhGejxFAf6tPEdOqtOJ1Q-1024x768.png',
+    description: 'This one is huge. When you start out coding, it can feel completely overwhelming. Should you focus on front end or back end? What programming languages should you use? Get a dose of self-reliance, and you will be able to answer these questions.',
+    quantity: 10,
+  },
+  {
+    title: 'Logic',
+    price: 55.00,
+    imageUrl: 'https://romanroadsmedia.com/wp-content/uploads/2015/07/Logic-square-2017.jpg',
+    description: 'Love proofs? Live to assess the facts at hand and come to useful conclusions for problem solving? You may have a skeleton in one of the most important skills for coders.',
+    quantity: 10,
+  },
+  {
+    title: 'Attention to Detail',
+    price: 20.05,
+    imageUrl: 'http://stumingames.com/wp-content/uploads/2013/10/attention-to-detail.jpg',
+    description: 'Get up off that thang. Dance \'til you feel better! Did you notice that this was a song lyric? If not, get some attention to detail in order to improve your coding skills today! We believe in you.',
+    quantity: 10,
+  },
+  {
+    title: 'Recognition of Stupidity',
+    price: 19.95,
+    imageUrl: 'https://masterytechblog.files.wordpress.com/2014/12/attention-to-detail-503x277.png',
+    description: 'Computers are dumb, and ruthless. Their strength is their processing power, not independent or creative thought. Learn all about that with this discounted item!',
+    quantity: 10,
+  },
+  {
+    title: 'Abstract Thinking',
+    price: 35.75,
+    imageUrl: 'abstract-thinking.jpg',
+    description: 'Abstract thinking is thinking done without the object of the thought present, or even physical. It’s a foundation of coding.',
+    quantity: 10,
+  },
+  {
+    title: 'Patience',
+    price: 45.00,
+    imageUrl: 'http://smallbizclub.com/wp-content/uploads/2018/04/Patience-The-Missing-Key.jpg',
+    description: 'Patience. You need it. Trust us.',
+    quantity: 10,
+  },
+  {
+    title: 'Memory',
+    price: 40.00,
+    imageUrl: 'https://cdn.psychologytoday.com/sites/default/files/styles/article-inline-half/public/field_blog_entry_images/1369847707_4085_memory-1.jpg?itok=aZRKeJXR',
+    description: 'There are some many docs! Where will you look for your coding challenges? Put as much as you can into your own memory, and you will code along for miles!',
+    quantity: 10,
+  },
+  {
+    title: 'Communication',
+    price: 55.00,
+    imageUrl: 'https://thebraincraftcompany.com/wp-content/uploads/2016/01/people-sitting-and-debating.jpg',
+    description: 'Programmers need to be able to communicate well. Just try making a group project like grace-shopper without it!',
+    quantity: 10,
+  },
+  {
     title: 'Intermediate Piano',
     price: 75.0,
-    imageUrl: 'n/a',
+    imageUrl: 'http://musicbyross.com/w/wp-content/uploads/adam-williams.jpg',
     description:
       'Tired of playing Heart & Soul? Up your piano skills to include Fur Elise, Elvin Dance, and the Spinning Song',
-    quantity: `12`
-  }
+    quantity: 12
+  },
+  {
+    title: 'Beginner Piano',
+    price: 100.00,
+    imageUrl: 'http://sharonmusicacademy.com/wp-content/uploads/2016/02/piano.jpg',
+    description: 'If you do not know how to play the piano, no worries. Spend money on this item and be a pro of Mary Had a Little Lamb in no time!',
+    quantity: 10,
+  },
+  {
+    title: 'Guitar Lessons',
+    price: 95.00,
+    imageUrl: 'https://ak4.picdn.net/shutterstock/videos/14075474/thumb/1.jpg',
+    description: 'Jimi Hendrick said "Music doesn\'t lie. If there is something that needs to be changed in this world, then it can only happen through music."',
+    quantity: 10,
+  },
+  {
+    title: 'Saxophone Jazzy Times',
+    price: 85.99,
+    imageUrl: 'https://us.123rf.com/450wm/kurtvate/kurtvate1004/kurtvate100400099/6820711-a-young-asian-woman-sitting-in-the-studio-playing-the-saxophone-in-shorts-with-suspender-and-a-hat-o.jpg?ver=6',
+    description: 'The potential for the saxophone is unlimited. If you like an instrument that sings, play the saxophone.',
+    quantity: 10,
+  },
+  {
+    title: 'Toot Toot Flute Lessons',
+    price: 75.00,
+    imageUrl: 'http://nebula.wsimg.com/1d776a418bc7a2addcecefac2ead85fa?AccessKeyId=5AB4604EC743D5CC66DA&disposition=0&alloworigin=1',
+    description: 'The flute of the infinite is played without ceasing, and it\'s sound is love. ',
+    quantity: 10,
+  },
+  {
+    title: 'Singing Lessons',
+    price: 200.99,
+    imageUrl: 'http://www.londonmusicinstitute.co.uk/wp-content/uploads/2012/03/rock-singing-lessons-London.jpg',
+    description: 'The late Aretha Franklin beleived that politics were not her arena. Music was. Be like Aretha and learn to sing with this fine item!',
+    quantity: 10,
+  },
+  {
+    title: 'Violin Lessons',
+    price: 50.95,
+    imageUrl: 'https://www.sagemusic.co/wp-content/uploads/2012/09/Kids-Violin-Lesson-at-Sage-Music-School-11.jpg',
+    description: 'The soul is like a violin string: it makes music only when it is stretched.',
+    quantity: 10,
+  },
 ]
 const addresses = [
   {
@@ -108,8 +276,20 @@ const addresses = [
     zipCode: 55342,
     userId: 3
   },
-  {street: '45 Hannah Ave', city: 'Gruen', state: 'IL', zipCode: 21376},
-  {street: '1 Circle Drive', city: 'River Heights', state: 'IL', zipCode: 31201}
+
+  {
+    street: '45 Hannah Ave', 
+    city: 'Gruen', 
+    state: 'IL', 
+    zipCode: 21376
+  },
+
+  {
+    street: '1 Circle Drive', 
+    city: 'River Heights', 
+    state: 'IL', 
+    zipCode: 31201
+  }
 ]
 const reviews = [
   {
