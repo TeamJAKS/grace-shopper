@@ -27,28 +27,18 @@ const styles = theme => ({
 
 class Cart extends Component {
 
-    //DOLI - the coded out below is what doesn't work. the live 
-    //componentDidMount I just built for testing. 
-
-    // componentDidMount(){
-    //     console.log('this.props', this.props)
-    //     if(this.props.userId) {
-    //     this.props.getCartOrders(this.props.userId)
-    //     } else {
-    //         return null
-    //     }
-    // }
-    //    componentDidMount(){
-    //     console.log('this.props', this.props)
-    //     this.props.getCartOrders(userId)
-    // }
     render(){
-        const cartItems = this.props.cartItems
-        const userId = this.props.userId
+        let cartItems
+        if(this.props.userId) {
+        cartItems = this.props.cartItems
+        }
+        else {
+        cartItems = JSON.parse(localStorage.getItem("cart"))
+        }
         return (
             <div>
                 <h1>Your Shopping Cart</h1>
-                {cartItems.length ? <List>
+                {cartItems && cartItems.length ? <List>
                 {cartItems.map(product => {
                     return (
                         <ListItem key={product.id}>

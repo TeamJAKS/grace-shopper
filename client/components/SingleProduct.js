@@ -11,8 +11,8 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import {addItemToCart} from '../store'
-import ErrorNoProduct from './Error_NoProduct'
+import {addItemToCart, addToCartNLI, setCartState} from '../store'
+import ErrorNoProduct from './Error_NoProduct';
 //potential material ui component - card, complex
 //suggestion to look at gist for themes
 
@@ -36,22 +36,30 @@ class SingleProduct extends Component {
     this.props.getSingleProduct(Number(this.props.id))
   }
 
-  handleClick() {
-    const reqBodyObj = {
-      orderId: this.props.orderId,
-      productId: Number(this.props.singleProduct.id)
-    }
+  async handleClick () {
+    const reqBodyObj = {orderId: this.props.orderId, productId: Number(this.props.singleProduct.id)}
+    if(this.props.orderId) {
     return this.props.addItemToCart(reqBodyObj)
+    } else {
+      await this.props.setCartState();
+      await this.props.addToCartNLI(this.props.singleProduct)
+      window.localStorage.setItem("cart", JSON.stringify(this.props.cartItems))
+    }
+    //use an action creator to add the item to the cartItems array
+    //window.localStorage.setItem("cart", this.props.cart.cartItems)
+    //to ultimately access this to display a customer's cart, i'm looping over localStorage.getItem("cart")
   }
   render() {
     const {classes} = this.props
     const product = this.props.singleProduct
     console.log('ERROR', this.props.error)
+
     let adminStatus = this.props.user.adminStatus
     let link
     if (adminStatus) {
       link = <Link to={`${product.id}/update`}>Update Product</Link>
     }
+
     if (this.props.error) {
       return <ErrorNoProduct />
     } else {
@@ -96,15 +104,17 @@ const mapStateToProps = state => {
     singleProduct: state.product.singleProduct,
     orderId: state.cart.orderId,
     error: state.product.error,
-    user: state.user
+    user: state.user,
+    cartItems: state.cart.cartItems
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: id => dispatch(getSingleProduct(id)),
-    addItemToCart: (orderid, productId) =>
-      dispatch(addItemToCart(orderid, productId))
+    addItemToCart: (orderid, productId) => dispatch(addItemToCart(orderid, productId)),
+    addToCartNLI: (product) => dispatch(addToCartNLI(product)),
+    setCartState: () => dispatch (setCartState())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(
