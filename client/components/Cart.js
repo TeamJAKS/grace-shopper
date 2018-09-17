@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import {connect} from 'react-redux'
 import {getCartOrders, removeItem} from '../store'
+import Button from '@material-ui/core/Button'
 
 
 const styles = theme => ({
@@ -32,7 +33,11 @@ class Cart extends Component {
     }
 
     async handleClick () {
-        const reqBodyObj = {orderId: this.props.orderId, productId: Number(this.props.singleProduct.id)}
+        console.log('productId', value)
+        const reqBodyObj = {orderId: this.props.orderId, productId: evt.value}
+        if(this.props.orderId) {
+            return this.props.removeItem(reqBodyObj)
+        }
     }
     render(){
         let cartItems
@@ -53,8 +58,8 @@ class Cart extends Component {
                             {product.imageUrl}
                             </Avatar>
                             <ListItemText primary={product.title} secondary={product.price.toFixed(2)} />
-                            <Button onClick = {this.handleClick}>
-                                Removed from Cart
+                            <Button onClick = {this.handleClick} value = {product.id}>
+                                Remove from Cart
                             </Button>
                         </ListItem> 
                     )
@@ -73,7 +78,8 @@ const mapStateToProps = state => {
     console.log(state.user.id)
     return {
       cartItems: state.cart.cartItems,
-      userId: state.user.id
+      userId: state.user.id,
+      orderId: state.cart.orderId
     }
 }
 
