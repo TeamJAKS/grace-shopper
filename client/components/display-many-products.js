@@ -7,6 +7,20 @@ import GridListTile from '@material-ui/core/GridListTile'
 import ListSubheader from '@material-ui/core/ListSubheader'
 import ProductGrid from './productGrid'
 
+export const styles = theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
+  },
+  gridList: {
+    width: 'auto',
+    height: 'auto',//keyairra made a change. this was originally --> height: 450
+  },
+})
+
 const DisplayManyProducts = props => {
   const {classes, products, title} = props
   return (
@@ -22,20 +36,6 @@ const DisplayManyProducts = props => {
     </div>
   )
 }
-
-export const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper
-  },
-  gridList: {
-    width: 'auto',
-    height: 450
-  }
-})
 
 DisplayManyProducts.propTypes = {
   classes: PropTypes.object.isRequired

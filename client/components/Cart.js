@@ -53,7 +53,7 @@ class Cart extends Component {
                     return (
                         <ListItem key={product.id}>
                             <Avatar>
-                            {product.imageUrl}
+                            {product.imgUrl}
                             </Avatar>
                             <ListItemText primary={product.title} secondary={product.price.toFixed(2)} />
                         </ListItem> 
