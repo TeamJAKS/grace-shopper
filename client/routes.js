@@ -13,9 +13,11 @@ import {
   AddProductForm,
   UpdateProductForm,
   SearchView,
+  AddReviewForm,
   UserProfile,
   EditProfile,
   Cart
+
 } from './components'
 
 /**
@@ -54,6 +56,7 @@ class Routes extends Component {
           path="/product/:productId/update"
           component={UpdateProductForm}
         />
+        <Route path="/product/:productId/add/review" component={AddReviewForm}/>
         <Route exact path="/users/profile/:userId" component={UserProfile} />
         <Route path="/users/profile/:userId/edit" component={EditProfile} />
         <Route path="/cart" component={Cart} />

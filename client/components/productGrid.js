@@ -12,7 +12,7 @@ const ProductGrid = props => {
   return (
     <div className={styles.gridList}>
       <GridListTile key={product.title}>
-        <img src={`/${product.imgUrl}`} alt={product.title} />
+        <img src={`/${product.imgUrl}`} alt={product.title} style={{height: '200px', width: '200px'}}/>
         <GridListTileBar
           title={<Link to={`/product/${product.id}`}>{product.title}</Link>}
           subtitle={<span>{product.description}</span>}
