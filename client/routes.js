@@ -20,12 +20,10 @@ import {
  * COMPONENT
  */
 class Routes extends Component {
-
-   async componentDidMount() {
+  async componentDidMount() {
     await this.props.loadInitialData()
     console.log('this.props.userId in cdm', this.props.userId)
     this.props.getCartOrders(this.props.userId)
-  
   }
 
   render() {
@@ -54,7 +52,7 @@ class Routes extends Component {
           component={UpdateProductForm}
         />
         <Route path="/cart" component={Cart} />
-        <Route path="*search" component = {SearchView} />
+        <Route path="/search" component={SearchView} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -72,7 +70,6 @@ class Routes extends Component {
  * CONTAINER
  */
 const mapState = state => {
-  
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
@@ -83,7 +80,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-   async loadInitialData() {
+    async loadInitialData() {
       await dispatch(me())
       await dispatch(fetchProducts())
       //await dispatch(getCartOrders(userId))
@@ -91,7 +88,6 @@ const mapDispatch = dispatch => {
     getCartOrders: userId => dispatch(getCartOrders(userId))
   }
 }
-
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
