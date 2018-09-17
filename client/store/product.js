@@ -10,6 +10,7 @@ const ADDED_PRODUCT = 'ADDED_PRODUCT'
 const UPDATED_PRODUCT = 'UPDATED_PRODUCT'
 const GOT_REVIEWS = 'GOT_REVIEWS'
 const ERROR_RETURNED = 'ERROR_RETURNED'
+const GOT_ALL_CATEGORIES = 'GOT_ALL_CATEGORIES'
 
 //action creators
 
@@ -48,6 +49,13 @@ const errorOccured = () => {
   return {
     type: ERROR_RETURNED,
     error: true
+  }
+}
+
+const gotAllCategories = categories => {
+  return {
+    type: GOT_ALL_CATEGORIES,
+    categories
   }
 }
 
@@ -95,13 +103,19 @@ export const addNewProduct = product => {
 }
 
 export const updateOldProduct = product => {
-  console.log('PRODUCT', product)
   return async dispatch => {
     const {data: productUpdate} = await axios.put(
       `/api/product/${product.product.id}`,
       product.product
     )
     dispatch(updateProduct(productUpdate))
+  }
+}
+
+export const getAllCategories = () => {
+  return async dispatch => {
+    const {data} = await axios.get('/api/product/category')
+    dispatch(gotAllCategories(data))
   }
 }
 
@@ -112,7 +126,8 @@ const initialState = {
   error: null,
   loading: null,
   product: {},
-  productUpdate: {}
+  productUpdate: {},
+  categories: []
 }
 
 const productReducer = (state = initialState, action) => {
@@ -155,6 +170,11 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         error: action.error
+      }
+    case GOT_ALL_CATEGORIES:
+      return {
+        ...state,
+        categories: action.categories
       }
     default:
       return state

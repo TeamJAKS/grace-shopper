@@ -1,32 +1,30 @@
-/* 
+/*
 Idea:
 Cart should be persistent on main pages users/visitors will browse products (ie. SingleProductFullView
     SingleProduct, AllProducts)
 When cart is closed (if not persistent), then we should redirect to the last page viewed by client
 */
 
-import React, {Component} from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
+import React, {Component} from 'react'
+import {withStyles} from '@material-ui/core/styles'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Avatar from '@material-ui/core/Avatar'
 import {connect} from 'react-redux'
 import {getCartOrders} from '../store'
 
-
 const styles = theme => ({
-    root: {
-      width: '100%',
-      maxWidth: 360,
-      backgroundColor: theme.palette.background.paper,
-    },
-  });
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper
+  }
+})
 
 //const userId = 1
 
 class Cart extends Component {
-
     render(){
         let cartItems
         if(this.props.userId) {
@@ -60,17 +58,18 @@ class Cart extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state.user.id)
-    return {
-      cartItems: state.cart.cartItems,
-      userId: state.user.id
-    }
+  return {
+    cartItems: state.cart.cartItems,
+    userId: state.user.id
+  }
 }
 
 const mapDispatchToProps = dispatch => {
-    return{
-        getCartOrders: userId => dispatch(getCartOrders(userId))
-    }
+  return {
+    getCartOrders: userId => dispatch(getCartOrders(userId))
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (withStyles(styles)(Cart));
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withStyles(styles)(Cart)
+)
