@@ -8,8 +8,8 @@ const GOT_ALL_PRODUCTS = 'GOT_ALL_PRODUCTS'
 const GOT_PRODUCT_CATEGORY = 'GOT_PRODUCT_CATEGORY'
 const ADDED_PRODUCT = 'ADDED_PRODUCT'
 const UPDATED_PRODUCT = 'UPDATED_PRODUCT'
-
 const GOT_REVIEWS = 'GOT_REVIEWS'
+const ERROR_RETURNED = 'ERROR_RETURNED'
 
 //action creators
 
@@ -44,11 +44,22 @@ const updateProduct = productUpdate => {
   }
 }
 
+const errorOccured = () => {
+  return {
+    type: ERROR_RETURNED,
+    error: true
+  }
+}
+
 //thunks
 export const getSingleProduct = id => {
   return async dispatch => {
     const {data} = await axios.get(`/api/product/${id}`)
+    if(data.length) {
     dispatch(gotSingleProduct(data[0]))
+    } else {
+      dispatch(errorOccured())
+    }
   }
 }
 
@@ -114,15 +125,17 @@ const productReducer = (state = initialState, action) => {
     case GOT_PRODUCT_CATEGORY:
       return {
         ...state,
+        error: null,
         products: action.products
       }
     case GOT_SINGLE_PRODUCT:
-      return {...state, singleProduct: {...action.product}}
+      return {...state, error: null, singleProduct: {...action.product}}
     case GOT_REVIEWS:
       return {...state, reviews: [...action.reviews]}
     case ADDED_PRODUCT:
       return {
         ...state,
+        error: null,
         products: [...state.products, action.product]
       }
     case UPDATED_PRODUCT:
@@ -133,7 +146,12 @@ const productReducer = (state = initialState, action) => {
           if (product.id === action.productUpdate.id)
             return action.productUpdate
           else return product
-        })
+        }),
+        error: null,
+      }
+      case ERROR_RETURNED:
+      return {
+        ...state, error: action.error
       }
     default:
       return state
