@@ -151,6 +151,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
+        loading: true,
         products: [...state.products, action.product]
       }
     case UPDATED_PRODUCT:
@@ -162,7 +163,8 @@ const productReducer = (state = initialState, action) => {
             return action.productUpdate
           else return product
         }),
-        error: null
+        error: null,
+        loading: true
       }
     case ERROR_RETURNED:
       return {

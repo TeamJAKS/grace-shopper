@@ -25,48 +25,36 @@ const styles = theme => ({
 //const userId = 1
 
 class Cart extends Component {
-  //DOLI - the coded out below is what doesn't work. the live
-  //componentDidMount I just built for testing.
+    render(){
+        let cartItems
+        if(this.props.userId) {
+        cartItems = this.props.cartItems
+        }
+        else {
+        cartItems = JSON.parse(localStorage.getItem("cart"))
+        }
+        return (
+            <div>
+                <h1>Your Shopping Cart</h1>
+                {cartItems && cartItems.length ? <List>
+                {cartItems.map(product => {
+                    return (
+                        <ListItem key={product.id}>
+                            <Avatar>
+                            {product.imageUrl}
+                            </Avatar>
+                            <ListItemText primary={product.title} secondary={product.price.toFixed(2)} />
+                        </ListItem> 
+                    )
+                })}
+                 {/* <h2>Total Price: ${fakeItemsPrices.reduce(findTotalPrices,0).toFixed(2)}</h2> */}
+            </List> : <h3>Your Cart Is Empty</h3>}
+                
+            </div>
+            
+        )
 
-  // componentDidMount(){
-  //     console.log('this.props', this.props)
-  //     if(this.props.userId) {
-  //     this.props.getCartOrders(this.props.userId)
-  //     } else {
-  //         return null
-  //     }
-  // }
-  //    componentDidMount(){
-  //     console.log('this.props', this.props)
-  //     this.props.getCartOrders(userId)
-  // }
-  render() {
-    const cartItems = this.props.cartItems
-    const userId = this.props.userId
-    return (
-      <div>
-        <h1>Your Shopping Cart</h1>
-        {cartItems.length ? (
-          <List>
-            {cartItems.map(product => {
-              return (
-                <ListItem key={product.id}>
-                  <Avatar>{product.imageUrl}</Avatar>
-                  <ListItemText
-                    primary={product.title}
-                    secondary={product.price.toFixed(2)}
-                  />
-                </ListItem>
-              )
-            })}
-            {/* <h2>Total Price: ${fakeItemsPrices.reduce(findTotalPrices,0).toFixed(2)}</h2> */}
-          </List>
-        ) : (
-          <h3>Your Cart Is Empty</h3>
-        )}
-      </div>
-    )
-  }
+    }
 }
 
 const mapStateToProps = state => {
