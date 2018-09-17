@@ -10,7 +10,7 @@ const ADDED_PRODUCT = 'ADDED_PRODUCT'
 const UPDATED_PRODUCT = 'UPDATED_PRODUCT'
 const GOT_REVIEWS = 'GOT_REVIEWS'
 const ERROR_RETURNED = 'ERROR_RETURNED'
-const ADDED_REVIEW ='ADDED_REVIEW'
+const ADDED_REVIEW = 'ADDED_REVIEW'
 const GOT_ALL_CATEGORIES = 'GOT_ALL_CATEGORIES'
 
 //action creators
@@ -53,7 +53,7 @@ const errorOccured = () => {
   }
 }
 
-const addedReview = productReview =>{
+const addedReview = productReview => {
   return {
     type: ADDED_REVIEW,
     productReview
@@ -121,7 +121,10 @@ export const updateOldProduct = product => {
 
 export const addNewReview = (product, productReview) => {
   return async dispatch => {
-    const response = await axios.post(`/api/product/${product.id}}`, productReview)
+    const response = await axios.post(
+      `/api/product/${product.id}}`,
+      productReview
+    )
     const data = response.data
     dispatch(addedReview(data))
   }
@@ -176,7 +179,7 @@ const productReducer = (state = initialState, action) => {
         error: null,
         reviews: [...state.reviews, action.productReview]
       }
-      case UPDATED_PRODUCT:
+    case UPDATED_PRODUCT:
       return {
         ...state,
         singleProduct: action.productUpdate,

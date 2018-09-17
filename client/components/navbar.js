@@ -1,19 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Route, Link, NavLink} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import {logout} from '../store'
 import {getAllCategories} from '../store/product'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
-import UserProfile from './UserProfile'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 
 const defaultState = {
   search: '',
-  anchorEl: null
+  anchorEl: null,
+  anchorEl2: null
 }
 
 class Navbar extends React.Component {
@@ -21,21 +21,29 @@ class Navbar extends React.Component {
     super(props)
     this.state = defaultState
     this.handleClick = this.handleClick.bind(this)
+    this.handleClick2 = this.handleClick2.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleClose = this.handleClose.bind(this)
   }
 
   componentDidMount() {
     this.props.fetchCategories()
-
   }
 
   handleClick(evt) {
     this.setState({anchorEl: evt.currentTarget})
   }
 
+  handleClick2(evt) {
+    this.setState({anchorEl2: evt.currentTarget})
+  }
+
   handleClose = () => {
     this.setState({anchorEl: null})
+  }
+
+  handleClose2 = () => {
+    this.setState({anchorEl2: null})
   }
 
   handleChange(evt) {
@@ -45,8 +53,9 @@ class Navbar extends React.Component {
   }
 
   render() {
-    const {anchorEl} = this.state
+    const {anchorEl, anchorEl2} = this.state
     const categories = this.props.categories
+    const userId = this.props.user.id
     return (
       <div>
         <h1>GRACE SHOPPER</h1>
@@ -54,12 +63,15 @@ class Navbar extends React.Component {
           {this.props.isLoggedIn ? (
             <div>
               {/* The navbar will show these links after you log in */}
-              <Link to="/home">Home</Link>
-              <a href="#" onClick={this.props.handleClick}>
+              <Button to="/home" color="secondary">
+                Home
+              </Button>
+              <Button onClick={this.props.handleClick} color="secondary">
                 Logout
-              </a>
+              </Button>
 
               <Button
+                props="user"
                 color="primary"
                 aria-owns={anchorEl ? 'simple-menu' : null}
                 aria-haspopup="true"
@@ -73,26 +85,21 @@ class Navbar extends React.Component {
                 open={Boolean(anchorEl)}
                 onClose={this.handleClose}
               >
-                <MenuItem
-                  onClick={() => {
-                    this.handleClose()
-                    //history.push is not working
-                    this.props.history.push(
-                      `/users/profile/${this.props.user.id}`
-                    )
-                  }}
-                  type="Profile"
-                >
-                  Profile
-                </MenuItem>
+                <NavLink to={`/users/profile/${userId}`}>
+                  <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                </NavLink>
                 <MenuItem onClick={this.handleClose}>My Orders</MenuItem>
               </Menu>
             </div>
           ) : (
             <div>
               {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
+              <Button to="/login" color="secondary">
+                Login
+              </Button>
+              <Button to="/signup" color="secondary">
+                Sign Up
+              </Button>
             </div>
           )}
 
@@ -111,24 +118,22 @@ class Navbar extends React.Component {
             </button>
           </NavLink>
           <NavLink to="/product">
-            <Button variant="outlined" color="primary">
-              Products
-            </Button>{' '}
+            <Button color="primary">Products</Button>{' '}
           </NavLink>
 
           <Button
             color="primary"
-            aria-owns={anchorEl ? 'simple-menu' : null}
+            aria-owns={anchorEl2 ? 'simple-menu' : null}
             aria-haspopup="true"
-            onClick={this.handleClick}
+            onClick={this.handleClick2}
           >
             Categories
           </Button>
           <Menu
             id="simple-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={this.handleClose}
+            anchorEl={anchorEl2}
+            open={Boolean(anchorEl2)}
+            onClose={this.handleClose2}
           >
             {categories.map(category => {
               return (
@@ -136,7 +141,7 @@ class Navbar extends React.Component {
                   key={category.id}
                   to={`/product/category/${category.title}`}
                 >
-                  <MenuItem onClick={this.handleClose}>
+                  <MenuItem onClick={this.handleClose2}>
                     {category.title}
                   </MenuItem>
                 </NavLink>
