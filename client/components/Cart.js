@@ -32,7 +32,7 @@ class Cart extends Component {
     }
 
     async handleClick () {
-
+        const reqBodyObj = {orderId: this.props.orderId, productId: Number(this.props.singleProduct.id)}
     }
     render(){
         let cartItems
