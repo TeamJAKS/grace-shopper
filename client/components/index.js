@@ -14,4 +14,5 @@ export {default as UpdateProductForm} from './UpdateProductForm'
 export {default as DisplayWithProducts} from './productCategory'
 export {default as SearchView} from './searchView'
 export {default as ErrorNoProduct} from './error_NoProduct'
-
+export {default as UserProfile} from './UserProfile'
+export {default as EditProfile} from './EditProfile'

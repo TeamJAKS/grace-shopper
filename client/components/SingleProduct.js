@@ -11,7 +11,7 @@ import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import ErrorNoProduct from './Error_NoProduct';
+import ErrorNoProduct from './Error_NoProduct'
 //potential material ui component - card, complex
 //suggestion to look at gist for themes
 
@@ -33,9 +33,7 @@ class SingleProduct extends Component {
     const product = this.props.singleProduct
     console.log('ERROR', this.props.error)
     if (this.props.error) {
-      return (
-        <ErrorNoProduct />
-      )
+      return <ErrorNoProduct />
     } else {
       return (
         <Card className={classes.card}>

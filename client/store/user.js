@@ -6,17 +6,36 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const UPDATED_USER = 'UPDATED_USER'
+const GOT_USER_ADDRESS = 'GOT_USER_ADDRESS'
 
 /**
  * INITIAL STATE
  */
-const defaultUser = {}
+const defaultUser = {
+  userUpdate: {},
+  address: {}
+}
 
 /**
  * ACTION CREATORS
  */
 const getUser = user => ({type: GET_USER, user})
 const removeUser = () => ({type: REMOVE_USER})
+
+const updatedUser = userUpdate => {
+  return {
+    type: UPDATED_USER,
+    userUpdate
+  }
+}
+
+const gotUserAddress = address => {
+  return {
+    type: GOT_USER_ADDRESS,
+    address
+  }
+}
 
 /**
  * THUNK CREATORS
@@ -37,7 +56,6 @@ export const auth = (email, password, method) => async dispatch => {
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
-
   try {
     dispatch(getUser(res.data))
     history.push('/home')
@@ -56,6 +74,20 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const updateUser = user => {
+  return async dispatch => {
+    const {data} = await axios.put(`/api/users/profile/${user.id}/edit`, user)
+    dispatch(updatedUser(data))
+  }
+}
+
+export const getUserAddress = id => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/users/profile/${id}`)
+    dispatch(gotUserAddress(data))
+  }
+}
+
 /**
  * REDUCER
  */
@@ -65,6 +97,13 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case UPDATED_USER:
+      return action.userUpdate
+    case GOT_USER_ADDRESS:
+      return {
+        ...state,
+        address: action.address
+      }
     default:
       return state
   }

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Address} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
       // explicitly select only the id and email fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['firstName', 'lastName', 'id', 'email']
+      attributes: ['id', 'email']
     })
     res.json(users)
   } catch (err) {
@@ -16,11 +16,30 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/profile/:userId', async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.userId)
-    res.json(user)
-  } catch (err) {
-    next(err)
+    const address = await Address.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    })
+    res.json(address)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/profile/:userId/edit', async (req, res, next) => {
+  try {
+    const id = req.params.userId
+    const updates = req.body
+    const updatedUser = await User.update(updates, {
+      where: {id},
+      returning: true,
+      plain: true
+    })
+    res.status(204).json(updatedUser[1])
+  } catch (error) {
+    next(error)
   }
 })

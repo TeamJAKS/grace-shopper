@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link, NavLink} from 'react-router-dom'
-import {logout, fetchUserData} from '../store'
+import {Route, Link, NavLink} from 'react-router-dom'
+import {logout} from '../store'
+import UserProfile from './UserProfile'
 
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
@@ -19,6 +20,7 @@ class Navbar extends React.Component {
     this.state = defaultState
     this.handleClick = this.handleClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
 
   handleClick(evt) {
@@ -37,7 +39,6 @@ class Navbar extends React.Component {
 
   render() {
     const {anchorEl} = this.state
-    console.log('PROPS', this.props)
     return (
       <div>
         <h1>GRACE SHOPPER</h1>
@@ -56,7 +57,7 @@ class Navbar extends React.Component {
                 aria-haspopup="true"
                 onClick={this.handleClick}
               >
-                {this.props.user.email}
+                {this.props.user.firstName}
               </Button>
               <Menu
                 id="simple-menu"
@@ -64,9 +65,19 @@ class Navbar extends React.Component {
                 open={Boolean(anchorEl)}
                 onClose={this.handleClose}
               >
-                <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    this.handleClose()
+                    //history.push is not working
+                    this.props.history.push(
+                      `/users/profile/${this.props.user.id}`
+                    )
+                  }}
+                  type="Profile"
+                >
+                  Profile
+                </MenuItem>
                 <MenuItem onClick={this.handleClose}>My Orders</MenuItem>
-                <MenuItem onClick={this.handleClose}>Logout</MenuItem>
               </Menu>
             </div>
           ) : (
@@ -116,8 +127,6 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
-
 /**
  * PROP TYPES
  */
@@ -125,3 +134,5 @@ Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
+
+export default connect(mapState, mapDispatch)(Navbar)
