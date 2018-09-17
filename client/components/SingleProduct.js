@@ -56,6 +56,9 @@ class SingleProduct extends Component {
           <div>
             <Link to={`${product.id}/update`}>Update Product</Link>
           </div>
+          <div>
+          <Link to={`${product.id}/add/review`}>Write a Product Review</Link>
+          </div>
           <CardActionArea>
             <CardMedia
               component="img"
