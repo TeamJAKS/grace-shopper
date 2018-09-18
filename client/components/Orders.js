@@ -18,17 +18,13 @@ class Orders extends React.Component {
     return (
       <div>
         <h4>Previous Orders</h4>
-        {/* {orders.map(order => {
+        {orders.map(order => {
           return (
             <ListItem key={order.id}>
-              <Avatar>{product.imageUrl}</Avatar>
-              <ListItemText
-                primary={product.title}
-                secondary={product.price.toFixed(2)}
-              />
+              <ListItemText primary={order.id} secondary={order.order_status} />
             </ListItem>
           )
-        })} */}
+        })}
       </div>
     )
   }
@@ -38,7 +34,6 @@ const mapStateToProps = state => {
   console.log('STATE', state)
   return {
     user: state.user,
-    cart: state.cart,
     orders: state.orders
   }
 }
