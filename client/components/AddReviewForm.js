@@ -25,6 +25,8 @@ class AddReviewForm extends React.Component {
       text: '',
       stars: 0,
     }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange = event => {
@@ -34,10 +36,16 @@ class AddReviewForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault()
     const {title, text, stars} = this.state
-    this.props.postReview({title, text, stars})
+    this.props.postReview({title, text, stars, productId: this.props.match.params.productId})
     alert('A new review was added to this product')
   }
   render() {
+    let loggedIn = this.props.user.id
+    if (!loggedIn) {
+      return (
+        <p>We value your opinion! Please create an account in order to share your thoughts.</p>
+      )
+    }
     return (
       <div>
         <h1>Review Form</h1>
@@ -52,16 +60,16 @@ class AddReviewForm extends React.Component {
             />
           </FormControl>
           <FormControl className="name">
-            <InputLabel htmlFor="title">Your Thoughts</InputLabel>
+            <InputLabel htmlFor="text">Your Thoughts</InputLabel>
             <Input
               id="review-text"
-              name="review text"
+              name="text"
               value={this.state.price}
               onChange={this.handleChange}
             />
           </FormControl>
           <FormControl className="name">
-            <InputLabel htmlFor="title">Star Rating</InputLabel>
+            <InputLabel htmlFor="stars">Star Rating</InputLabel>
             <Input
               name="stars"
               value={this.state.stars}
@@ -71,20 +79,21 @@ class AddReviewForm extends React.Component {
           <button type="submit">Submit</button>
         </form>
       </div>
-        
     )
   }
 }
 
 const mapStateToProps = state => {
+  console.log('here is the state in the add review form', state)
   return {
-    reviews: state.product.reviews
+    reviews: state.product.reviews,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    postReview: product => dispatch(addNewReview(product))
+    postReview: review => dispatch(addNewReview(review))
   }
 }
 
