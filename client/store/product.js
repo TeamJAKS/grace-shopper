@@ -128,6 +128,8 @@ export const addNewReview = review => {
   }
 }
 
+//req.body 
+
 export const getAllCategories = () => {
   return async dispatch => {
     const {data} = await axios.get('/api/product/category')
@@ -174,7 +176,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        reviews: [...state, action.review]
+        reviews: [...state.reviews, action.review]
       }
       case UPDATED_PRODUCT:
       return {
