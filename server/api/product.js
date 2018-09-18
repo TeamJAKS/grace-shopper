@@ -77,24 +77,16 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// router.post('/:productId/reviews', /*isLoggedI*/ async (req, res, next)=> {
-//   try{
-//       const newReview = await Reviews.create(req.body)
-//       res.json(newReview)
-//   }catch (error){
-//     next(error)
-//   }
-// })
-
+//This route was tested and passed using Postman
 router.post("/:productId/reviews", /*isLoggedIn,*/ async (req, res, next) => {
   let productForReview = await Product.findById(req.params.productId)
     try{
       if (!productForReview) {
         res.sendStatus(404);
       } else {
-        let review = req.body;
-        let incomingReview = await Reviews.create(review)
-        res.json(incomingReview)
+        let incomingReview = req.body;
+        let postedReview = await Reviews.create(incomingReview)
+        res.json(postedReview)
       }
     }catch(error) {
       next(error)

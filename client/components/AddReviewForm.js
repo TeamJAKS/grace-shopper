@@ -25,6 +25,8 @@ class AddReviewForm extends React.Component {
       text: '',
       stars: 0,
     }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange = event => {
@@ -52,16 +54,16 @@ class AddReviewForm extends React.Component {
             />
           </FormControl>
           <FormControl className="name">
-            <InputLabel htmlFor="title">Your Thoughts</InputLabel>
+            <InputLabel htmlFor="text">Your Thoughts</InputLabel>
             <Input
               id="review-text"
-              name="review text"
+              name="text"
               value={this.state.price}
               onChange={this.handleChange}
             />
           </FormControl>
           <FormControl className="name">
-            <InputLabel htmlFor="title">Star Rating</InputLabel>
+            <InputLabel htmlFor="stars">Star Rating</InputLabel>
             <Input
               name="stars"
               value={this.state.stars}
@@ -71,20 +73,20 @@ class AddReviewForm extends React.Component {
           <button type="submit">Submit</button>
         </form>
       </div>
-        
     )
   }
 }
 
 const mapStateToProps = state => {
   return {
-    reviews: state.product.reviews
+    reviews: state.product.reviews,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    postReview: product => dispatch(addNewReview(product))
+    postReview: review => dispatch(addNewReview(review))
   }
 }
 

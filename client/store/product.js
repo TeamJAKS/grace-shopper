@@ -53,10 +53,10 @@ const errorOccured = () => {
   }
 }
 
-const addedReview = productReview =>{
+const addedReview = review =>{
   return {
     type: ADDED_REVIEW,
-    productReview
+    review
   }
 }
 const gotAllCategories = categories => {
@@ -119,9 +119,10 @@ export const updateOldProduct = product => {
   }
 }
 
-export const addNewReview = (product, productReview) => {
+export const addNewReview = (productId, review) => {
+  console.log('here is the product in the product reducer, for reviews', product)
   return async dispatch => {
-    const response = await axios.post(`/api/product/${product.id}}`, productReview)
+    const response = await axios.post(`/api/product/:productId/reviews`, review)
     const data = response.data
     dispatch(addedReview(data))
   }
@@ -138,7 +139,6 @@ const initialState = {
   products: [],
   singleProduct: {},
   reviews: [],
-  productReview: {},
   product: {},
   productUpdate: {},
   error: null,
@@ -174,7 +174,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        reviews: [...state.reviews, action.productReview]
+        reviews: [...state, action.review]
       }
       case UPDATED_PRODUCT:
       return {
