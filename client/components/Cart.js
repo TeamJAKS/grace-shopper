@@ -12,7 +12,7 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
 import {connect} from 'react-redux'
-import {getCartOrders, removeItem, setCartState, removedFromCart} from '../store'
+import {getCartOrders, removeItem, setCartState, removedFromCart, checkout} from '../store'
 import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
@@ -29,6 +29,7 @@ class Cart extends Component {
     constructor () {
         super()
         this.handleClick = this.handleClick.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
    handleClick (productId) {
@@ -41,6 +42,13 @@ class Cart extends Component {
           console.log('PRODUCT ID', productId)
           this.props.removedFromCart(productId)
           window.localStorage.setItem("cart", JSON.stringify(this.props.cartItems))  
+        }
+    }
+
+    handleSubmit () {
+        if (this.props.orderId) {
+            alert('Your Order Has Been Placed')
+            return this.props.checkout(this.props.orderId)
         }
     }
     render(){
@@ -63,7 +71,7 @@ class Cart extends Component {
                             {product.imgUrl}
                             </Avatar>
                             <ListItemText primary={product.title} secondary={product.price.toFixed(2)} />
-                            <Button onClick = {async() => await this.handleClick(product.id)}>
+                            <Button onClick = {() => this.handleClick(product.id)}>
                                 Remove from Cart
                             </Button>
                         </ListItem> 
@@ -71,7 +79,7 @@ class Cart extends Component {
                 })}
                  {/* <h2>Total Price: ${fakeItemsPrices.reduce(findTotalPrices,0).toFixed(2)}</h2> */}
             </List> 
-            <Button>Checkout </Button>
+            <Button onClick = {() => this.handleSubmit()}>Checkout </Button>
             </div>
             : <h3>Your Cart Is Empty</h3>}
                 
@@ -96,7 +104,8 @@ const mapDispatchToProps = dispatch => {
         getCartOrders: userId => dispatch(getCartOrders(userId)),
         removeItem: (infoObj) => dispatch(removeItem(infoObj)),
         setCartState: () => dispatch(setCartState()),
-        removedFromCart: (productId) => dispatch(removedFromCart(productId))
+        removedFromCart: (productId) => dispatch(removedFromCart(productId)),
+        checkout: (orderId) => dispatch(checkout(orderId))
     }
 }
 

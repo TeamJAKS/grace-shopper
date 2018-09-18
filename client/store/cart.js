@@ -61,9 +61,9 @@ export function setCartState() {
     }
 }
 
-export function checkout () {
+export function checkout (orderId) {
     return async dispatch => {
-        const {data} = await axios.put('/api/cart/checkout')
+        const {data} = await axios.put('/api/cart/checkout', {id: orderId})
         dispatch(filledCart({products:[], id: null}))
     }
 }
@@ -91,7 +91,7 @@ const cartReducer = (state = initialState, action) => {
             return newState
 
         case ADD_TO_CART_NLI: 
-            if(state.cartItems.length) {
+            if(state.cartItems && state.cartItems.length) {
             return {...state, cartItems: [...state.cartItems, action.product]}
             } else {
                 return {...state, cartItems: [action.product]}

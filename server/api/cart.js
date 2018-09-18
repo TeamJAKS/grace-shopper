@@ -37,6 +37,7 @@ router.put('/' , async (req, res, next) => {
 })
 
 router.put('/checkout', async (req, res, next) => {
+    console.log('req.body', req.body)
     try {
         const processOrder = await Order.update({
             order_status: 'Processing'
