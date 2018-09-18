@@ -33,7 +33,7 @@ class ProductCategory extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.products
+    products: state.product.filteredProducts
   }
 }
 
