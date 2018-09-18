@@ -70,26 +70,26 @@ export function removeItem (infoObj) {
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
-      case FILLED_CART:
+        case FILLED_CART:
             if(action.cart){
                 return {...state, orderId: action.orderId, cartItems: [...action.cart]}
             } else {
                 return {...state, orderId: action.orderId}
             }
             
-      case REMOVED_FROM_CART:
-          return {...state, cartItems: [...state.cartItems.filter(item => item.id !== action.productId)]}
+        case REMOVED_FROM_CART:
+            const newCart = state.cartItems.filter(item => item.id !== action.productId)
+            const newState = {...state, cartItems: newCart}
+            console.log('newState', newState)
+            return newState
 
-      case ADD_TO_CART_NLI: 
-            // if(state.cartItems && state.cartItems.length) {
+        case ADD_TO_CART_NLI: 
             return {...state, cartItems: [...state.cartItems, action.product]}
-            // } else {
-            //     return {...state, cartItems: action.product}
-            // }
+    
         case FILL_CART_NLI:
             return {...state, cartItems: action.cart}
-      default:
-        return state
+        default:
+            return state
     }
   
   }

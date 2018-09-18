@@ -31,14 +31,15 @@ class Cart extends Component {
         this.handleClick = this.handleClick.bind(this)
     }
 
-    async handleClick (productId) {
+   handleClick (productId) {
+
         const reqBodyObj = {orderId: this.props.orderId, productId: productId}
         if(this.props.orderId) {
             return this.props.removeItem(reqBodyObj)
         } else {
-          await this.props.setCartState()
+          this.props.setCartState()
           console.log('PRODUCT ID', productId)
-          await this.props.removedFromCart(productId)
+          this.props.removedFromCart(productId)
           window.localStorage.setItem("cart", JSON.stringify(this.props.cartItems))  
         }
     }
@@ -59,10 +60,10 @@ class Cart extends Component {
                     return (
                         <ListItem key={product.id}>
                             <Avatar>
-                            {product.imageUrl}
+                            {product.imgUrl}
                             </Avatar>
                             <ListItemText primary={product.title} secondary={product.price.toFixed(2)} />
-                            <Button onClick = {() => this.handleClick(product.id)}>
+                            <Button onClick = {async() => await this.handleClick(product.id)}>
                                 Remove from Cart
                             </Button>
                         </ListItem> 

@@ -21,7 +21,8 @@ const styles = {
     maxWidth: 400
   },
   media: {
-    height: 300
+    height: 300,
+    objectFit: 'cover'
   }
 }
 
@@ -65,12 +66,19 @@ class SingleProduct extends Component {
     } else {
       return (
         <Card className={classes.card}>
+          <div>
+            <Link to={`${product.id}/update`}>Update Product</Link>
+          </div>
+          <div>
+          <Link to={`${product.id}/add/review`}>Write a Product Review</Link>
+          </div>
           <div>{link}</div>
           <CardActionArea>
             <CardMedia
+              component="img"
               className={classes.media}
               image={`/${product.imgUrl}`}
-              title={product.title}
+              title={`/${product.titlel}`}
             />
             <CardContent>
               <Typography gutterBottom variant="headline" component="h2">
