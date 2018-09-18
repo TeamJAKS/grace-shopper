@@ -44,10 +44,29 @@ router.put('/checkout', async (req, res, next) => {
         returning: true,
         plain: true
     })
-    res.json(processOrder[1])
+    const newOrder = await Order.create({
+        userId: req.body.userId
+    })
+    res.json(newOrder)
 
 }catch (err) {
     next(err)
+    }
+})
+
+router.post('/checkout', async (req, res, next) => {
+    try {
+        const user = await User.create(req.body.formInput)
+        const userId = user.id
+        const newOrder = await Order.create({
+            order_status: 'Processing',
+            userId: userId
+        })
+        console.log('NEWORDER', newOrder)
+        const newOrderWProducts = await newOrder.addProducts(req.body.cartItemsArr)
+        res.json(newOrder)
+    } catch (err) {
+        next(err)
     }
 })
 

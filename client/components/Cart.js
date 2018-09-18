@@ -16,7 +16,8 @@ import {
   getCartOrders,
   removeItem,
   setCartState,
-  removedFromCart
+  removedFromCart,
+  checkout
 } from '../store'
 import Button from '@material-ui/core/Button'
 
@@ -34,6 +35,7 @@ class Cart extends Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleClick(productId) {
@@ -45,6 +47,17 @@ class Cart extends Component {
       console.log('PRODUCT ID', productId)
       this.props.removedFromCart(productId)
       window.localStorage.setItem('cart', JSON.stringify(this.props.cartItems))
+    }
+  }
+
+  handleSubmit() {
+    if (this.props.userId) {
+      const reqObj = {id: this.props.orderId, userId: this.props.userId}
+      alert('Your Order Has Been Placed')
+      this.props.checkout(reqObj)
+      this.props.history.push('/product')
+    } else {
+      this.props.history.push('/checkout')
     }
   }
   render() {
@@ -69,9 +82,7 @@ class Cart extends Component {
                       primary={product.title}
                       secondary={product.price.toFixed(2)}
                     />
-                    <Button
-                      onClick={async () => await this.handleClick(product.id)}
-                    >
+                    <Button onClick={() => this.handleClick(product.id)}>
                       Remove from Cart
                     </Button>
                   </ListItem>
@@ -79,7 +90,7 @@ class Cart extends Component {
               })}
               {/* <h2>Total Price: ${fakeItemsPrices.reduce(findTotalPrices,0).toFixed(2)}</h2> */}
             </List>
-            <Button>Checkout </Button>
+            <Button onClick={() => this.handleSubmit()}>Checkout </Button>
           </div>
         ) : (
           <h3>Your Cart Is Empty</h3>
@@ -88,7 +99,6 @@ class Cart extends Component {
     )
   }
 }
-
 const mapStateToProps = state => {
   return {
     cartItems: state.cart.cartItems,
@@ -102,7 +112,8 @@ const mapDispatchToProps = dispatch => {
     getCartOrders: userId => dispatch(getCartOrders(userId)),
     removeItem: infoObj => dispatch(removeItem(infoObj)),
     setCartState: () => dispatch(setCartState()),
-    removedFromCart: productId => dispatch(removedFromCart(productId))
+    removedFromCart: productId => dispatch(removedFromCart(productId)),
+    checkout: obj => dispatch(checkout(obj))
   }
 }
 
