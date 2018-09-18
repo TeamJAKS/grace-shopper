@@ -167,8 +167,8 @@ class Navbar extends React.Component {
 const mapState = state => {
   return {
     categories: state.product.categories,
-    user: state.user,
-    isLoggedIn: !!state.user.id
+    user: state.user.currentUser,
+    isLoggedIn: !!state.user.currentUser.id
   }
 }
 

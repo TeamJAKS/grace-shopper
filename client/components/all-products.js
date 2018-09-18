@@ -32,7 +32,7 @@ class AllProducts extends React.Component {
 const mapStateToProps = state => {
   return {
     products: state.product.products,
-    user: state.user
+    user: state.user.currentUser
   }
 }
 

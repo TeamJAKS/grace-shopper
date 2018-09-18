@@ -104,7 +104,7 @@ class UpdateProductForm extends React.Component {
 const mapStateToProps = state => {
   return {
     singleProduct: state.product.singleProduct,
-    user: state.user,
+    user: state.user.currentUser,
     loading: state.loading
   }
 }

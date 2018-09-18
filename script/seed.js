@@ -285,20 +285,20 @@ const addresses = [
     zipCode: 12345,
     userId: 4
   },
-  {
-    street: '34 Fayne Way',
-    city: 'Atlanta',
-    state: 'GA',
-    zipCode: 11245,
-    userId: 4
-  },
-  {
-    street: '33 Bess Street',
-    city: 'Marvinsville',
-    state: 'TX',
-    zipCode: 55342,
-    userId: 3
-  },
+  // {
+  //   street: '34 Fayne Way',
+  //   city: 'Atlanta',
+  //   state: 'GA',
+  //   zipCode: 11245,
+  //   userId: 4
+  // },
+  // {
+  //   street: '33 Bess Street',
+  //   city: 'Marvinsville',
+  //   state: 'TX',
+  //   zipCode: 55342,
+  //   userId: 3
+  // },
 
   {
     street: '45 Hannah Ave',

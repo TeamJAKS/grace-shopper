@@ -20,7 +20,7 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    user: state.user
+    user: state.user.currentUser
   }
 }
 

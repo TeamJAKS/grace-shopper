@@ -18,28 +18,46 @@ router.get('/', async (req, res, next) => {
 
 router.get('/profile/:userId', async (req, res, next) => {
   try {
-    const address = await Address.findAll({
-      where: {
-        userId: req.params.userId
-      }
+    const address = await Address.findOne({
+      where: {userId: req.params.userId}
     })
-    res.json(address)
+    res.json(address.dataValues)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/profile/:userId/edit', async (req, res, next) => {
+  try {
+    const id = req.params.userId
+    const [num, updatedUser] = await User.update(
+      {
+        firstName: req.body.user.firstName,
+        lastName: req.body.user.lastName
+      },
+      {
+        where: {
+          id: id
+        },
+        returning: true,
+        plain: true
+      }
+    )
+    res.status(204).send(updatedUser.dataValues)
   } catch (error) {
     next(error)
   }
 })
 
 router.put('/profile/:userId/edit/address', async (req, res, next) => {
-  console.log('***', req.body)
   try {
     const id = req.params.userId
-    const updates = req.body
-    const updatedAddress = await Address.update(
+    const [num, updatedAddress] = await Address.update(
       {
-        street: updates.street,
-        city: updates.city,
-        state: updates.state,
-        zipCode: updates.zip
+        street: req.body.address.street,
+        city: req.body.address.city,
+        state: req.body.address.state,
+        zipCode: req.body.address.zipCode
       },
       {
         where: {
@@ -49,25 +67,7 @@ router.put('/profile/:userId/edit/address', async (req, res, next) => {
         plain: true
       }
     )
-    console.log('UPD ADDRESS', updatedAddress)
-    res.status(204).json(updatedAddress)
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.put('/profile/:userId/edit', async (req, res, next) => {
-  try {
-    const id = req.params.userId
-    const updates = req.body
-    const updatedUser = await User.update(updates, {
-      where: {
-        userId: id
-      },
-      returning: true,
-      plain: true
-    })
-    res.status(204).json(updatedUser[1])
+    res.status(204).send(updatedAddress.dataValues)
   } catch (error) {
     next(error)
   }

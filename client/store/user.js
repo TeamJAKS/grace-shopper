@@ -1,6 +1,5 @@
 import axios from 'axios'
 import history from '../history'
-import {INSPECT_MAX_BYTES} from 'buffer'
 
 /**
  * ACTION TYPES
@@ -15,9 +14,14 @@ const UPDATED_ADDRESS = 'UPDATED_ADDRESS'
  * INITIAL STATE
  */
 const defaultUser = {
+  currentUser: {},
   userUpdate: {},
   address: {}
 }
+
+/**
+ * at the end of the me thunk state will equal { id: 4, email: ... } (aka CURRENT
+ */
 
 /**
  * ACTION CREATORS
@@ -86,10 +90,13 @@ export const logout = () => async dispatch => {
 export const updateUser = user => {
   return async dispatch => {
     try {
-      const {data} = await axios.put(`/api/users/profile/${user.id}/edit`, user)
+      const data = await axios.put(`/api/users/profile/${user.id}/edit`, {
+        user
+      })
+      console.log('DATA', data)
       dispatch(updatedUser(data))
     } catch (error) {
-      next(error)
+      console.error(error)
     }
   }
 }
@@ -100,7 +107,7 @@ export const getUserAddress = id => {
       const {data} = await axios.get(`/api/users/profile/${id}`)
       dispatch(gotUserAddress(data))
     } catch (error) {
-      next(error)
+      console.error(error)
     }
   }
 }
@@ -108,15 +115,12 @@ export const getUserAddress = id => {
 export const updateAddress = (address, id) => {
   return async dispatch => {
     try {
-      console.log('address', address)
-      const data = await axios.put(
-        `/api/users/profile/${id}/edit/address`,
+      const data = await axios.put(`/api/users/profile/${id}/edit/address`, {
         address
-      )
-      console.log('DATA', data)
+      })
       dispatch(updatedAddress(data))
     } catch (error) {
-      next(error)
+      console.error(error)
     }
   }
 }
@@ -127,11 +131,20 @@ export const updateAddress = (address, id) => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
-      return action.user
+      return {
+        ...state,
+        currentUser: action.user
+      }
     case REMOVE_USER:
-      return defaultUser
+      return {
+        ...state,
+        currentUser: {}
+      }
     case UPDATED_USER:
-      return action.userUpdate
+      return {
+        ...state,
+        userUpdate: action.userUpdate
+      }
     case GOT_USER_ADDRESS:
       return {
         ...state,
@@ -139,6 +152,7 @@ export default function(state = defaultUser, action) {
       }
     case UPDATED_ADDRESS:
       return {
+        ...state,
         address: action.address
       }
     default:

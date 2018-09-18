@@ -20,24 +20,23 @@ const styles = theme => ({
 class UpdateProfile extends React.Component {
   constructor(props) {
     super(props)
-    console.log('PROPS', props.address[0].zipCode)
     this.state = {
-      id: Number(props.user.id),
+      id: props.user.id,
       firstName: '' || props.user.firstName,
       lastName: '' || props.user.lastName,
-      email: '' || props.user.email,
-      password: '' || props.user.password,
-      street: '' || props.address[0].street,
-      city: '' || props.address[0].city,
-      state: '' || props.address[0].state,
-      zipCode: '' || Number(props.address[0].zipCode)
+      //email: '' || props.user.email,
+      //password: '' || props.user.password,
+      street: '' || props.address.street,
+      city: '' || props.address.city,
+      state: '' || props.address.state,
+      zipCode: Number(props.address.zipCode)
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
-    this.props.getAddress(this.props.user.id)
+    this.props.getAddress(this.state.id)
   }
 
   handleChange(event) {
@@ -50,14 +49,14 @@ class UpdateProfile extends React.Component {
       id,
       firstName,
       lastName,
-      email,
-      password,
+      //email,
+      //password,
       street,
       city,
       state,
       zipCode
     } = this.state
-    this.props.updateUser({id, firstName, lastName, email, password})
+    this.props.updateUser({id, firstName, lastName})
     this.props.updateAddress({street, city, state, zipCode}, id)
     this.props.history.push(`/users/profile/${id}`)
   }
@@ -117,14 +116,14 @@ class UpdateProfile extends React.Component {
         <FormControl className="name">
           <InputLabel htmlFor="title">Zip</InputLabel>
           <Input
-            id="zip"
-            name="zip"
-            value={this.state.zip}
+            id="zipCode"
+            name="zipCode"
+            value={this.state.zipCode}
             onChange={this.handleChange}
           />
         </FormControl>
 
-        <FormControl className="name">
+        {/* <FormControl className="name">
           <InputLabel htmlFor="title">Email</InputLabel>
           <Input
             id="email"
@@ -140,7 +139,7 @@ class UpdateProfile extends React.Component {
             value={this.state.password}
             onChange={this.handleChange}
           />
-        </FormControl>
+        </FormControl> */}
         <button type="submit">Submit</button>
       </form>
     )
@@ -149,7 +148,7 @@ class UpdateProfile extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
+    user: state.user.currentUser,
     address: state.user.address
   }
 }

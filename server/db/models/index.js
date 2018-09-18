@@ -14,7 +14,7 @@ const ProductsInOrder = require('./productsInOrder')
  *
  */
 
-User.hasMany(Address)
+User.hasOne(Address)
 Address.belongsTo(User)
 
 User.hasMany(Order)
