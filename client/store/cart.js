@@ -1,38 +1,35 @@
-import axios from 'axios';
-
+import axios from 'axios'
 
 const FILLED_CART = 'FILLED_CART'
 const REMOVED_FROM_CART = 'REMOVED_FROM_CART'
-const ADD_TO_CART_NLI = "ADD_TO_CART_NLI"
+const ADD_TO_CART_NLI = 'ADD_TO_CART_NLI'
 const FILL_CART_NLI = 'FILL_CART_NLI'
 
-
 export function filledCart(cart) {
-    return {
-        type: FILLED_CART, 
-        cart: cart.products, 
-        orderId: cart.id
-    }   
+  return {
+    type: FILLED_CART,
+    cart: cart.products,
+    orderId: cart.id
   }
+}
 export function removedFromCart(productId) {
-    return {type: REMOVED_FROM_CART, productId}
-  }
+  return {type: REMOVED_FROM_CART, productId}
+}
 
-  export function addToCartNLI (product) {
-      return {type: ADD_TO_CART_NLI, product}
-  }
+export function addToCartNLI(product) {
+  return {type: ADD_TO_CART_NLI, product}
+}
 
-  export function fillCartNLI (cart) {
-      return {
-          type: FILL_CART_NLI,
-          cart
-      }
+export function fillCartNLI(cart) {
+  return {
+    type: FILL_CART_NLI,
+    cart
   }
-
+}
 
 const initialState = {
-    orderId: null,
-    cartItems: []
+  orderId: null,
+  cartItems: []
 }
 
 //thunks
@@ -41,24 +38,24 @@ const initialState = {
 //order.getProducts will exist due to sequelize magical methods with associations and order.addProduct or .setProduct
 
 export function getCartOrders(userId) {
-    return async dispatch => {
-        const {data} = await axios.post('/api/cart', userId)
-        dispatch(filledCart(data))
-    }
+  return async dispatch => {
+    const {data} = await axios.post('/api/cart', userId)
+    dispatch(filledCart(data))
+  }
 }
 
-export function addItemToCart(infoObj){
-    return async dispatch => {
-        const {data} = await axios.put('/api/cart', infoObj)
-        dispatch(filledCart(data))
-    }
+export function addItemToCart(infoObj) {
+  return async dispatch => {
+    const {data} = await axios.put('/api/cart', infoObj)
+    dispatch(filledCart(data))
+  }
 }
 
 export function setCartState() {
-    const curCart = JSON.parse(window.localStorage.getItem("cart"))
-    return dispatch => {
-        dispatch(fillCartNLI(curCart))
-    }
+  const curCart = JSON.parse(window.localStorage.getItem('cart'))
+  return dispatch => {
+    dispatch(fillCartNLI(curCart))
+  }
 }
 
 export function checkout (reqObj) {
@@ -74,13 +71,14 @@ export function checkoutNLI (reqObj) {
         const data = await axios.post('/api/cart/checkout', reqObj)
         dispatch(fillCartNLI([]))
     }
+
 }
 
-export function removeItem (infoObj) {
-    return async dispatch => {
-        const {data} = await axios.put('/api/cart/deleteItem', infoObj)
-        dispatch(filledCart(data))
-    }
+export function removeItem(infoObj) {
+  return async dispatch => {
+    const {data} = await axios.put('/api/cart/deleteItem', infoObj)
+    dispatch(filledCart(data))
+  }
 }
 
 const cartReducer = (state = initialState, action) => {
@@ -110,7 +108,7 @@ const cartReducer = (state = initialState, action) => {
         default:
             return state
     }
-  
   }
+}
 
-  export default cartReducer;
+export default cartReducer
