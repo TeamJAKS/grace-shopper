@@ -16,7 +16,8 @@ import {
   AddReviewForm,
   UserProfile,
   EditProfile,
-  Cart
+  Cart,
+  CheckoutNLI
 
 } from './components'
 
@@ -61,7 +62,8 @@ class Routes extends Component {
         <Route path="/users/profile/:userId/edit" component={EditProfile} />
         <Route path="/cart" component={Cart} />
         <Route path="/search" component={SearchView} />
-        {/* <Route path = "/checkout" component={Checkout} /> */}
+        <Route path = "/checkout" component={CheckoutNLI} />
+
 
         {isLoggedIn && (
           <Switch>
