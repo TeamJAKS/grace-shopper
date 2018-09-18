@@ -61,6 +61,13 @@ export function setCartState() {
     }
 }
 
+export function checkout () {
+    return async dispatch => {
+        const {data} = await axios.put('/api/cart/checkout')
+        dispatch(filledCart({products:[], id: null}))
+    }
+}
+
 
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {

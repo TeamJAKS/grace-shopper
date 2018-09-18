@@ -36,3 +36,18 @@ router.put('/' , async (req, res, next) => {
         next(err)
     }
 })
+
+router.put('/checkout', async (req, res, next) => {
+    try {
+        const processOrder = await Order.update({
+            order_status: 'Processing'
+        }, {where: {id: req.body.id},
+        returning: true,
+        plain: true
+    })
+    res.json(processOrder[1])
+
+}catch (err) {
+    next(err)
+}
+})

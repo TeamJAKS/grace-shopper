@@ -36,7 +36,7 @@ class Cart extends Component {
         return (
             <div>
                 <h1>Your Shopping Cart</h1>
-                {cartItems && cartItems.length ? <List>
+                {cartItems && cartItems.length ? <div><List>
                 {cartItems.map(product => {
                     return (
                         <ListItem key={product.id}>
@@ -48,7 +48,10 @@ class Cart extends Component {
                     )
                 })}
                  {/* <h2>Total Price: ${fakeItemsPrices.reduce(findTotalPrices,0).toFixed(2)}</h2> */}
-            </List> : <h3>Your Cart Is Empty</h3>}
+            </List> 
+            <Button>Checkout </Button>
+            </div>
+            : <h3>Your Cart Is Empty</h3>}
                 
             </div>
             
