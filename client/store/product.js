@@ -119,7 +119,6 @@ export const updateOldProduct = product => {
   }
 }
 
-///post here////////////////////////////
 export const addNewReview = review => {
   console.log('here is the review in the product reducer, for addNewReview thunk', review)
   return async dispatch => {

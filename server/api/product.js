@@ -76,8 +76,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-//This route was tested and passed using Postman
-router.post("/:productId/reviews", /*isLoggedIn,*/ async (req, res, next) => {
+router.post("/:productId/reviews", async (req, res, next) => {
   let productForReview = await Product.findById(req.params.productId)
     try{
       if (!productForReview) {
