@@ -19,7 +19,6 @@ const styles = {
     height: 300
   }
 }
-
 class UserProfile extends React.Component {
   constructor(props) {
     super(props)

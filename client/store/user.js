@@ -8,6 +8,7 @@ const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const UPDATED_USER = 'UPDATED_USER'
 const GOT_USER_ADDRESS = 'GOT_USER_ADDRESS'
+const UPDATED_ADDRESS = 'UPDATED_ADDRESS'
 
 /**
  * INITIAL STATE
@@ -33,6 +34,13 @@ const updatedUser = userUpdate => {
 const gotUserAddress = address => {
   return {
     type: GOT_USER_ADDRESS,
+    address
+  }
+}
+
+const updatedAddress = address => {
+  return {
+    type: UPDATED_ADDRESS,
     address
   }
 }
@@ -88,6 +96,15 @@ export const getUserAddress = id => {
   }
 }
 
+export const updateAddress = (address, id) => {
+  return async dispatch => {
+    console.log('address', address)
+    const data = await axios.put(`/api/users/profile/${id}/edit`, address)
+    console.log('DATA', data)
+    dispatch(updatedAddress(data))
+  }
+}
+
 /**
  * REDUCER
  */
@@ -102,6 +119,10 @@ export default function(state = defaultUser, action) {
     case GOT_USER_ADDRESS:
       return {
         ...state,
+        address: action.address
+      }
+    case UPDATED_ADDRESS:
+      return {
         address: action.address
       }
     default:

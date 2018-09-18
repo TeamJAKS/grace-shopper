@@ -3,7 +3,6 @@ const {User, Address} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
-
   try {
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
@@ -40,6 +39,31 @@ router.put('/profile/:userId/edit', async (req, res, next) => {
       plain: true
     })
     res.status(204).json(updatedUser[1])
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/profile/:userId/edit', async (req, res, next) => {
+  try {
+    console.log('***', req.body)
+    const id = req.params.userId
+    const updates = req.body
+    const updatedAddress = await Address.update(
+      {
+        street: updates.street,
+        city: updates.city,
+        state: updates.state,
+        zipCode: updates.zip
+      },
+      {
+        where: {id},
+        returning: true,
+        plain: true
+      }
+    )
+    console.log('UPD ADDRESS', updatedAddress)
+    res.status(204).json(updatedAddress)
   } catch (error) {
     next(error)
   }

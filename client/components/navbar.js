@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link, NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import {logout} from '../store'
 import {getAllCategories} from '../store/product'
 import Button from '@material-ui/core/Button'
@@ -40,6 +40,7 @@ class Navbar extends React.Component {
 
   handleClose = () => {
     this.setState({anchorEl: null})
+    console.log('in handle close')
   }
 
   handleClose2 = () => {
@@ -64,10 +65,10 @@ class Navbar extends React.Component {
             <div>
               {/* The navbar will show these links after you log in */}
               <Button to="/home" color="secondary">
-                Home
+                <h2>Home</h2>
               </Button>
               <Button onClick={this.props.handleClick} color="secondary">
-                Logout
+                <h2>Logout</h2>
               </Button>
 
               <Button
@@ -77,7 +78,7 @@ class Navbar extends React.Component {
                 aria-haspopup="true"
                 onClick={this.handleClick}
               >
-                {this.props.user.firstName}
+                <h2>{this.props.user.firstName}</h2>
               </Button>
               <Menu
                 id="simple-menu"
@@ -95,10 +96,10 @@ class Navbar extends React.Component {
             <div>
               {/* The navbar will show these links before you log in */}
               <Button to="/login" color="secondary">
-                Login
+                <h2>Login</h2>
               </Button>
               <Button to="/signup" color="secondary">
-                Sign Up
+                <h2>Sign Up</h2>
               </Button>
             </div>
           )}

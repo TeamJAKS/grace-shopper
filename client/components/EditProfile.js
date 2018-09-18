@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {updateUser} from '../store/user'
+import {updateUser, updateAddress} from '../store/user'
 import {withStyles} from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -25,7 +25,11 @@ class UpdateProfile extends React.Component {
       firstName: '',
       lastName: '',
       email: '',
-      password: ''
+      password: '',
+      street: '',
+      city: '',
+      state: '',
+      zipCode: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -36,9 +40,20 @@ class UpdateProfile extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    const {id, firstName, lastName, email, password} = this.state
-    this.props.update({id, firstName, lastName, email, password})
-    this.props.history.push(`/users/profile`)
+    const {
+      id,
+      firstName,
+      lastName,
+      email,
+      password,
+      street,
+      city,
+      state,
+      zipCode
+    } = this.state
+    this.props.updateUser({id, firstName, lastName, email, password})
+    this.props.updateAddress({street, city, state, zipCode}, id)
+    this.props.history.push(`/users/profile/${id}`)
   }
 
   render() {
@@ -62,6 +77,47 @@ class UpdateProfile extends React.Component {
             onChange={this.handleChange}
           />
         </FormControl>
+
+        <FormControl className="name">
+          <InputLabel htmlFor="title">Street</InputLabel>
+          <Input
+            id="street"
+            name="street"
+            value={this.state.street}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+
+        <FormControl className="name">
+          <InputLabel htmlFor="title">City</InputLabel>
+          <Input
+            id="city"
+            name="city"
+            value={this.state.city}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+
+        <FormControl className="name">
+          <InputLabel htmlFor="title">State</InputLabel>
+          <Input
+            id="state"
+            name="state"
+            value={this.state.state}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+
+        <FormControl className="name">
+          <InputLabel htmlFor="title">Zip</InputLabel>
+          <Input
+            id="zip"
+            name="zip"
+            value={this.state.zip}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+
         <FormControl className="name">
           <InputLabel htmlFor="title">Email</InputLabel>
           <Input
@@ -87,13 +143,15 @@ class UpdateProfile extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    address: state.user.address
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    update: user => dispatch(updateUser(user))
+    updateUser: user => dispatch(updateUser(user)),
+    updateAddress: (address, id) => dispatch(updateAddress(address, id))
   }
 }
 
