@@ -63,7 +63,7 @@ export function setCartState() {
 
 export function removeItem (infoObj) {
     return async dispatch => {
-        const {data} = await axios.pus('/api/cart/deleteItem', infoObj)
+        const {data} = await axios.put('/api/cart/deleteItem', infoObj)
         dispatch(filledCart(data))
     }
 }
@@ -78,14 +78,14 @@ const cartReducer = (state = initialState, action) => {
             }
             
       case REMOVED_FROM_CART:
-          return {...state, cartItems: state.cartItems.filter(id => id !== action.productId)}
+          return {...state, cartItems: [...state.cartItems.filter(item => item.id !== action.productId)]}
 
       case ADD_TO_CART_NLI: 
-            if(cartItems && cartItems.length) {
+            // if(state.cartItems && state.cartItems.length) {
             return {...state, cartItems: [...state.cartItems, action.product]}
-            } else {
-                return {...state, cartItems: [action.product]}
-            }
+            // } else {
+            //     return {...state, cartItems: action.product}
+            // }
         case FILL_CART_NLI:
             return {...state, cartItems: action.cart}
       default:

@@ -27,10 +27,9 @@ const styles = {
 
 //ISSUE - state not staying stable. don't have access to orderId here for some reason
 
-
 class SingleProduct extends Component {
-  constructor () {
-    super() 
+  constructor() {
+    super()
     this.handleClick = this.handleClick.bind(this)
   }
   componentDidMount() {
@@ -54,21 +53,23 @@ class SingleProduct extends Component {
     const {classes} = this.props
     const product = this.props.singleProduct
     console.log('ERROR', this.props.error)
-    console.log('CART ITEMS ON THIS PAGE', this.props.cartItems)
+
+    let adminStatus = this.props.user.adminStatus
+    let link
+    if (adminStatus) {
+      link = <Link to={`${product.id}/update`}>Update Product</Link>
+    }
+
     if (this.props.error) {
-      return (
-        <ErrorNoProduct />
-      )
+      return <ErrorNoProduct />
     } else {
       return (
         <Card className={classes.card}>
-          <div>
-            <Link to={`${product.id}/update`}>Update Product</Link>
-          </div>
+          <div>{link}</div>
           <CardActionArea>
             <CardMedia
               className={classes.media}
-              image={product.imageUrl}
+              image={`/${product.imgUrl}`}
               title={product.title}
             />
             <CardContent>
@@ -81,7 +82,7 @@ class SingleProduct extends Component {
             </CardContent>
           </CardActionArea>
           <CardActions>
-            <Button size="small" color="primary" onClick = {this.handleClick}>
+            <Button size="small" color="primary" onClick={this.handleClick}>
               Add to Cart
             </Button>
             <Button size="small" color="primary">
@@ -103,6 +104,7 @@ const mapStateToProps = state => {
     singleProduct: state.product.singleProduct,
     orderId: state.cart.orderId,
     error: state.product.error,
+    user: state.user,
     cartItems: state.cart.cartItems
   }
 }
