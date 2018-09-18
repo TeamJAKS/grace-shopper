@@ -53,6 +53,7 @@ class Navbar extends React.Component {
   }
 
   render() {
+    console.log('props', this.props)
     const {anchorEl, anchorEl2} = this.state
     const categories = this.props.categories
     const userId = this.props.user.id
@@ -167,8 +168,8 @@ class Navbar extends React.Component {
 const mapState = state => {
   return {
     categories: state.product.categories,
-    user: state.user.currentUser,
-    isLoggedIn: !!state.user.currentUser.id
+    user: state.user,
+    isLoggedIn: !!state.user.id
   }
 }
 

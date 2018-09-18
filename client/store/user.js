@@ -14,7 +14,6 @@ const UPDATED_ADDRESS = 'UPDATED_ADDRESS'
  * INITIAL STATE
  */
 const defaultUser = {
-  currentUser: {},
   userUpdate: {},
   address: {}
 }
@@ -131,15 +130,9 @@ export const updateAddress = (address, id) => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
-      return {
-        ...state,
-        currentUser: action.user
-      }
+      return action.user
     case REMOVE_USER:
-      return {
-        ...state,
-        currentUser: {}
-      }
+      return action.defaultUser
     case UPDATED_USER:
       return {
         ...state,

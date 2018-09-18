@@ -102,7 +102,7 @@ class AddProductForm extends React.Component {
 const mapStateToProps = state => {
   return {
     products: state.product.products,
-    user: state.user.currentUser,
+    user: state.user,
     loading: state.loading
   }
 }

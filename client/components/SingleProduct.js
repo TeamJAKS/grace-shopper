@@ -115,7 +115,7 @@ const mapStateToProps = state => {
     singleProduct: state.product.singleProduct,
     orderId: state.cart.orderId,
     error: state.product.error,
-    user: state.user.currentUser,
+    user: state.user,
     cartItems: state.cart.cartItems
   }
 }

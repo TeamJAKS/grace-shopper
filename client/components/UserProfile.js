@@ -70,7 +70,7 @@ class UserProfile extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user.currentUser,
+    user: state.user,
     address: state.user.address
   }
 }
