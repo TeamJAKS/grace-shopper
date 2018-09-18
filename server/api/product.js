@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const {Product, Reviews, User, Category} = require('../db/models')
+//const {isLoggedIn} = require('../?)
 
 module.exports = router
 
@@ -76,14 +77,29 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.post('/:productId', async (req, res, next)=> {
-  try{
-    const newReview = await Product.create(req.body)
-    res.json(newReview)
-  }catch (error){
-    next(error)
-  }
-})
+// router.post('/:productId/reviews', /*isLoggedI*/ async (req, res, next)=> {
+//   try{
+//       const newReview = await Reviews.create(req.body)
+//       res.json(newReview)
+//   }catch (error){
+//     next(error)
+//   }
+// })
+
+router.post("/:productId/reviews", /*isLoggedIn,*/ async (req, res, next) => {
+  let productForReview = await Product.findById(req.params.productId)
+    try{
+      if (!productForReview) {
+        res.sendStatus(404);
+      } else {
+        let review = req.body;
+        let incomingReview = await Reviews.create(review)
+        res.json(incomingReview)
+      }
+    }catch(error) {
+      next(error)
+    }
+});
 
 router.put('/:productId', async (req, res, next) => {
   try {
