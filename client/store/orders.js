@@ -13,9 +13,9 @@ const initialState = {
   orders: []
 }
 
-export const gotOrders = userId => {
+export const gotOrders = id => {
   return async dispatch => {
-    const response = await axios.get(`/api/users/orders/${userId}`)
+    const response = await axios.get(`/api/order/${id}`)
     const userOrders = response.data
     dispatch(getOrders(userOrders))
   }

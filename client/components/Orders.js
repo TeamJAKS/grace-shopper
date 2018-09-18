@@ -8,17 +8,19 @@ import {gotProducts, gotOrders} from '../store/orders'
 
 class Orders extends React.Component {
   componentDidMount() {
-    this.props.userOrders()
+    this.props.userOrders(this.props.match.params.userId)
   }
 
   render() {
     let cartItems = this.props.cart.cartItems
+    console.log('orders', this.props.orders.orders)
+    let orders = this.props.orders.orders
     return (
       <div>
         <h4>Previous Orders</h4>
-        {cartItems.map(product => {
+        {/* {orders.map(order => {
           return (
-            <ListItem key={product.id}>
+            <ListItem key={order.id}>
               <Avatar>{product.imageUrl}</Avatar>
               <ListItemText
                 primary={product.title}
@@ -26,22 +28,24 @@ class Orders extends React.Component {
               />
             </ListItem>
           )
-        })}
+        })} */}
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
+  console.log('STATE', state)
   return {
     user: state.user,
-    cart: state.cart
+    cart: state.cart,
+    orders: state.orders
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    userOrders: id => dispatch(gotOrders(id))
+    userOrders: ord => dispatch(gotOrders(ord))
   }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Orders))
