@@ -43,7 +43,7 @@ class AddReviewForm extends React.Component {
     let loggedIn = this.props.user.id
     if (!loggedIn) {
       return (
-        <p>We value your opinion! Please create an account in order to share your thoughts</p>
+        <p>We value your opinion! Please create an account in order to share your thoughts.</p>
       )
     }
     return (
