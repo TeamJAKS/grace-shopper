@@ -15,6 +15,7 @@ class ProductCategory extends React.Component {
   }
 
   render() {
+    console.log('CAT PROPS', this.props)
     const products = this.props.products
     if (products) {
       return (

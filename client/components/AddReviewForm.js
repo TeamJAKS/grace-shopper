@@ -18,12 +18,12 @@ const styles = theme => ({
 })
 
 class AddReviewForm extends React.Component {
-  constructor(){
+  constructor() {
     super()
-    this.state= {
-      title:'',
+    this.state = {
+      title: '',
       text: '',
-      stars: 0,
+      stars: 0
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
