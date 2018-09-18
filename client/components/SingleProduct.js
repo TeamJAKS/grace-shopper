@@ -69,6 +69,7 @@ class SingleProduct extends Component {
     } else {
       return (
         <Card className={classes.card}>
+          <div>{link}</div>
           <CardActionArea>
             <CardMedia
               component="img"
