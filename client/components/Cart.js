@@ -47,8 +47,9 @@ class Cart extends Component {
 
     handleSubmit () {
         if (this.props.orderId) {
+            const reqObj = {id: this.props.orderId, userId: this.props.userId}
             alert('Your Order Has Been Placed')
-            return this.props.checkout(this.props.orderId)
+            return this.props.checkout(reqObj)
         }
     }
     render(){
@@ -105,7 +106,7 @@ const mapDispatchToProps = dispatch => {
         removeItem: (infoObj) => dispatch(removeItem(infoObj)),
         setCartState: () => dispatch(setCartState()),
         removedFromCart: (productId) => dispatch(removedFromCart(productId)),
-        checkout: (orderId) => dispatch(checkout(orderId))
+        checkout: (obj) => dispatch(checkout(obj))
     }
 }
 
