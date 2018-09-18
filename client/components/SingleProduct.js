@@ -69,13 +69,6 @@ class SingleProduct extends Component {
     } else {
       return (
         <Card className={classes.card}>
-          <div>
-            <Link to={`${product.id}/update`}>Update Product</Link>
-          </div>
-          <div>
-            <Link to={`${product.id}/add/review`}>Write a Product Review</Link>
-          </div>
-          <div>{link}</div>
           <CardActionArea>
             <CardMedia
               component="img"
@@ -97,7 +90,7 @@ class SingleProduct extends Component {
               Add to Cart
             </Button>
             <Button size="small" color="primary">
-              Learn More
+              <Link to={`${product.id}/add/review`}>Write a Review</Link>
             </Button>
           </CardActions>
         </Card>

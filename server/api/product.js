@@ -75,10 +75,16 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-router.post('/:productId', async (req, res, next) => {
+router.post('/:productId/reviews', async (req, res, next) => {
+  let productForReview = await Product.findById(req.params.productId)
   try {
-    const newReview = await Product.create(req.body)
-    res.json(newReview)
+    if (!productForReview) {
+      res.sendStatus(404)
+    } else {
+      let incomingReview = req.body
+      let postedReview = await Reviews.create(incomingReview)
+      res.json(postedReview)
+    }
   } catch (error) {
     next(error)
   }
