@@ -40,7 +40,6 @@ class Navbar extends React.Component {
 
   handleClose = () => {
     this.setState({anchorEl: null})
-    console.log('in handle close')
   }
 
   handleClose2 = () => {

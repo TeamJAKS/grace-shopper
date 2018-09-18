@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {INSPECT_MAX_BYTES} from 'buffer'
 
 /**
  * ACTION TYPES
@@ -84,24 +85,39 @@ export const logout = () => async dispatch => {
 
 export const updateUser = user => {
   return async dispatch => {
-    const {data} = await axios.put(`/api/users/profile/${user.id}/edit`, user)
-    dispatch(updatedUser(data))
+    try {
+      const {data} = await axios.put(`/api/users/profile/${user.id}/edit`, user)
+      dispatch(updatedUser(data))
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
 export const getUserAddress = id => {
   return async dispatch => {
-    const {data} = await axios.get(`/api/users/profile/${id}`)
-    dispatch(gotUserAddress(data))
+    try {
+      const {data} = await axios.get(`/api/users/profile/${id}`)
+      dispatch(gotUserAddress(data))
+    } catch (error) {
+      next(error)
+    }
   }
 }
 
 export const updateAddress = (address, id) => {
   return async dispatch => {
-    console.log('address', address)
-    const data = await axios.put(`/api/users/profile/${id}/edit`, address)
-    console.log('DATA', data)
-    dispatch(updatedAddress(data))
+    try {
+      console.log('address', address)
+      const data = await axios.put(
+        `/api/users/profile/${id}/edit/address`,
+        address
+      )
+      console.log('DATA', data)
+      dispatch(updatedAddress(data))
+    } catch (error) {
+      next(error)
+    }
   }
 }
 

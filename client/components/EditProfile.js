@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {updateUser, updateAddress} from '../store/user'
+import {updateUser, updateAddress, getUserAddress} from '../store/user'
 import {withStyles} from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -20,20 +20,26 @@ const styles = theme => ({
 class UpdateProfile extends React.Component {
   constructor(props) {
     super(props)
+    console.log('PROPS', props.address[0].zipCode)
     this.state = {
       id: Number(props.user.id),
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      street: '',
-      city: '',
-      state: '',
-      zipCode: ''
+      firstName: '' || props.user.firstName,
+      lastName: '' || props.user.lastName,
+      email: '' || props.user.email,
+      password: '' || props.user.password,
+      street: '' || props.address[0].street,
+      city: '' || props.address[0].city,
+      state: '' || props.address[0].state,
+      zipCode: '' || Number(props.address[0].zipCode)
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
+  componentDidMount() {
+    this.props.getAddress(this.props.user.id)
+  }
+
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value})
   }
@@ -150,6 +156,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    getAddress: id => dispatch(getUserAddress(id)),
     updateUser: user => dispatch(updateUser(user)),
     updateAddress: (address, id) => dispatch(updateAddress(address, id))
   }

@@ -29,24 +29,9 @@ router.get('/profile/:userId', async (req, res, next) => {
   }
 })
 
-router.put('/profile/:userId/edit', async (req, res, next) => {
+router.put('/profile/:userId/edit/address', async (req, res, next) => {
+  console.log('***', req.body)
   try {
-    const id = req.params.userId
-    const updates = req.body
-    const updatedUser = await User.update(updates, {
-      where: {id},
-      returning: true,
-      plain: true
-    })
-    res.status(204).json(updatedUser[1])
-  } catch (error) {
-    next(error)
-  }
-})
-
-router.put('/profile/:userId/edit', async (req, res, next) => {
-  try {
-    console.log('***', req.body)
     const id = req.params.userId
     const updates = req.body
     const updatedAddress = await Address.update(
@@ -57,13 +42,32 @@ router.put('/profile/:userId/edit', async (req, res, next) => {
         zipCode: updates.zip
       },
       {
-        where: {id},
+        where: {
+          userId: id
+        },
         returning: true,
         plain: true
       }
     )
     console.log('UPD ADDRESS', updatedAddress)
     res.status(204).json(updatedAddress)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.put('/profile/:userId/edit', async (req, res, next) => {
+  try {
+    const id = req.params.userId
+    const updates = req.body
+    const updatedUser = await User.update(updates, {
+      where: {
+        userId: id
+      },
+      returning: true,
+      plain: true
+    })
+    res.status(204).json(updatedUser[1])
   } catch (error) {
     next(error)
   }
