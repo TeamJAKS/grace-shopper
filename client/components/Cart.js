@@ -42,6 +42,7 @@ class Cart extends Component {
       this.props.removedFromCart(productId)
       window.localStorage.setItem('cart', JSON.stringify(this.props.cartItems))
     }
+  }
 
     handleSubmit () {
         if (this.props.userId) {
@@ -85,9 +86,7 @@ class Cart extends Component {
             <Button onClick = {() => this.handleSubmit()}>Checkout </Button>
             </div>
             : <h3>Your Cart Is Empty</h3>}
-
             </div>
-
         )
 
     }
