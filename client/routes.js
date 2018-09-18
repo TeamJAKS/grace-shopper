@@ -17,7 +17,8 @@ import {
   UserProfile,
   EditProfile,
   Cart,
-  Orders
+  Orders,
+  CheckoutNLI
 } from './components'
 
 /**
@@ -66,7 +67,7 @@ class Routes extends Component {
         <Route path="/search" component={SearchView} />
         <Route path="/users/order/:userId" component={Orders} />
         {/* <Route path = "/checkout" component={Checkout} /> */}
-
+        <Route path="/checkout" component={CheckoutNLI} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}

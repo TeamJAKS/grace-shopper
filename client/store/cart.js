@@ -58,11 +58,20 @@ export function setCartState() {
   }
 }
 
-export function checkout() {
-  return async dispatch => {
-    const {data} = await axios.put('/api/cart/checkout')
-    dispatch(filledCart({products: [], id: null}))
-  }
+export function checkout (reqObj) {
+    return async dispatch => {
+        const {data} = await axios.put('/api/cart/checkout', reqObj)
+        dispatch(filledCart({products:[], id: data.id}))
+    }
+}
+
+export function checkoutNLI (reqObj) {
+    return async dispatch => {
+        console.log('we here?')
+        const data = await axios.post('/api/cart/checkout', reqObj)
+        dispatch(fillCartNLI([]))
+    }
+
 }
 
 export function removeItem(infoObj) {
@@ -73,33 +82,32 @@ export function removeItem(infoObj) {
 }
 
 const cartReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case FILLED_CART:
-      if (action.cart) {
-        return {...state, orderId: action.orderId, cartItems: [...action.cart]}
-      } else {
-        return {...state, orderId: action.orderId}
-      }
+    switch (action.type) {
+        case FILLED_CART:
+            if(action.cart){
+                return {...state, orderId: action.orderId, cartItems: [...action.cart]}
+            } else {
+                return {...state, orderId: action.orderId}
+            }
+            
+        case REMOVED_FROM_CART:
+            const newCart = state.cartItems.filter(item => item.id !== action.productId)
+            const newState = {...state, cartItems: newCart}
+            console.log('newState', newState)
+            return newState
 
-    case REMOVED_FROM_CART:
-      const newCart = state.cartItems.filter(
-        item => item.id !== action.productId
-      )
-      const newState = {...state, cartItems: newCart}
-      console.log('newState', newState)
-      return newState
-
-    case ADD_TO_CART_NLI:
-      if (state.cartItems && state.cartItems.length) {
-        return {...state, cartItems: [...state.cartItems, action.product]}
-      } else {
-        return {...state, cartItems: [action.product]}
-      }
-
-    case FILL_CART_NLI:
-      return {...state, cartItems: action.cart}
-    default:
-      return state
+        case ADD_TO_CART_NLI: 
+            if(state.cartItems && state.cartItems.length) {
+            return {...state, cartItems: [...state.cartItems, action.product]}
+            } else {
+                return {...state, cartItems: [action.product]}
+            }
+    
+        case FILL_CART_NLI:
+            return {...state, cartItems: action.cart}
+        default:
+            return state
+    }
   }
 }
 
