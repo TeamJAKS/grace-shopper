@@ -1,7 +1,6 @@
 const router = require('express').Router()
 
 const {Product, Reviews, User, Category} = require('../db/models')
-//const {isLoggedIn} = require('../?)
 
 module.exports = router
 
