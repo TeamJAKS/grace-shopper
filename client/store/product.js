@@ -119,10 +119,11 @@ export const updateOldProduct = product => {
   }
 }
 
-export const addNewReview = (productId, review) => {
-  console.log('here is the product in the product reducer, for reviews', product)
+///post here////////////////////////////
+export const addNewReview = review => {
+  console.log('here is the review in the product reducer, for addNewReview thunk', review)
   return async dispatch => {
-    const response = await axios.post(`/api/product/:productId/reviews`, review)
+    const response = await axios.post(`/api/product/${review.productId}/reviews`, review)
     const data = response.data
     dispatch(addedReview(data))
   }

@@ -40,6 +40,12 @@ class AddReviewForm extends React.Component {
     alert('A new review was added to this product')
   }
   render() {
+    let loggedIn = this.props.user.id
+    if (!loggedIn) {
+      return (
+        <p>We value your opinion! Please create an account in order to share your thoughts</p>
+      )
+    }
     return (
       <div>
         <h1>Review Form</h1>
@@ -78,6 +84,7 @@ class AddReviewForm extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log('here is the state in the add review form', state)
   return {
     reviews: state.product.reviews,
     user: state.user

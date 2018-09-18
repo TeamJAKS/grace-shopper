@@ -1,5 +1,6 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 const db = require('../db')
+const Product = require('./Product')
 
 module.exports = db.define('reviews', {
     title: {
@@ -13,7 +14,7 @@ module.exports = db.define('reviews', {
         type: Sequelize.TEXT,
         allowNull: false,
         validate: {
-            notEmpty: true 
+                notEmpty: true 
         }
     },
     stars: {
@@ -23,4 +24,10 @@ module.exports = db.define('reviews', {
             max: 5
         }
     }
+// }, {
+//   defaultScope: {
+//     include: [
+//       { model: Product}
+//     ]
+//   } Keyairra is using this to test the add review routes
 })
