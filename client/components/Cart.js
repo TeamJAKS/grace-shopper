@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import Avatar from '@material-ui/core/Avatar'
 import {connect} from 'react-redux'
 import {getCartOrders} from '../store'
+import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
   root: {
@@ -49,7 +50,7 @@ class Cart extends Component {
                 })}
                  {/* <h2>Total Price: ${fakeItemsPrices.reduce(findTotalPrices,0).toFixed(2)}</h2> */}
             </List> 
-            <Button>Checkout </Button>
+            <Button onClick = {() => this.onClick}>Checkout </Button>
             </div>
             : <h3>Your Cart Is Empty</h3>}
                 
