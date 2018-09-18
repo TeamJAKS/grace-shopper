@@ -50,7 +50,10 @@ class Cart extends Component {
             const reqObj = {id: this.props.orderId, userId: this.props.userId}
             alert('Your Order Has Been Placed')
             return this.props.checkout(reqObj)
+        }else {
+            this.props.history.push('/checkout')
         }
+
     }
     render(){
         let cartItems
