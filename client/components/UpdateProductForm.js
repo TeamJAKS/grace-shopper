@@ -49,6 +49,10 @@ class UpdateProductForm extends React.Component {
     }
   }
 
+  componentDidMount() {
+    this.props.getProduct(this.state.id)
+  }
+
   render() {
     let adminStatus = this.props.user.adminStatus
     if (this.props.loading || !adminStatus) {
@@ -61,6 +65,7 @@ class UpdateProductForm extends React.Component {
             <Input
               id="title"
               name="title"
+              placeholder={this.props.singleProduct.title}
               value={this.state.title}
               onChange={this.handleChange}
             />
@@ -71,6 +76,7 @@ class UpdateProductForm extends React.Component {
               id="adornment-amount"
               name="price"
               value={this.state.price}
+              placeholder={this.props.singleProduct.price}
               onChange={this.handleChange}
               startAdornment={
                 <InputAdornment position="start">$</InputAdornment>
@@ -82,6 +88,7 @@ class UpdateProductForm extends React.Component {
             <Input
               id="quantity"
               name="quantity"
+              placeholder={this.props.singleProduct.quantity}
               value={this.state.quantity}
               onChange={this.handleChange}
             />
@@ -91,6 +98,7 @@ class UpdateProductForm extends React.Component {
             <Input
               name="category"
               value={this.state.category}
+              placeholder={this.props.singleProduct.category}
               onChange={this.handleChange}
             />
           </FormControl>
@@ -111,6 +119,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    getProduct: id => dispatch(getSingleProduct(id)),
     update: product => dispatch(updateOldProduct({product}))
   }
 }

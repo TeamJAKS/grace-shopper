@@ -16,8 +16,8 @@ import {
   AddReviewForm,
   UserProfile,
   EditProfile,
-  Cart
-
+  Cart,
+  Orders
 } from './components'
 
 /**
@@ -26,8 +26,8 @@ import {
 class Routes extends Component {
   async componentDidMount() {
     await this.props.loadInitialData()
-    if(this.props.userId) {
-    this.props.getCartOrders(this.props.userId)
+    if (this.props.userId) {
+      this.props.getCartOrders(this.props.userId)
     }
   }
 
@@ -56,11 +56,15 @@ class Routes extends Component {
           path="/product/:productId/update"
           component={UpdateProductForm}
         />
-        <Route path="/product/:productId/add/review" component={AddReviewForm}/>
+        <Route
+          path="/product/:productId/add/review"
+          component={AddReviewForm}
+        />
         <Route exact path="/users/profile/:userId" component={UserProfile} />
         <Route path="/users/profile/:userId/edit" component={EditProfile} />
         <Route path="/cart" component={Cart} />
         <Route path="/search" component={SearchView} />
+        <Route path="/users/orders/:userId" component={Orders} />
         {/* <Route path = "/checkout" component={Checkout} /> */}
 
         {isLoggedIn && (
