@@ -46,10 +46,11 @@ class Cart extends Component {
     }
 
     handleSubmit () {
-        if (this.props.orderId) {
+        if (this.props.userId) {
             const reqObj = {id: this.props.orderId, userId: this.props.userId}
             alert('Your Order Has Been Placed')
-            return this.props.checkout(reqObj)
+            this.props.checkout(reqObj)
+            this.props.history.push('/product')
         }else {
             this.props.history.push('/checkout')
         }

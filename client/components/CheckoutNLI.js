@@ -53,6 +53,11 @@ class CheckoutNLI extends Component {
         this.props.cartItems.forEach(item => cartItemsArr.push(item.id))
         const reqBody = {formInput: this.state, cartItemsArr: cartItemsArr}
         this.props.checkoutNLI(reqBody)
+        this.setState(defaultState)
+        window.localStorage.setItem("cart", JSON.stringify([])) 
+        alert('Your Order Has Been Placed')
+
+        this.props.history.push('/product')
     }
     
     render() {
