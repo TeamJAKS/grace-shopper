@@ -170,7 +170,7 @@ const productReducer = (state = initialState, action) => {
         prodByCategory: action.products,
         category: action.category,
         error: null,
-        products: action.products
+        filteredProducts: action.products
       }
     case GOT_SINGLE_PRODUCT:
       return {...state, error: null, singleProduct: {...action.product}}
