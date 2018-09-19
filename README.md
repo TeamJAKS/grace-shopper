@@ -10,4 +10,4 @@ Developers on this project include:
     - Stacy Harfenist
     - Keyairra Wright
 
-![](GraceShopper2.gif)
+![]GraceShopper2.gif
