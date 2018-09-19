@@ -9,3 +9,5 @@ Developers on this project include:
     - Jordan Davis
     - Stacy Harfenist
     - Keyairra Wright
+
+![](GraceShopper2.gif)
