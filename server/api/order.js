@@ -15,14 +15,14 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-// router.get('/', async (req, res, next) => {
-//   try {
-//     const userOrders = await Order.findAll()
-//     res.json(userOrders)
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+router.get('/', async (req, res, next) => {
+  try {
+    const userOrders = await Order.findAll()
+    res.json(userOrders)
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.get('/', async (req, res, next) => {
   try {

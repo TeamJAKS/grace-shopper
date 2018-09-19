@@ -12,7 +12,6 @@ class Orders extends React.Component {
   }
 
   render() {
-    let cartItems = this.props.cart.cartItems
     console.log('orders', this.props.orders.orders)
     let orders = this.props.orders.orders
     return (
@@ -31,7 +30,6 @@ class Orders extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log('STATE', state)
   return {
     user: state.user,
     orders: state.orders
