@@ -36,14 +36,23 @@ class AddReviewForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault()
     const {title, text, stars} = this.state
-    this.props.postReview({title, text, stars, productId: this.props.match.params.productId})
+    this.props.postReview({
+      title,
+      text,
+      stars,
+      productId: this.props.match.params.productId
+    })
     alert('A new review was added to this product')
+    this.props.history.push(`/product/${this.props.match.params.productId}`)
   }
   render() {
     let loggedIn = this.props.user.id
     if (!loggedIn) {
       return (
-        <p>We value your opinion! Please create an account in order to share your thoughts.</p>
+        <p>
+          We value your opinion! Please create an account in order to share your
+          thoughts.
+        </p>
       )
     }
     return (
