@@ -38,13 +38,12 @@ class Cart extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleClick(productId) {
+  async handleClick(productId) {
     const reqBodyObj = {orderId: this.props.orderId, productId: productId}
     if (this.props.orderId) {
       return this.props.removeItem(reqBodyObj)
     } else {
-      this.props.setCartState()
-      console.log('PRODUCT ID', productId)
+      await this.props.setCartState()
       this.props.removedFromCart(productId)
       window.localStorage.setItem('cart', JSON.stringify(this.props.cartItems))
     }
