@@ -8,20 +8,17 @@ import IconButton from '@material-ui/core/IconButton'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 //import {addItemToCart, addToCartNLI, setCartState} from '../store'
 
-const handleClick = async (product, orderId, cart, addItemToCart) => {
-  console.log('hello?')
+const handleClick = async (product, orderId, cartItems, addItemToCart, addToCartNLI, setCartState) => {
   const reqBodyObj = {
     orderId: orderId,
     productId: Number(product.id)
   }
-  console.log('reqBodyObj', reqBodyObj)
   if (orderId) {
-    console.log('orderId', orderId)
     return addItemToCart(reqBodyObj)
   } else {
-    await setCartState()
-    await addToCartNLI(product)
-    window.localStorage.setItem('cart', JSON.stringify(cart))
+    const curCart = JSON.parse(window.localStorage.getItem('cart'))
+    curCart.push(product)
+    window.localStorage.setItem('cart', JSON.stringify(curCart))
 }
 }
 
@@ -36,7 +33,7 @@ const ProductGrid = props => {
           subtitle={<span>{product.description}</span>}
           actionIcon={
             <IconButton className={styles.icon}>
-              <ShoppingCartIcon onClick ={() => handleClick(product, props.orderId, props.cart, props.addItemToCart)}/>
+              <ShoppingCartIcon onClick ={() => handleClick(product, props.orderId, props.cartItems, props.addItemToCart, props.addToCartNLI, props.setCartState)}/>
             </IconButton>
           }
         />
