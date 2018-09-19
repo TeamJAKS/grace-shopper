@@ -53,6 +53,7 @@ export function addItemToCart(infoObj) {
 
 export function setCartState() {
   const curCart = JSON.parse(window.localStorage.getItem('cart'))
+  console.log('curCart', curCart)
   return dispatch => {
     dispatch(fillCartNLI(curCart))
   }
