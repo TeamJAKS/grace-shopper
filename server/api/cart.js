@@ -21,6 +21,7 @@ router.post('/', async (req, res, next) => {
 
 router.put('/' , async (req, res, next) => {
     try {
+        console.log('hello Up Top')
         const orderId = req.body.orderId
         const order = await Order.findById(orderId)
         const updateOrder = await order.addProduct(req.body.productId)
@@ -30,6 +31,7 @@ router.put('/' , async (req, res, next) => {
             },
             include: [{model: Product}]
         })
+        console.log('updatedOrder[0]', updatedOrder[0])
         res.json(updatedOrder[0])
     }catch(err){
         next(err)

@@ -30,7 +30,8 @@ const DisplayManyProducts = props => {
           <ListSubheader component="div">{title}</ListSubheader>
         </GridListTile>
         {products.map(product => (
-          <ProductGrid product={product} key={product.id} />
+          <ProductGrid product={product} key={product.id} orderId = {props.orderId} cart = {props.cartItems}
+          addItemToCart = {props.addItemToCart} addToCartNLI = {props.addToCartNLI} setCartState = {props.setCartState}/>
         ))}
       </GridList>
     </div>

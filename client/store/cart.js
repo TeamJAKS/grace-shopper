@@ -45,8 +45,10 @@ export function getCartOrders(userId) {
 }
 
 export function addItemToCart(infoObj) {
+    console.log('bonjour?')
   return async dispatch => {
     const {data} = await axios.put('/api/cart', infoObj)
+    console.log('data', data)
     dispatch(filledCart(data))
   }
 }
