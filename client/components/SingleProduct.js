@@ -96,7 +96,7 @@ class SingleProduct extends Component {
               Add to Cart
             </Button>
             <Button size="small" color="primary">
-              Learn More
+              <Link to={`${product.id}/add/review`}>Write a Review</Link>
             </Button>
           </CardActions>
         </Card>

@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {updateUser} from '../store/user'
+import {updateUser, updateAddress, getUserAddress} from '../store/user'
 import {withStyles} from '@material-ui/core/styles'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -21,24 +21,44 @@ class UpdateProfile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      id: Number(props.user.id),
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: ''
+      id: props.user.id,
+      firstName: '' || props.user.firstName,
+      lastName: '' || props.user.lastName,
+      //email: '' || props.user.email,
+      //password: '' || props.user.password,
+      street: '' || props.address.street,
+      city: '' || props.address.city,
+      state: '' || props.address.state,
+      zipCode: Number(props.address.zipCode)
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
+  componentDidMount() {
+    this.props.getAddress(this.state.id)
+  }
+
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value})
   }
 
   handleSubmit(event) {
     event.preventDefault()
-    const {id, firstName, lastName, email, password} = this.state
-    this.props.update({id, firstName, lastName, email, password})
-    this.props.history.push(`/users/profile`)
+    const {
+      id,
+      firstName,
+      lastName,
+      //email,
+      //password,
+      street,
+      city,
+      state,
+      zipCode
+    } = this.state
+    this.props.updateUser({id, firstName, lastName})
+    this.props.updateAddress({street, city, state, zipCode}, id)
+    this.props.history.push(`/users/profile/${id}`)
   }
 
   render() {
@@ -62,7 +82,48 @@ class UpdateProfile extends React.Component {
             onChange={this.handleChange}
           />
         </FormControl>
+
         <FormControl className="name">
+          <InputLabel htmlFor="title">Street</InputLabel>
+          <Input
+            id="street"
+            name="street"
+            value={this.state.street}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+
+        <FormControl className="name">
+          <InputLabel htmlFor="title">City</InputLabel>
+          <Input
+            id="city"
+            name="city"
+            value={this.state.city}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+
+        <FormControl className="name">
+          <InputLabel htmlFor="title">State</InputLabel>
+          <Input
+            id="state"
+            name="state"
+            value={this.state.state}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+
+        <FormControl className="name">
+          <InputLabel htmlFor="title">Zip</InputLabel>
+          <Input
+            id="zipCode"
+            name="zipCode"
+            value={this.state.zipCode}
+            onChange={this.handleChange}
+          />
+        </FormControl>
+
+        {/* <FormControl className="name">
           <InputLabel htmlFor="title">Email</InputLabel>
           <Input
             id="email"
@@ -78,7 +139,7 @@ class UpdateProfile extends React.Component {
             value={this.state.password}
             onChange={this.handleChange}
           />
-        </FormControl>
+        </FormControl> */}
         <button type="submit">Submit</button>
       </form>
     )
@@ -87,13 +148,16 @@ class UpdateProfile extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    address: state.user.address
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    update: user => dispatch(updateUser(user))
+    getAddress: id => dispatch(getUserAddress(id)),
+    updateUser: user => dispatch(updateUser(user)),
+    updateAddress: (address, id) => dispatch(updateAddress(address, id))
   }
 }
 
