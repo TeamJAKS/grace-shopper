@@ -1,6 +1,5 @@
 import React from 'react'
 import {fetchByCategory} from '../store/product'
-import {addItemToCart, addToCartNLI, setCartState} from '../store'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import DisplayManyProducts from './display-many-products'
@@ -16,6 +15,7 @@ class ProductCategory extends React.Component {
   }
 
   render() {
+    console.log('CAT PROPS', this.props)
     const products = this.props.products
     if (products) {
       return (
@@ -23,8 +23,6 @@ class ProductCategory extends React.Component {
           <DisplayManyProducts
             products={products}
             title={this.state.category}
-            orderId= {this.props.orderId} cartItems = {this.props.cartItems}
-          addItemToCart = {this.props.addItemToCart} addToCartNLI = {this.props.addToCartNLI} setCartState = {this.props.setCartState}
           />
         </div>
       )
@@ -36,21 +34,13 @@ class ProductCategory extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.products,
-    user: state.user,
-    orderId: state.cart.orderId,
-    cartItems: state.cart.cartItems,
-    category: state.product.category
-
+    products: state.product.products
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchAllProducts: category => dispatch(fetchByCategory(category)),
-    addItemToCart: (reqBodObj) => dispatch(addItemToCart(reqBodObj)),
-    addToCartNLI: product => dispatch(addToCartNLI(product)),
-    setCartState: () => dispatch(setCartState())
+    fetchAllProducts: category => dispatch(fetchByCategory(category))
   }
 }
 

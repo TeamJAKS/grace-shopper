@@ -25,11 +25,10 @@ const gotAllProducts = products => {
   }
 }
 
-const gotProductCategory = (category, products) => {
+const gotProductCategory = products => {
   return {
     type: GOT_PRODUCT_CATEGORY,
-    products,
-    category
+    products
   }
 }
 
@@ -98,7 +97,7 @@ export const fetchByCategory = category => {
   return async dispatch => {
     const response = await axios.get(`/api/product/category/${category}`)
     const products = response.data
-    dispatch(gotProductCategory(category, products))
+    dispatch(gotProductCategory(products))
   }
 }
 
@@ -150,11 +149,9 @@ const initialState = {
   reviews: [],
   product: {},
   productUpdate: {},
-  prodByCategory: [],
   error: null,
   loading: null,
-  categories: [],
-  category: {}
+  categories: []
 }
 
 const productReducer = (state = initialState, action) => {
@@ -167,10 +164,8 @@ const productReducer = (state = initialState, action) => {
     case GOT_PRODUCT_CATEGORY:
       return {
         ...state,
-        prodByCategory: action.products,
-        category: action.category,
         error: null,
-        filteredProducts: action.products
+        products: action.products
       }
     case GOT_SINGLE_PRODUCT:
       return {...state, error: null, singleProduct: {...action.product}}

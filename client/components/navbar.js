@@ -58,7 +58,7 @@ class Navbar extends React.Component {
     const userId = this.props.user.id
     return (
       <div>
-        <h1>GRACE SHOPPER</h1>
+        <h1>JAK UP YOUR SKILLS</h1>
         <nav>
           {this.props.isLoggedIn ? (
             <div>
