@@ -53,7 +53,6 @@ class Navbar extends React.Component {
   }
 
   render() {
-    console.log('props', this.props)
     const {anchorEl, anchorEl2} = this.state
     const categories = this.props.categories
     const userId = this.props.user.id
@@ -64,9 +63,11 @@ class Navbar extends React.Component {
           {this.props.isLoggedIn ? (
             <div>
               {/* The navbar will show these links after you log in */}
-              <Button to="/home" color="secondary">
-                <h2>Home</h2>
-              </Button>
+              <NavLink to="/home">
+                <Button color="secondary">
+                  <h2>Home</h2>
+                </Button>
+              </NavLink>
               <Button onClick={this.props.handleClick} color="secondary">
                 <h2>Logout</h2>
               </Button>
@@ -95,12 +96,16 @@ class Navbar extends React.Component {
           ) : (
             <div>
               {/* The navbar will show these links before you log in */}
-              <Button to="/login" color="secondary">
-                <h2>Login</h2>
-              </Button>
-              <Button to="/signup" color="secondary">
-                <h2>Sign Up</h2>
-              </Button>
+              <NavLink to="/login">
+                <Button color="secondary">
+                  <h2>Login</h2>
+                </Button>
+              </NavLink>
+              <NavLink to="/signup">
+                <Button color="secondary">
+                  <h2>Sign Up</h2>
+                </Button>
+              </NavLink>
             </div>
           )}
 

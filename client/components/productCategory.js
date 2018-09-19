@@ -15,7 +15,6 @@ class ProductCategory extends React.Component {
   }
 
   render() {
-    console.log('CAT PROPS', this.props)
     const products = this.props.products
     if (products) {
       return (
@@ -34,7 +33,8 @@ class ProductCategory extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.product.products
+    products: state.product.products,
+    category: state.product.category
   }
 }
 
