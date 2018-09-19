@@ -365,9 +365,39 @@ function seed() {
     .then(newCategories => {
       createdCategories = newCategories
       const newOne = createdProducts[0].addCategories(createdCategories[0])
-      const newTwo = createdProducts[1].addCategories(createdCategories[1])
-      const newThree = createdProducts[2].addCategories(createdCategories[2])
-      return newOne, newTwo, newThree
+      const newTwo = createdProducts[1].addCategories(createdCategories[0])
+      const newThree = createdProducts[2].addCategories(createdCategories[0])
+      const newFour = createdProducts[3].addCategories(createdCategories[0])
+      const newFive = createdProducts[4].addCategories(createdCategories[0])
+      const newSix = createdProducts[5].addCategories(createdCategories[0])
+      const newSeven = createdProducts[6].addCategories(createdCategories[0])
+      const newEight = createdProducts[7].addCategories(createdCategories[0])
+      const newNine = createdProducts[8].addCategories(createdCategories[0])
+      const newTen = createdProducts[9].addCategories(createdCategories[0])
+
+      const newEleven = createdProducts[10].addCategories(createdCategories[1])
+      const newTwelve = createdProducts[11].addCategories(createdCategories[1])
+      const newThirteen = createdProducts[12].addCategories(createdCategories[1])
+      const newFourteen = createdProducts[13].addCategories(createdCategories[1])
+      const newFifteen = createdProducts[14].addCategories(createdCategories[1])
+      const newSixteen = createdProducts[15].addCategories(createdCategories[1])
+      const newSeventeen = createdProducts[16].addCategories(createdCategories[1])
+      const newEighteen = createdProducts[17].addCategories(createdCategories[1])
+      const newNineteen = createdProducts[18].addCategories(createdCategories[1])
+      const newTwenty = createdProducts[19].addCategories(createdCategories[1])
+
+      const newTwentyOne = createdProducts[20].addCategories(createdCategories[2])
+      const newTwentyTwo = createdProducts[21].addCategories(createdCategories[2])
+      const newTwentyThree = createdProducts[22].addCategories(createdCategories[2])
+      const newTwentyFour = createdProducts[23].addCategories(createdCategories[2])
+      const newTwentyFive = createdProducts[24].addCategories(createdCategories[2])
+      const newTwentySix = createdProducts[25].addCategories(createdCategories[2])
+      const newTwentySeven = createdProducts[26].addCategories(createdCategories[2])
+     
+      return newOne, newTwo, newThree, newFour, newFive, newSix, newSeven, newEight, newNine, newTen,
+      newEleven, newTwelve, newThirteen, newFourteen, newFifteen, newSixteen, newSeventeen,
+      newEighteen, newNineteen, newTwenty, newTwentyOne, newTwentyTwo, newTwentyThree, newTwentyFour, 
+      newTwentyFive, newTwentySix, newTwentySeven
     })
     .catch(error => console.error(error))
   // .then(() => {

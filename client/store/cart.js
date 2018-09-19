@@ -53,6 +53,7 @@ export function addItemToCart(infoObj) {
 
 export function setCartState() {
   const curCart = JSON.parse(window.localStorage.getItem('cart'))
+  console.log('curCart', curCart)
   return dispatch => {
     dispatch(fillCartNLI(curCart))
   }
@@ -67,7 +68,6 @@ export function checkout(reqObj) {
 
 export function checkoutNLI(reqObj) {
   return async dispatch => {
-    console.log('we here?')
     const data = await axios.post('/api/cart/checkout', reqObj)
     dispatch(fillCartNLI([]))
   }

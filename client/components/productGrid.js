@@ -6,6 +6,21 @@ import GridListTile from '@material-ui/core/GridListTile'
 import GridListTileBar from '@material-ui/core/GridListTileBar'
 import IconButton from '@material-ui/core/IconButton'
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
+//import {addItemToCart, addToCartNLI, setCartState} from '../store'
+
+const handleClick = async (product, orderId, cartItems, addItemToCart, addToCartNLI, setCartState) => {
+  const reqBodyObj = {
+    orderId: orderId,
+    productId: Number(product.id)
+  }
+  if (orderId) {
+    return addItemToCart(reqBodyObj)
+  } else {
+    const curCart = JSON.parse(window.localStorage.getItem('cart'))
+    curCart.push(product)
+    window.localStorage.setItem('cart', JSON.stringify(curCart))
+}
+}
 
 const ProductGrid = props => {
   const product = props.product
@@ -18,7 +33,7 @@ const ProductGrid = props => {
           subtitle={<span>{product.description}</span>}
           actionIcon={
             <IconButton className={styles.icon}>
-              <ShoppingCartIcon />
+              <ShoppingCartIcon onClick ={() => handleClick(product, props.orderId, props.cartItems, props.addItemToCart, props.addToCartNLI, props.setCartState)}/>
             </IconButton>
           }
         />

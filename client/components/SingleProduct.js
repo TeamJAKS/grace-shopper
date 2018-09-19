@@ -117,8 +117,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: id => dispatch(getSingleProduct(id)),
-    addItemToCart: (orderid, productId) =>
-      dispatch(addItemToCart(orderid, productId)),
+    addItemToCart: (reqBodObj) =>
+      dispatch(addItemToCart(reqBodObj)),
     addToCartNLI: product => dispatch(addToCartNLI(product)),
     setCartState: () => dispatch(setCartState())
   }
