@@ -67,7 +67,6 @@ export function checkout(reqObj) {
 
 export function checkoutNLI(reqObj) {
   return async dispatch => {
-    console.log('we here?')
     const data = await axios.post('/api/cart/checkout', reqObj)
     dispatch(fillCartNLI([]))
   }
