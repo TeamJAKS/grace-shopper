@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch, Link} from 'react-router-dom'
+import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {fetchProducts, me, getCartOrders} from './store'
 import {
@@ -16,8 +16,8 @@ import {
   AddReviewForm,
   UserProfile,
   EditProfile,
-  Cart
-
+  Cart,
+  CheckoutNLI
 } from './components'
 
 /**
@@ -26,8 +26,8 @@ import {
 class Routes extends Component {
   async componentDidMount() {
     await this.props.loadInitialData()
-    if(this.props.userId) {
-    this.props.getCartOrders(this.props.userId)
+    if (this.props.userId) {
+      this.props.getCartOrders(this.props.userId)
     }
   }
 
@@ -37,8 +37,9 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Route exact path="/" component={UserHome} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
         <Route exact path="/product" component={AllProducts} />
         <Route
           exact
@@ -56,17 +57,28 @@ class Routes extends Component {
           path="/product/:productId/update"
           component={UpdateProductForm}
         />
-        <Route path="/product/:productId/add/review" component={AddReviewForm}/>
-        <Route exact path="/users/profile/:userId" component={UserProfile} />
-        <Route path="/users/profile/:userId/edit" component={EditProfile} />
+        <Route
+          path="/product/:productId/add/review"
+          component={AddReviewForm}
+        />
         <Route path="/cart" component={Cart} />
         <Route path="/search" component={SearchView} />
-        {/* <Route path = "/checkout" component={Checkout} /> */}
+        <Route path="/checkout" component={CheckoutNLI} />
 
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route
+              exact
+              path="/users/profile/:userId"
+              component={UserProfile}
+            />
+            <Route
+              exact
+              path="/users/profile/:userId/edit"
+              component={EditProfile}
+            />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

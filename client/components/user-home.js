@@ -7,12 +7,19 @@ import {connect} from 'react-redux'
  */
 export const UserHome = props => {
   const firstName = props.user.firstName
-
-  return (
-    <div>
-      <h3>Welcome, {firstName}</h3>
-    </div>
-  )
+  if (firstName) {
+    return (
+      <div>
+        <h3>Welcome, {firstName}</h3>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <h3>Welcome!</h3>
+      </div>
+    )
+  }
 }
 
 /**

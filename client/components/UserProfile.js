@@ -19,7 +19,6 @@ const styles = {
     height: 300
   }
 }
-
 class UserProfile extends React.Component {
   constructor(props) {
     super(props)
@@ -31,14 +30,8 @@ class UserProfile extends React.Component {
     this.props.getAddress(this.state.userId)
   }
   render() {
-    const {classes} = this.props
-    const user = this.props.user
-    const address = this.props.address
-    let curAddress
-    if (address) {
-      curAddress = address[0]
-    }
-    if (user.firstName && curAddress) {
+    const {classes, user, address} = this.props
+    if (user.firstName && address) {
       const letter = user.firstName.slice(0, 1)
       return (
         <Card className={classes.card}>
@@ -46,15 +39,11 @@ class UserProfile extends React.Component {
             <Avatar>{letter}</Avatar>
             <CardContent>
               <Typography gutterBottom variant="headline" component="h2">
-                {user.firstName + user.lastName}
+                {user.firstName + ' ' + user.lastName}
               </Typography>
               <Typography component="p">{user.email}</Typography>
               <Typography component="p">
-                {curAddress.street +
-                  ' ' +
-                  curAddress.city +
-                  ', ' +
-                  curAddress.state}
+                {address.street + ' ' + address.city + ', ' + address.state}
               </Typography>
             </CardContent>
           </CardActionArea>

@@ -19,5 +19,5 @@ export {default as ErrorNoProduct} from './Error_NoProduct'
 export {default as AddReviewForm} from './AddReviewForm'
 export {default as UserProfile} from './UserProfile'
 export {default as EditProfile} from './EditProfile'
-//export {default as Checkout} from './Checkout'
+export {default as CheckoutNLI} from './CheckoutNLI'
 

@@ -12,7 +12,7 @@ import CardMedia from '@material-ui/core/CardMedia'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {addItemToCart, addToCartNLI, setCartState} from '../store'
-import ErrorNoProduct from './Error_NoProduct';
+import ErrorNoProduct from './Error_NoProduct'
 //potential material ui component - card, complex
 //suggestion to look at gist for themes
 
@@ -37,14 +37,17 @@ class SingleProduct extends Component {
     this.props.getSingleProduct(Number(this.props.id))
   }
 
-  async handleClick () {
-    const reqBodyObj = {orderId: this.props.orderId, productId: Number(this.props.singleProduct.id)}
-    if(this.props.orderId) {
-    return this.props.addItemToCart(reqBodyObj)
+  async handleClick() {
+    const reqBodyObj = {
+      orderId: this.props.orderId,
+      productId: Number(this.props.singleProduct.id)
+    }
+    if (this.props.orderId) {
+      return this.props.addItemToCart(reqBodyObj)
     } else {
-      await this.props.setCartState();
+      await this.props.setCartState()
       await this.props.addToCartNLI(this.props.singleProduct)
-      window.localStorage.setItem("cart", JSON.stringify(this.props.cartItems))
+      window.localStorage.setItem('cart', JSON.stringify(this.props.cartItems))
     }
     //use an action creator to add the item to the cartItems array
     //window.localStorage.setItem("cart", this.props.cart.cartItems)
@@ -66,12 +69,6 @@ class SingleProduct extends Component {
     } else {
       return (
         <Card className={classes.card}>
-          <div>
-            <Link to={`${product.id}/update`}>Update Product</Link>
-          </div>
-          <div>
-          <Link to={`${product.id}/add/review`}>Write a Product Review</Link>
-          </div>
           <div>{link}</div>
           <CardActionArea>
             <CardMedia
@@ -94,7 +91,7 @@ class SingleProduct extends Component {
               Add to Cart
             </Button>
             <Button size="small" color="primary">
-              Learn More
+              <Link to={`${product.id}/add/review`}>Write a Review</Link>
             </Button>
           </CardActions>
         </Card>
@@ -120,9 +117,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     getSingleProduct: id => dispatch(getSingleProduct(id)),
-    addItemToCart: (orderid, productId) => dispatch(addItemToCart(orderid, productId)),
-    addToCartNLI: (product) => dispatch(addToCartNLI(product)),
-    setCartState: () => dispatch (setCartState())
+    addItemToCart: (orderid, productId) =>
+      dispatch(addItemToCart(orderid, productId)),
+    addToCartNLI: product => dispatch(addToCartNLI(product)),
+    setCartState: () => dispatch(setCartState())
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(

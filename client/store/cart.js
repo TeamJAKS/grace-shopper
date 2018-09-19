@@ -58,10 +58,17 @@ export function setCartState() {
   }
 }
 
-export function checkout() {
+export function checkout(reqObj) {
   return async dispatch => {
-    const {data} = await axios.put('/api/cart/checkout')
-    dispatch(filledCart({products: [], id: null}))
+    const {data} = await axios.put('/api/cart/checkout', reqObj)
+    dispatch(filledCart({products: [], id: data.id}))
+  }
+}
+
+export function checkoutNLI(reqObj) {
+  return async dispatch => {
+    const data = await axios.post('/api/cart/checkout', reqObj)
+    dispatch(fillCartNLI([]))
   }
 }
 

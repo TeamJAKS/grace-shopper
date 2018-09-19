@@ -10,7 +10,7 @@ const ADDED_PRODUCT = 'ADDED_PRODUCT'
 const UPDATED_PRODUCT = 'UPDATED_PRODUCT'
 const GOT_REVIEWS = 'GOT_REVIEWS'
 const ERROR_RETURNED = 'ERROR_RETURNED'
-const ADDED_REVIEW ='ADDED_REVIEW'
+const ADDED_REVIEW = 'ADDED_REVIEW'
 const GOT_ALL_CATEGORIES = 'GOT_ALL_CATEGORIES'
 
 //action creators
@@ -25,10 +25,11 @@ const gotAllProducts = products => {
   }
 }
 
-const gotProductCategory = products => {
+const gotProductCategory = (category, products) => {
   return {
     type: GOT_PRODUCT_CATEGORY,
-    products
+    products,
+    category
   }
 }
 
@@ -53,10 +54,10 @@ const errorOccured = () => {
   }
 }
 
-const addedReview = productReview =>{
+const addedReview = review => {
   return {
     type: ADDED_REVIEW,
-    productReview
+    review
   }
 }
 const gotAllCategories = categories => {
@@ -97,8 +98,7 @@ export const fetchByCategory = category => {
   return async dispatch => {
     const response = await axios.get(`/api/product/category/${category}`)
     const products = response.data
-    console.log('fetchByCategory products',products)
-    dispatch(gotProductCategory(products))
+    dispatch(gotProductCategory(category, products))
   }
 }
 
@@ -120,13 +120,22 @@ export const updateOldProduct = product => {
   }
 }
 
-export const addNewReview = (product, productReview) => {
+export const addNewReview = review => {
+  console.log(
+    'here is the review in the product reducer, for addNewReview thunk',
+    review
+  )
   return async dispatch => {
-    const response = await axios.post(`/api/product/${product.id}}`, productReview)
+    const response = await axios.post(
+      `/api/product/${review.productId}/reviews`,
+      review
+    )
     const data = response.data
     dispatch(addedReview(data))
   }
 }
+
+//req.body
 
 export const getAllCategories = () => {
   return async dispatch => {
@@ -138,14 +147,14 @@ export const getAllCategories = () => {
 const initialState = {
   products: [],
   singleProduct: {},
-  filteredProducts: [],
   reviews: [],
-  productReview: {},
   product: {},
   productUpdate: {},
+  prodByCategory: [],
   error: null,
   loading: null,
-  categories: []
+  categories: [],
+  category: {}
 }
 
 const productReducer = (state = initialState, action) => {
@@ -158,6 +167,8 @@ const productReducer = (state = initialState, action) => {
     case GOT_PRODUCT_CATEGORY:
       return {
         ...state,
+        prodByCategory: action.products,
+        category: action.category,
         error: null,
         filteredProducts: action.products
       }
@@ -176,9 +187,9 @@ const productReducer = (state = initialState, action) => {
       return {
         ...state,
         error: null,
-        reviews: [...state.reviews, action.productReview]
+        reviews: [...state.reviews, action.review]
       }
-      case UPDATED_PRODUCT:
+    case UPDATED_PRODUCT:
       return {
         ...state,
         singleProduct: action.productUpdate,

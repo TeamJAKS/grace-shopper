@@ -1,4 +1,4 @@
-const Sequelize = require('sequelize');
+const Sequelize = require('sequelize')
 const db = require('../db')
 
 module.exports = db.define('reviews', {
@@ -13,7 +13,7 @@ module.exports = db.define('reviews', {
         type: Sequelize.TEXT,
         allowNull: false,
         validate: {
-            notEmpty: true 
+                notEmpty: true 
         }
     },
     stars: {
