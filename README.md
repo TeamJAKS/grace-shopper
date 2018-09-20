@@ -1,6 +1,6 @@
 Grace Shopper
 
-Find the deployed app on heroku using: 
+Find the deployed app on heroku using: graceshopperjaks.herokuapp.com/
 
 This is an e-commerce platform that will allow clients to create, manage and run an e-commerce site. Technologies used include Node.js, Sequelize, Express, React-Redux, Google OAuth, and Passport.
 
